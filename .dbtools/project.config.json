@@ -5,7 +5,7 @@
     "version" : "25.2.1.0"
   },
   "schemas" : [ "PRLNU" ],
-  "lastReleaseVersion" : "1.0.3-15",
+  "lastReleaseVersion" : "1.0.3-17",
   "export" : {
     "format" : {
       "enable" : true
