@@ -1,0 +1,50 @@
+{
+  "project" : "customer_demo_app",
+  "sqlcl" : {
+    "connectionName" : "",
+    "version" : "25.2.1.0"
+  },
+  "schemas" : [ "PRLNU" ],
+  "lastReleaseVersion" : "",
+  "export" : {
+    "format" : {
+      "enable" : true
+    },
+    "setTransform" : {
+      "collationClause" : "NEVER",
+      "constraints" : true,
+      "constraintsAsAlter" : true,
+      "emitSchema" : false,
+      "force" : true,
+      "partitioning" : false,
+      "segmentAttributes" : false,
+      "sizeByteKeyword" : true,
+      "sqlterminator" : true,
+      "storage" : false,
+      "tablespace" : false
+    },
+    "apex" : {
+      "exptype" : [ "READABLE_YAML", "APPLICATION_SOURCE" ],
+      "expAclAssignments" : true,
+      "expComments" : false,
+      "skipExportDate" : true,
+      "expirNotif" : false,
+      "expOriginalIds" : false,
+      "expSavedReports" : false,
+      "expPubReports" : true,
+      "expSubscriptions" : false,
+      "expSupportingObjects" : "Y",
+      "expTranslations" : false,
+      "auditType" : "NULL"
+    }
+  },
+  "git" : {
+    "protectedBranches" : [ "dev", "uat", "prod" ],
+    "defaultBranch" : "dev"
+  },
+  "stage" : {
+    "excludeObjects" : [ "ALL.user" ],
+    "generatedFormat" : "liquibase",
+    "softObjectIsolation" : "change"
+  }
+}
