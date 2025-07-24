@@ -1,0 +1,1514 @@
+---
+# ====== Page: Data Load Source ==============================
+id: 60
+identification: 
+  name: Data Load Source
+  alias: DATA-LOAD-SOURCE
+  title: Data Load Source
+  page-group: Contacts # 14742626925666277537
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 15910201429996915859
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 17862590586954210114
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Data Load Process Train =====================
+  id: 15910201839725915862
+  identification: 
+    name: Data Load Process Train
+    type: List
+
+  source: 
+    list: Data Load Process Train - contacts # 15910199445280915852
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Wizard Container
+    template-options: 
+    - '#DEFAULT#'
+    - t-Wizard--hideStepsSmall
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Wizard Progress
+      template-options: 
+      - '#DEFAULT#'
+      - t-WizardSteps--displayLabels
+
+- # ====== Region: Data Load Source ============================
+  id: 15910201930929915863
+  identification: 
+    name: Data Load Source
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: Data Load Process Train # 15910201839725915862
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    custom-attributes: 
+    - 'style="width:100%;max-width:none;"'
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Globalization ===============================
+  id: 15910205348848915875
+  identification: 
+    name: Globalization
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: Data Load Source # 15910201930929915863
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    custom-attributes: 
+    - 'style="width:100%;max-width:none;"'
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Information =================================
+  id: 16686945249222881936
+  identification: 
+    name: Information
+    type: Static Content
+
+  source: 
+    html-code: |
+      <p>This is  a 3-step wizard that allows the user to upload the existing data into a specified table. 
+      The user will have two options to upload data by copy and paste to the above textarea or choosing the 
+      file that contains the Customer contacts list.
+      Both of the above will take the user to second step that allows 
+      the user to map the columns of the columns with the column names of the uploaded data.
+      The third step, is straight forward step, it shows the data after lookups keys have been 
+      fetched and allows the user to review the data before the final submit. 
+      The last step will  allow the user to see the outcome of the submitted data, will show the report of inserted/updated and failed records. The failed records are displayed with the error message showing what caused the issue. 
+      </p>
+      
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P60_IMPORT_FROM ==========================
+  id: 15910202641057915869
+  identification: 
+    name: P60_IMPORT_FROM
+    type: Radio Group
+
+  label: 
+    label: Import From
+    alignment: Left
+
+  settings: 
+    number-of-columns: 1
+    page-action-on-selection: None
+
+  layout: 
+    sequence: 20
+    region: Data Load Source # 15910201930929915863
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: DATA_LOAD_OPTION # 15708909532199430404
+    display-extra-values: true
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: PASTE
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P60_FILE_NAME ============================
+  id: 15910202749734915869
+  identification: 
+    name: P60_FILE_NAME
+    type: File Upload
+
+  label: 
+    label: File Name
+    alignment: Right
+
+  display: 
+    display-as: Inline File Browse
+    capture-using: NONE
+
+  storage:: 
+    type: Table APEX_APPLICATION_TEMP_FILES
+    purge-file-at: End of Request
+    allow-multiple-files: false
+
+  layout: 
+    sequence: 30
+    region: Data Load Source # 15910201930929915863
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: Name of the file to upload
+
+- # ====== Page Item: P60_SEPARATOR ============================
+  id: 15910203530249915872
+  identification: 
+    name: P60_SEPARATOR
+    type: Text Field
+
+  label: 
+    label: Separator
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: Data Load Source # 15910201930929915863
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required
+    template-options: 
+    - '#DEFAULT#'
+    width: 2
+
+  validation: 
+    value-required: true
+    maximum-length: 2
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: \t
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: Identify a column separator character. Use <code>\t</code> for tab separators.
+
+- # ====== Page Item: P60_ENCLOSED_BY ==========================
+  id: 15910204040230915873
+  identification: 
+    name: P60_ENCLOSED_BY
+    type: Text Field
+
+  label: 
+    label: Optionally Enclosed By
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 50
+    region: Data Load Source # 15910201930929915863
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 2
+
+  validation: 
+    value-required: false
+    maximum-length: 2
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: '"'
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: Enter a delimiter character. You can use this character to delineate the starting and ending boundary of a data value. If you specify a delimiter character, Data Workshop ignores whitespace occurring before the starting and ending boundary of a data value. You can also use this option to enclose a data value with the specified delimiter character.
+
+- # ====== Page Item: P60_FIRST_ROW ============================
+  id: 15910204534813915875
+  identification: 
+    name: P60_FIRST_ROW
+    type: Checkbox Group
+
+  label: 
+    label: First Row has Column Names
+    alignment: Left
+
+  settings: 
+    number-of-columns: 1
+
+  multiple-values: 
+    type: Delimited List
+    separator: ':'
+
+  layout: 
+    sequence: 60
+    region: Data Load Source # 15910201930929915863
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: FIRST_ROW_OPTION # 15708912032683430410
+    display-extra-values: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: Select this box if your data contains column names in the first row.
+
+- # ====== Page Item: P60_STOP_START_TABLE =====================
+  id: 15910205042869915875
+  identification: 
+    name: P60_STOP_START_TABLE
+    type: Stop and Start Grid Layout [Deprecated]
+
+  label: 
+    alignment: Right
+
+  layout: 
+    sequence: 70
+    region: Data Load Source # 15910201930929915863
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P60_COPY_PASTE ===========================
+  id: 15910205125306915875
+  identification: 
+    name: P60_COPY_PASTE
+    type: Textarea
+
+  label: 
+    label: Copy and Paste Delimited Data
+    alignment: Left
+
+  settings: 
+    resizable: false
+    auto-height: false
+    character-counter: false
+    trim-spaces: None
+
+  layout: 
+    sequence: 80
+    region: Data Load Source # 15910201930929915863
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required
+    template-options: 
+    - '#DEFAULT#'
+    width: 80
+    height: 10
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: '&P60_ORIG_COPY_PASTE.'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: Copy and Paste your data here
+
+- # ====== Page Item: P60_CURRENCY =============================
+  id: 15910205624398915876
+  identification: 
+    name: P60_CURRENCY
+    type: Text Field
+
+  label: 
+    label: Currency Symbol
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 90
+    region: Globalization # 15910205348848915875
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 2
+
+  validation: 
+    value-required: false
+    maximum-length: 2
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: |
+      select value
+        from nls_session_parameters
+       where parameter = 'NLS_CURRENCY'
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: $
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: If your data contains international currency symbol, enter it here. For example, if your data has "&euro;1,234.56" or "&yen;1,234.56", enter "&euro;" or "&yen;".  Otherwise the data will not load correctly.
+
+- # ====== Page Item: P60_GROUP_SEPARATOR ======================
+  id: 15910206148840915877
+  identification: 
+    name: P60_GROUP_SEPARATOR
+    type: Text Field
+
+  label: 
+    label: Group Separator
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 100
+    region: Globalization # 15910205348848915875
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 2
+
+  validation: 
+    value-required: false
+    maximum-length: 2
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: apex_application.get_nls_group_separator
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: |
+      <p>A group separator is a character that separates integer groups, for example to show thousands and millions.</p>
+      <p>Any character can be the group separator. The character specified must be single-byte, and the group separator must be different from any other decimal character. The character can be a space, but cannot be a numeric character or any of the following:</p>
+      <ul class="noIndent">
+      <li>plus (+)</li>
+      <li>hyphen (-)</li> 
+      <li>less than sign (<)</li>
+      <li>greater than sign (>)</li> 
+      </ul>
+
+- # ====== Page Item: P60_DECIMAL_CHARACTER ====================
+  id: 15910206635649915877
+  identification: 
+    name: P60_DECIMAL_CHARACTER
+    type: Text Field
+
+  label: 
+    label: Decimal Character
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 110
+    region: Globalization # 15910205348848915875
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 2
+
+  validation: 
+    value-required: false
+    maximum-length: 2
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: apex_application.get_nls_decimal_separator
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: |
+      <p>The decimal character separates the integer and decimal parts of a number.</p>
+      <p> Any character can be the decimal character. The character specified must be single-byte, and the decimal character must be different from group separator. The character can be a space, but cannot be any numeric character or any of the following characters:</p>
+      <ul class="noIndent">
+      <li>plus (+)</li>
+      <li>hyphen (-)</li> 
+      <li>less than sign (<)</li>
+      <li>greater than sign (>)</li> 
+      </ul>
+
+- # ====== Page Item: P60_SAMPLE_DATA ==========================
+  id: 16686945947276890801
+  identification: 
+    name: P60_SAMPLE_DATA
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Information # 16686945249222881936
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: |
+      "Customer ID","Name","Title","Contact Type ID","Phone","Email"
+      
+      "Illumina","David Yvan","CFO","Other","-","-"
+      
+      "Massive Mashups","DesChamps Dio","CEO","Other","-","-"
+      
+      "Synergy Sales Solutions","Isha Ben","CFO","Other","-","-"
+      
+      "Monolithic Power Systems","Kevin Eggan","CFO","Other","-","-"
+      
+      "Monolithic Power Systems","Fabrice Inan","CFO","Other","-","-"
+      
+      "Altiris","Thomas Lin","Executive Director","Other","-","-"
+      
+      "Martek Biosciences","Josh Tenenbaum","Executive Director","Other","-","-"
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P60_ORIG_COPY_PASTE ======================
+  id: 17945101589468265926
+  identification: 
+    name: P60_ORIG_COPY_PASTE
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: Data Load Source # 15910201930929915863
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 15910202237181915865
+  identification: 
+    button-name: CANCEL
+    label: Cancel
+
+  layout: 
+    sequence: 10
+    region: Data Load Process Train # 15910201839725915862
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:18:&SESSION.::&DEBUG.:::'
+      page: 18 # Contacts
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: NEXT ========================================
+  id: 15910202326368915867
+  identification: 
+    button-name: NEXT
+    label: Next
+
+  layout: 
+    sequence: 30
+    region: Data Load Process Train # 15910201839725915862
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    - t-Button--large
+    icon: fa-chevron-right
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: TRY_SAMPLE_DATA =============================
+  id: 16686945533770886892
+  identification: 
+    button-name: TRY_SAMPLE_DATA
+    label: Try Sample Data
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 15910201429996915859
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: Import From Copy and Paste ==========
+  id: 15910207027893915877
+  identification: 
+    name: Import From Copy and Paste
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P60_IMPORT_FROM
+
+  client-side-condition: 
+    type: Item = Value
+    item: P60_IMPORT_FROM
+    value: PASTE
+
+  actions: 
+  - # ====== Action: Show ========================================
+    id: 15910207338403915878
+    identification: 
+      action: Show
+
+    settings: 
+      show-all-on-the-same-line: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P60_COPY_PASTE
+
+    execution: 
+      sequence: 10
+      event: Import From Copy and Paste # 15910207027893915877
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Hide ========================================
+    id: 15910207532136915879
+    identification: 
+      action: Hide
+
+    settings: 
+      hide-all-page-items-on-the-same-line: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P60_COPY_PASTE
+
+    execution: 
+      sequence: 10
+      event: Import From Copy and Paste # 15910207027893915877
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: Import from File ====================
+  id: 15910207621908915879
+  identification: 
+    name: Import from File
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P60_IMPORT_FROM
+
+  client-side-condition: 
+    type: Item = Value
+    item: P60_IMPORT_FROM
+    value: UPLOAD
+
+  actions: 
+  - # ====== Action: Show ========================================
+    id: 15910207943973915879
+    identification: 
+      action: Show
+
+    settings: 
+      show-all-on-the-same-line: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P60_FILE_NAME
+
+    execution: 
+      sequence: 10
+      event: Import from File # 15910207621908915879
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Hide ========================================
+    id: 15910208148526915879
+    identification: 
+      action: Hide
+
+    settings: 
+      hide-all-page-items-on-the-same-line: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P60_FILE_NAME
+
+    execution: 
+      sequence: 10
+      event: Import from File # 15910207621908915879
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: Set copy and paste textarea with samp
+  id: 17945100717795265918
+  identification: 
+    name: Set copy and paste textarea with sample data
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: TRY_SAMPLE_DATA # 16686945533770886892
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 1329527472670046370
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: '"'
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P60_ENCLOSED_BY
+
+    execution: 
+      sequence: 50
+      event: Set copy and paste textarea with sample data # 17945100717795265918
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 17945100822133265919
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: '&P60_SAMPLE_DATA.'
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P60_COPY_PASTE
+
+    execution: 
+      sequence: 20
+      event: Set copy and paste textarea with sample data # 17945100717795265918
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 17945100990961265920
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: ','
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P60_SEPARATOR
+
+    execution: 
+      sequence: 40
+      event: Set copy and paste textarea with sample data # 17945100717795265918
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 17945101049002265921
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: Y
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P60_FIRST_ROW
+
+    execution: 
+      sequence: 60
+      event: Set copy and paste textarea with sample data # 17945100717795265918
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 17945101153215265922
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: null;
+      items-to-submit: 
+      - P60_COPY_PASTE
+
+    execution: 
+      sequence: 30
+      event: Set copy and paste textarea with sample data # 17945100717795265918
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 17945101477918265925
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: PASTE
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P60_IMPORT_FROM
+
+    execution: 
+      sequence: 10
+      event: Set copy and paste textarea with sample data # 17945100717795265918
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: Set orig cut paste value and submit =
+  id: 18168038337174793781
+  identification: 
+    name: Set orig cut paste value and submit
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: NEXT # 15910202326368915867
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 18168038458306793782
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: JavaScript Expression
+      javascript-expression: $v('P60_COPY_PASTE')
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P60_ORIG_COPY_PASTE
+
+    execution: 
+      sequence: 10
+      event: Set orig cut paste value and submit # 18168038337174793781
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 18168038535539793783
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: null;
+      items-to-submit: 
+      - P60_ORIG_COPY_PASTE
+
+    execution: 
+      sequence: 20
+      event: Set orig cut paste value and submit # 18168038337174793781
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 18168038703656793784
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        
+        apex.widget.textareaClob.upload('P60_COPY_PASTE', 'NEXT');
+
+    execution: 
+      sequence: 30
+      event: Set orig cut paste value and submit # 18168038337174793781
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Reset Import From For Upload ========
+  id: 18168040662970793804
+  identification: 
+    name: Reset Import From For Upload
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: $('li.htmldbStdErr').html() && $('li.htmldbStdErr').html().substring(0, 30) == 'File Name must have some value'
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 18168040751298793805
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: UPLOAD
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P60_IMPORT_FROM
+
+    execution: 
+      sequence: 10
+      event: Reset Import From For Upload # 18168040662970793804
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+validations: 
+- # ====== Validation: Filename is not null ====================
+  id: 15910203337808915871
+  identification: 
+    name: Filename is not null
+
+  execution: 
+    sequence: 10
+
+  validation: 
+    type: Item is NOT NULL
+    item: P60_FILE_NAME
+    always-execute: false
+
+  error: 
+    error-message: '#LABEL# must have some value.'
+    display-location: Inline with Field and in Notification
+    associated-item: P60_FILE_NAME # 15910202749734915869
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 15910202326368915867
+    type: Item = Value
+    item: P60_IMPORT_FROM
+    value: UPLOAD
+
+- # ====== Validation: Paste Content before continuing =========
+  id: 17945101280349265923
+  identification: 
+    name: Paste Content before continuing
+
+  execution: 
+    sequence: 20
+
+  validation: 
+    type: Item is NOT NULL
+    item: P60_ORIG_COPY_PASTE
+    always-execute: false
+
+  error: 
+    error-message: '#LABEL# must have some value.'
+    display-location: Inline with Field and in Notification
+    associated-item: P60_COPY_PASTE # 15910205125306915875
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 15910202326368915867
+    type: Item = Value
+    item: P60_IMPORT_FROM
+    value: PASTE
+
+processes: 
+- # ====== Process: Parse Uploaded Data ========================
+  id: 15910208348612915881
+  identification: 
+    name: Parse Uploaded Data
+    type: Parse Uploaded Data [Legacy]
+    execution-chain: None
+
+  settings: 
+    data-load-definition: contacts # 15910198929507915833
+    import-from-item: P60_IMPORT_FROM
+    separator-item: P60_SEPARATOR
+    enclosed-by-item: P60_ENCLOSED_BY
+    first-row-item: P60_FIRST_ROW
+    currency-symbol-item: P60_CURRENCY
+    group-separator-item: P60_GROUP_SEPARATOR
+    decimal-character-item: P60_DECIMAL_CHARACTER
+    file-name-item: P60_FILE_NAME
+    copy-and-paste-item: P60_COPY_PASTE
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 15910202326368915867
+
+branches: 
+- # ====== Branch: Go To Page 61 ===============================
+  id: 15910208532543915881
+  identification: 
+    name: Go To Page 61
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:61:&SESSION.&success_msg=#SUCCESS_MSG#'
+      page: 61
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 15910202326368915867
+

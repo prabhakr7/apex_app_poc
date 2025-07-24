@@ -1,0 +1,950 @@
+---
+# ====== Page: Referenceability ==============================
+id: 86
+identification: 
+  name: Referenceability
+  alias: REFERENCEABILITY
+  title: Referenceability
+  page-group: Customers # 14742626823242276921
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+configuration: 
+  build-option: Customer Referencability # 14310801550925186703
+
+regions: 
+- # ====== Region: By Asset Commitment =========================
+  id: 1120136023635135587
+  identification: 
+    name: By Asset Commitment
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 35
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Geography # 14978618648110331788
+
+  attributes: 
+    id: 1120136151695135588
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Vertical
+      stack: false
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: false
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Asset Commitment ============================
+      id: 1343811191339139939
+      identification: 
+        name: Asset Commitment
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select ID,
+          reference_TYPE group_name,
+          (select count(distinct(customer_id)) 
+           from EBA_CUST_CUSTOMER_REFTYPE_REF rt , eba_cust_customers c
+           where rt.reference_type_id = t.id and c.id = rt.customer_id and 
+                 (NVL(:P86_CATEGORY,0) = 0 or c.CATEGORY_ID = :P86_CATEGORY) and
+                 (NVL(:P86_GEO,0) = 0 or :P86_GEO = c.geography_id)
+           ) cnt
+          from EBA_CUST_reference_TYPES t
+          order by 2 desc
+        page-items-to-submit: 
+        - P86_CATEGORY
+        - P86_GEO
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: GROUP_NAME
+        value: CNT
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:91:&SESSION.::&DEBUG.:RP,RIR,91:IR_REFERENCE_TYPE:&GROUP_NAME.'
+          page: 91 # Referenceability Report
+          clear-cache: RP,RIR,91
+          values: 
+            ir_reference_type: '&GROUP_NAME.'
+
+      label: 
+        show: false
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 1343811243753139940
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: No
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 1343811336671139941
+      identification: 
+        name: y
+        show-axis: true
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+- # ====== Region: By Phase ====================================
+  id: 1343811506958139942
+  identification: 
+    name: By Phase
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 45
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Geography # 14978618648110331788
+
+  attributes: 
+    id: 1343811527344139943
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Vertical
+      stack: false
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: false
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: false
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Asset Commitment ============================
+      id: 1343811661034139944
+      identification: 
+        name: Asset Commitment
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select ID,
+          status group_name,
+          (select count(distinct(c.id)) 
+           from eba_cust_customers c
+           where (NVL(:P86_CATEGORY,0) = 0 or c.CATEGORY_ID = :P86_CATEGORY) and 
+                 (NVL(:P86_GEO,0) = 0 or :P86_GEO = c.geography_id) and
+                 t.id = c.reference_phase_id) cnt
+          from EBA_CUST_REF_PHASE t
+          order by display_sequence, description
+        page-items-to-submit: 
+        - P86_CATEGORY
+        - P86_GEO
+
+      order-by: 
+        type: None
+
+      column-mapping: 
+        label: GROUP_NAME
+        value: CNT
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:91:&SESSION.::&DEBUG.:RP,RIR,91:IR_REF_PHASE,P91_CATEGORY:&GROUP_NAME.,&P86_CATEGORY.'
+          page: 91 # Referenceability Report
+          clear-cache: RP,RIR,91
+          values: 
+            ir_ref_phase: '&GROUP_NAME.'
+            p91_category: '&P86_CATEGORY.'
+
+      label: 
+        show: false
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 1343811796253139945
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: No
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 1343811836108139946
+      identification: 
+        name: y
+        show-axis: true
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+        minimum-step: 1
+
+      minor-ticks: 
+        show: true
+
+      tick-label: 
+        show: true
+
+- # ====== Region: Breadcrumb ==================================
+  id: 15794379658143329508
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 17862590586954210114
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Customer Summary ============================
+  id: 15794437796244473908
+  identification: 
+    name: Customer Summary
+    type: Badge List
+
+  source: 
+    sql-query: |
+      select label, nvl(to_number(value,'999G999G990'),0) value, url from (
+      with data as (
+          select count(*) total,
+              sum(decode(marquee_customer_yn,'Y',1,0)) marquee,
+              sum(decode(referencable,'Yes',1,0)) ref
+          from eba_cust_customers c
+          where (NVL(:P86_CATEGORY,0) = 0 or CATEGORY_ID = :P86_CATEGORY) and
+                (NVL(:P86_GEO,0) = 0 or :P86_GEO = c.geography_id)
+      ), rws as (
+          select level r from dual connect by level < 4
+      )
+      select rws.r display_order,
+          decode(rws.r, 1, 'Customers Tracked',    2, 'Marquee',    3, 'Referenceable')  label,
+          decode(rws.r, 1, data.total, 2, data.marquee, 3, data.ref) value,
+          decode(rws.r, 1, 'f?p='||:APP_ID||':59:'||:APP_SESSION||':::59,RIR:',
+                        2, 'f?p='||:APP_ID||':59:'||:APP_SESSION||':::59,RIR:IR_MARQUEE_CUSTOMER,P59_MARQUEE_CUST:Yes,Y',
+                        3, 'f?p='||:APP_ID||':59:'||:APP_SESSION||':::59,RIR:IR_REFERENCABLE,P59_REFERENCEABLE:Yes,Yes:') url
+      from data, rws
+      union all
+      select 4 display_order,
+      	'Products' label,
+      	count(*) value,
+      	apex_util.prepare_url('f?p='||:APP_ID||':44:'||:APP_SESSION||':::44,RIR') url
+      from eba_cust_products
+      )
+      order by display_order
+    page-items-to-submit: 
+    - P86_CATEGORY
+    - P86_GEO
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--hiddenOverflow
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      badge-style: Default
+      value: VALUE
+      bottom-label: LABEL
+      link-target: '&URL.'
+      layout: 4 columns
+      color: No
+
+- # ====== Region: Button Bar ==================================
+  id: 15794438629992475092
+  identification: 
+    name: Button Bar
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    - t-ButtonRegion--noPadding
+    - t-ButtonRegion--noUI
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Region Display Selector =====================
+  id: 15794610140818656585
+  identification: 
+    name: Region Display Selector
+    type: Region Display Selector
+
+  layout: 
+    sequence: 25
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      mode: View Single Region
+      display-region-icons: false
+      include-'show-all': true
+      remember-selection: No
+
+- # ====== Region: by Recruitment Owner ========================
+  id: 15867019530416503860
+  identification: 
+    name: by Recruitment Owner
+    type: HTML 5 Bar Chart
+
+  source: 
+    sql-query: |
+      select REF_RECRUITMENT_OWNER RECRUITMENT_OWNER,
+             count(*) customers
+      from EBA_CUST_CUSTOMERS c
+      where REF_RECRUITMENT_OWNER is not null and  
+           (NVL(:P86_CATEGORY,0) = 0 or c.CATEGORY_ID = :P86_CATEGORY) and
+           (NVL(:P86_GEO,0) = 0 or :P86_GEO = c.geography_id)
+      group by REF_RECRUITMENT_OWNER
+    page-items-to-submit: 
+    - P86_CATEGORY
+    - P86_GEO
+
+  layout: 
+    sequence: 65
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      label-column: RECRUITMENT_OWNER
+      value-column: CUSTOMERS
+      label-link-target: 
+        url: 'f?p=&APP_ID.:91:&SESSION.::&DEBUG.:RP,91,RIR:IR_RECRUITMENT_OWNER,P91_CATEGORY:&RECRUITMENT_OWNER.,&P86_CATEGORY.'
+        page: 91 # Referenceability Report
+        clear-cache: RP,91,RIR
+        values: 
+          ir_recruitment_owner: '&RECRUITMENT_OWNER.'
+          p91_category: '&P86_CATEGORY.'
+
+      value-display: Value
+      bar-width-calculation: Absolute
+      display-type: Text Chart
+      text-position: Inline
+      color-scheme: Theme Colors
+      maximum-rows: 50
+      message-when-no-data-found: No data found.
+
+page-items: 
+- # ====== Page Item: P86_CATEGORY =============================
+  id: 15794438914182475093
+  identification: 
+    name: P86_CATEGORY
+    type: Select List
+
+  label: 
+    label: Category
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: Button Bar # 15794438629992475092
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: CAT # 14887235504235972832
+    display-extra-values: true
+    display-null-value: true
+    null-display-value: '- All -'
+    null-return-value: 0
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: 0
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 0
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P86_GEO ==================================
+  id: 15896432461755543518
+  identification: 
+    name: P86_GEO
+    type: Select List
+
+  label: 
+    label: Geography
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: Button Bar # 15794438629992475092
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: GEOGRAPHY # 14887232264328952141
+    display-extra-values: true
+    display-null-value: true
+    null-display-value: '- All - '
+    null-return-value: 0
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: RESET_REPORT ================================
+  id: 15794454835058527179
+  identification: 
+    button-name: RESET_REPORT
+    label: Reset
+
+  layout: 
+    sequence: 1000
+    region: Breadcrumb # 15794379658143329508
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-undo-alt
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:&APP_PAGE_ID.:&SESSION.::&DEBUG.:RP,&APP_PAGE_ID.,RIR::'
+      page: '&APP_PAGE_ID.'
+      clear-cache: RP,&APP_PAGE_ID.,RIR
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: cat =================================
+  id: 15896435249624600994
+  identification: 
+    name: cat
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P86_CATEGORY
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 15896436556109603693
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: by Recruitment Owner # 15867019530416503860
+
+    execution: 
+      sequence: 30
+      event: cat # 15896435249624600994
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 15896438912643614548
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Customer Summary # 15794437796244473908
+
+    execution: 
+      sequence: 40
+      event: cat # 15896435249624600994
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: geo =================================
+  id: 15896436852466608055
+  identification: 
+    name: geo
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P86_GEO
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 15896438173279610831
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: by Recruitment Owner # 15867019530416503860
+
+    execution: 
+      sequence: 30
+      event: geo # 15896436852466608055
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 15896438569686612436
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Customer Summary # 15794437796244473908
+
+    execution: 
+      sequence: 40
+      event: geo # 15896436852466608055
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

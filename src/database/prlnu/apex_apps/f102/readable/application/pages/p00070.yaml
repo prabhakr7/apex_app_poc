@@ -1,0 +1,395 @@
+---
+# ====== Page: Application Theme Style =======================
+id: 70
+identification: 
+  name: Application Theme Style
+  alias: APPLICATION-THEME-STYLE
+  title: Application Theme Style
+  page-group: Administration # 14742626245275273793
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  chained: true
+  resizable: false
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: <p>Select the look and feel of the application you would like all users to see while using this application.</p>
+
+regions: 
+- # ====== Region: Set User Interface Theme Style ==============
+  id: 15257694607305597816
+  identification: 
+    name: Set User Interface Theme Style
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: items =======================================
+  id: 15257695383170597824
+  identification: 
+    name: items
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: Set User Interface Theme Style # 15257694607305597816
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Buttons =====================================
+  id: 15257697038892597853
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P70_DESKTOP_THEME_STYLE_ID ===============
+  id: 15257695841127597824
+  identification: 
+    name: P70_DESKTOP_THEME_STYLE_ID
+    type: Select List
+
+  label: 
+    label: Desktop Theme Style
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: items # 15257695383170597824
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      select s.name d,
+                s.theme_style_id r
+      from apex_application_theme_styles s, apex_application_themes t
+      where s.application_id = t.application_id
+      and s.theme_number = t.theme_number
+      and s.application_id = :app_id
+      and t.ui_type_name   = 'DESKTOP'
+      and t.is_current = 'Yes'
+      order by 1
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: |
+      select s.theme_style_id
+      from apex_application_theme_styles s, apex_application_themes t
+      where s.application_id = t.application_id
+      and s.theme_number = t.theme_number
+      and s.application_id = :app_id
+      and t.ui_type_name   = 'DESKTOP'
+      and s.is_current = 'Yes'
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select 1
+      from apex_application_theme_styles s, apex_application_themes t
+      where s.application_id = t.application_id
+      and s.theme_number = t.theme_number
+      and s.application_id = :app_id
+      and t.ui_type_name   = 'DESKTOP'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: Blocklist HTML command characters (<>")
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 15257697560347597858
+  identification: 
+    button-name: CANCEL
+    label: Cancel
+
+  layout: 
+    sequence: 10
+    region: Buttons # 15257697038892597853
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: SAVE ========================================
+  id: 15257697875772597859
+  identification: 
+    button-name: SAVE
+    label: Apply Changes
+
+  layout: 
+    sequence: 20
+    region: Buttons # 15257697038892597853
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--gapLeft
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: CNX =================================
+  id: 356724697541174782
+  identification: 
+    name: CNX
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 15257697560347597858
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 356724731756174783
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: CNX # 356724697541174782
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: Set Theme Style ============================
+  id: 15257698315158597861
+  identification: 
+    name: Set Theme Style
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      if :P70_DESKTOP_THEME_STYLE_ID is not null then
+          for c1 in (select theme_number
+                     from apex_application_themes
+                     where application_id = :app_id
+                     and ui_type_name   = 'DESKTOP'
+                     and is_current = 'Yes')
+          loop
+              apex_util.set_current_theme_style (
+                  p_theme_number   => c1.theme_number,
+                  p_theme_style_id => :P70_DESKTOP_THEME_STYLE_ID
+                  );
+          end loop;
+      end if;
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Theme Style Set for All Users.
+
+  error: 
+    error-message: '#SQLERRM#'
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: SAVE # 15257697875772597859
+
+branches: 
+- # ====== Branch: Go To Page settings =========================
+  id: 15257698788088597863
+  identification: 
+    name: Go To Page settings
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:settings:&SESSION.::&DEBUG.:::&success_msg=#SUCCESS_MSG#'
+      page: SETTINGS
+
+  server-side-condition: 
+    when-button-pressed: SAVE # 15257697875772597859
+

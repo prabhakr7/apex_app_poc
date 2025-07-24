@@ -1,0 +1,743 @@
+---
+- # ====== Upgrade Script: TIMESTAMP Fix (BUGID: 31352674)  ====
+  id: 434360623131206169
+  identification: 
+    name: 'TIMESTAMP Fix (BUGID: 31352674) '
+
+  execution: 
+    sequence: 500
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: select null from all_tab_cols where table_name like 'EBA_CUST_%' and data_type = 'TIMESTAMP(6) WITH LOCAL TIME ZONE'
+
+- # ====== Upgrade Script: Update countries region_ids =========
+  id: 847985734054354635
+  identification: 
+    name: Update countries region_ids
+
+  execution: 
+    sequence: 510
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: select null from eba_cust_countries where region_id is null
+
+- # ====== Upgrade Script: Add total_contract_value & discount_l
+  id: 1176907251334824463
+  identification: 
+    name: Add total_contract_value & discount_level to Customers table
+
+  execution: 
+    sequence: 420
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tab_columns
+      where table_name = 'EBA_CUST_CUSTOMERS'
+          and column_name in ('TOTAL_CONTRACT_VALUE', 'DISCOUNT_LEVEL')
+
+- # ====== Upgrade Script: Set First Run Preference ============
+  id: 1186460331353558203
+  identification: 
+    name: Set First Run Preference
+
+  execution: 
+    sequence: 520
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+        from eba_cust_preferences
+       where preference_name = 'FIRST_RUN';
+
+- # ====== Upgrade Script: create eba_cust_acl_features ========
+  id: 1382999152268478108
+  identification: 
+    name: create eba_cust_acl_features
+
+  execution: 
+    sequence: 430
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_ACL_FEATURES';
+
+- # ====== Upgrade Script: Upgrade eba_cust spec and body ======
+  id: 1383040995710484982
+  identification: 
+    name: Upgrade eba_cust spec and body
+
+  execution: 
+    sequence: 440
+
+- # ====== Upgrade Script: populate eba_cust_acl_features ======
+  id: 1383044232297568559
+  identification: 
+    name: populate eba_cust_acl_features
+
+  execution: 
+    sequence: 450
+
+  server-side-condition: 
+    type: Function Body
+    language: PL/SQL
+    pl/sql-function-body: |
+      declare
+          l_cnt    pls_integer;
+          l_retval boolean := true;
+      begin
+          select count(*)
+            into l_cnt
+            from eba_cust_acl_features
+           where authorization_name in ('EDIT_COMPETITORS', 'VIEW_COMPETITORS');
+      
+          if l_cnt > 0 then
+              l_retval := false;
+          end if;
+      
+          return l_retval;
+      end;
+
+- # ====== Upgrade Script: Issue Statuses ======================
+  id: 2589047350539325384
+  identification: 
+    name: Issue Statuses
+
+  execution: 
+    sequence: 470
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_ISSUE_STATUSES'
+
+- # ====== Upgrade Script: Issues ==============================
+  id: 2589047519386328721
+  identification: 
+    name: Issues
+
+  execution: 
+    sequence: 480
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_ISSUES'
+
+- # ====== Upgrade Script: customer after delete trigger =======
+  id: 4036965499477969036
+  identification: 
+    name: customer after delete trigger
+
+  execution: 
+    sequence: 490
+
+- # ====== Upgrade Script: New Product Uses Columns ============
+  id: 14265911795582853204
+  identification: 
+    name: New Product Uses Columns
+
+  execution: 
+    sequence: 220
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tab_cols
+      where table_name = 'EBA_CUST_PRODUCT_USES'
+          and column_name = 'REFERENCE_TYPE_IDS'
+
+- # ====== Upgrade Script: Drop product/customer constraint in p
+  id: 14266040822754975885
+  identification: 
+    name: Drop product/customer constraint in product uses
+
+  execution: 
+    sequence: 230
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select null
+      from user_constraints
+      where constraint_name = 'EBA_CUST_PRODUCT_USES_UK'
+
+- # ====== Upgrade Script: drop index EBA_CUST_PRODUCT_USES_UK =
+  id: 14266071360430994842
+  identification: 
+    name: drop index EBA_CUST_PRODUCT_USES_UK
+
+  execution: 
+    sequence: 240
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select *
+      from user_indexes
+      where index_name = 'EBA_CUST_PRODUCT_USES_UK'
+
+- # ====== Upgrade Script: product statuses ====================
+  id: 14302777676370122129
+  identification: 
+    name: product statuses
+
+  execution: 
+    sequence: 260
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_PRODUCT_STATUSES'
+
+- # ====== Upgrade Script: add eba_cust_prod_uses_contact_fk ===
+  id: 14309483329851600138
+  identification: 
+    name: add eba_cust_prod_uses_contact_fk
+
+  execution: 
+    sequence: 250
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_constraints
+      where constraint_name = 'EBA_CUST_PROD_USES_CONTACT_FK'
+
+- # ====== Upgrade Script: add logo columns to customers table =
+  id: 14488839445806963234
+  identification: 
+    name: add logo columns to customers table
+
+  execution: 
+    sequence: 270
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tab_cols
+      where table_name = 'EBA_CUST_CUSTOMERS'
+          and column_name = 'LOGO_BLOB'
+
+- # ====== Upgrade Script: Framework Body ======================
+  id: 14759783024852737327
+  identification: 
+    name: Framework Body
+
+  execution: 
+    sequence: 30
+
+- # ====== Upgrade Script: Username Format Preference ==========
+  id: 14837813038590596287
+  identification: 
+    name: Username Format Preference
+
+  execution: 
+    sequence: 50
+
+- # ====== Upgrade Script: industry view =======================
+  id: 14870803950115447521
+  identification: 
+    name: industry view
+
+  execution: 
+    sequence: 80
+
+- # ====== Upgrade Script: add contact columns =================
+  id: 14872086730220549906
+  identification: 
+    name: add contact columns
+
+  execution: 
+    sequence: 90
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select column_name
+      from user_tab_columns
+      where table_name = 'EBA_CUST_CONTACTS'
+          and column_name = 'FACEBOOK'
+
+- # ====== Upgrade Script: Framework Package ===================
+  id: 14876920832157284259
+  identification: 
+    name: Framework Package
+
+  execution: 
+    sequence: 10
+
+- # ====== Upgrade Script: Remove Help Table ===================
+  id: 14876921222591290964
+  identification: 
+    name: Remove Help Table
+
+  execution: 
+    sequence: 110
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select table_name
+      from user_tables
+      where table_name = 'EBA_CUST_HELP_PAGE'
+
+- # ====== Upgrade Script: History Triggers ====================
+  id: 14932297932668949058
+  identification: 
+    name: History Triggers
+
+  execution: 
+    sequence: 120
+
+- # ====== Upgrade Script: Click Counting Table ================
+  id: 14955991219819107463
+  identification: 
+    name: Click Counting Table
+
+  execution: 
+    sequence: 130
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_CLICKS';
+
+- # ====== Upgrade Script: Content Validation Table ============
+  id: 14956429548013613143
+  identification: 
+    name: Content Validation Table
+
+  execution: 
+    sequence: 140
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_VERIFICATIONS';
+
+- # ====== Upgrade Script: eba_cust_customers trigger ==========
+  id: 15000911147687926692
+  identification: 
+    name: eba_cust_customers trigger
+
+  execution: 
+    sequence: 150
+
+- # ====== Upgrade Script: Reference Types =====================
+  id: 15633844398871642756
+  identification: 
+    name: Reference Types
+
+  execution: 
+    sequence: 160
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_REFERENCE_TYPES'
+
+- # ====== Upgrade Script: add phase table =====================
+  id: 15841595042725623832
+  identification: 
+    name: add phase table
+
+  execution: 
+    sequence: 170
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_REF_PHASE'
+
+- # ====== Upgrade Script: add reference_phase_id ==============
+  id: 15841744521939311802
+  identification: 
+    name: add reference_phase_id
+
+  execution: 
+    sequence: 180
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tab_cols
+      where table_name = 'EBA_CUST_CUSTOMERS'
+          and column_name = 'REFERENCE_PHASE_ID'
+
+- # ====== Upgrade Script: sales channel =======================
+  id: 15866503788792569093
+  identification: 
+    name: sales channel
+
+  execution: 
+    sequence: 190
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_SALES_CHANNEL'
+
+- # ====== Upgrade Script: add sales channel ===================
+  id: 15866504712659602479
+  identification: 
+    name: add sales channel
+
+  execution: 
+    sequence: 200
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tab_cols
+      where table_name = 'EBA_CUST_CUSTOMERS'
+          and column_name = 'SALES_CHANNEL_ID'
+
+- # ====== Upgrade Script: recruitment owner ===================
+  id: 15866504918615604636
+  identification: 
+    name: recruitment owner
+
+  execution: 
+    sequence: 210
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tab_cols
+      where table_name = 'EBA_CUST_CUSTOMERS'
+          and column_name = 'REF_RECRUITMENT_OWNER'
+
+- # ====== Upgrade Script: strategic_customer_program_yn =======
+  id: 16910576397206100124
+  identification: 
+    name: strategic_customer_program_yn
+
+  execution: 
+    sequence: 280
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tab_cols
+      where table_name = 'EBA_CUST_CUSTOMERS'
+          and column_name = 'STRATEGIC_CUSTOMER_PROGRAM_YN'
+
+- # ====== Upgrade Script: country_id in customers table =======
+  id: 16953189749040185756
+  identification: 
+    name: country_id in customers table
+
+  execution: 
+    sequence: 290
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tab_cols
+      where table_name = 'EBA_CUST_CUSTOMERS'
+          and column_name = 'COUNTRY_ID'
+
+- # ====== Upgrade Script: eba_cust_type =======================
+  id: 17024024094633065989
+  identification: 
+    name: eba_cust_type
+
+  execution: 
+    sequence: 300
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_TYPE'
+
+- # ====== Upgrade Script: type_id into customers table ========
+  id: 17024049790355123536
+  identification: 
+    name: type_id into customers table
+
+  execution: 
+    sequence: 310
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tab_cols
+      where table_name = 'EBA_CUST_CUSTOMERS'
+          and column_name = 'TYPE_ID'
+
+- # ====== Upgrade Script: eba_cust_use_case ===================
+  id: 17140084304873531001
+  identification: 
+    name: eba_cust_use_case
+
+  execution: 
+    sequence: 320
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_USE_CASE'
+
+- # ====== Upgrade Script: use_case_id into customers table ====
+  id: 17140095026425487246
+  identification: 
+    name: use_case_id into customers table
+
+  execution: 
+    sequence: 330
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tab_cols
+      where table_name = 'EBA_CUST_CUSTOMERS'
+          and column_name = 'USE_CASE_ID'
+
+- # ====== Upgrade Script: add party attributes ================
+  id: 17165316476464658427
+  identification: 
+    name: add party attributes
+
+  execution: 
+    sequence: 340
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tab_cols
+      where table_name = 'EBA_CUST_CUSTOMERS'
+          and column_name = 'PARTY_ID'
+
+- # ====== Upgrade Script: region_id in countries ==============
+  id: 17190441924816065187
+  identification: 
+    name: region_id in countries
+
+  execution: 
+    sequence: 350
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tab_cols
+      where table_name = 'EBA_CUST_COUNTRIES'
+          and column_name = 'REGION_ID'
+
+- # ====== Upgrade Script: Implementation Partners/Competitors =
+  id: 17735930108555682880
+  identification: 
+    name: Implementation Partners/Competitors
+
+  execution: 
+    sequence: 60
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_IMPL_PARTNERS'
+
+- # ====== Upgrade Script: Product Families ====================
+  id: 17778492181426739974
+  identification: 
+    name: Product Families
+
+  execution: 
+    sequence: 100
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_PRODUCT_FAMILIES'
+
+- # ====== Upgrade Script: Activities ==========================
+  id: 18158287277854843809
+  identification: 
+    name: Activities
+
+  execution: 
+    sequence: 70
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_ACTIVITIES'
+
+- # ====== Upgrade Script: Feedback Types DDL ==================
+  id: 18752952591972286055
+  identification: 
+    name: Feedback Types DDL
+
+  execution: 
+    sequence: 360
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_FEEDBACK_TYPES'
+
+- # ====== Upgrade Script: Feedback Types Data =================
+  id: 18753115138515324080
+  identification: 
+    name: Feedback Types Data
+
+  execution: 
+    sequence: 370
+
+  server-side-condition: 
+    type: Function Body
+    language: PL/SQL
+    pl/sql-function-body: |
+      declare
+          l_table_cnt number;
+          l_row_cnt   number;
+      begin
+          select count(*)
+            into l_table_cnt
+            from user_tables
+           where table_name = 'EBA_CUST_FEEDBACK_TYPES';
+          if l_table_cnt = 1 then
+              select count(*)
+                into l_row_cnt
+                from eba_cust_feedback_types;
+              if l_row_cnt = 0 then
+                  return true;
+              end if;
+          end if;
+          return false;
+      end;
+
+- # ====== Upgrade Script: Feedback DDL ========================
+  id: 18753142103440281856
+  identification: 
+    name: Feedback DDL
+
+  execution: 
+    sequence: 380
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_FEEDBACK'
+
+- # ====== Upgrade Script: Add parent_customer_id ==============
+  id: 18755717901427798652
+  identification: 
+    name: Add parent_customer_id
+
+  execution: 
+    sequence: 20
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select column_name
+      from user_tab_columns
+      where table_name = 'EBA_CUST_CUSTOMERS'
+          and column_name = 'PARENT_CUSTOMER_ID'
+
+- # ====== Upgrade Script: Email Log DDL =======================
+  id: 18757423855889307216
+  identification: 
+    name: Email Log DDL
+
+  execution: 
+    sequence: 390
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select null
+      from user_tables
+      where table_name = 'EBA_CUST_EMAIL_LOG'
+
+- # ====== Upgrade Script: eba_cust_email package spec =========
+  id: 18757740081899336321
+  identification: 
+    name: eba_cust_email package spec
+
+  execution: 
+    sequence: 400
+
+- # ====== Upgrade Script: eba_cust_email package body =========
+  id: 18757755189318390137
+  identification: 
+    name: eba_cust_email package body
+
+  execution: 
+    sequence: 410
+
+- # ====== Upgrade Script: Allow NULL Preference Values ========
+  id: 20249272381090778066
+  identification: 
+    name: Allow NULL Preference Values
+
+  execution: 
+    sequence: 40
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select null
+      from user_tab_cols
+      where table_name = 'EBA_CUST_PREFERENCES'
+          and column_name = 'PREFERENCE_VALUE'
+          and nullable = 'N'
+
+- # ====== Upgrade Script: Upgrade EBA_CUST_SAMPLE_DATA ========
+  id: 21444374885525344554
+  identification: 
+    name: Upgrade EBA_CUST_SAMPLE_DATA
+
+  execution: 
+    sequence: 460
+

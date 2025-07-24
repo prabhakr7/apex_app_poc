@@ -1,0 +1,1758 @@
+---
+- # ====== List of Values: ACCESS CONTROL SCOPE1 ===============
+  id: 361377506799653384
+  identification: 
+    name: ACCESS CONTROL SCOPE1
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Readers ======================================
+    id: 361377816758653385
+    entry: 
+      sequence: 1
+      display: Readers
+      return: PUBLIC_READONLY
+
+  - # ====== Entry: Contributors =================================
+    id: 361378295867653385
+    entry: 
+      sequence: 2
+      display: Contributors
+      return: PUBLIC_CONTRIBUTE
+
+- # ====== List of Values: HOMEPAGE_DISPLAY_AS =================
+  id: 1172659360276670828
+  identification: 
+    name: HOMEPAGE_DISPLAY_AS
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Cards View ===================================
+    id: 1172659546012670829
+    entry: 
+      sequence: 10
+      display: Cards View
+      return: CARDS
+
+    globalization: 
+      template: <span class="t-Icon fa fa-cards" title="#DISPLAY_VALUE#"></span><span class="u-VisuallyHidden">#DISPLAY_VALUE#</span>
+
+  - # ====== Entry: Report View ==================================
+    id: 1172659999117670830
+    entry: 
+      sequence: 30
+      display: Report View
+      return: REPORT
+
+    globalization: 
+      template: <span class="t-Icon fa fa-table" title="#DISPLAY_VALUE#"></span><span class="u-VisuallyHidden">#DISPLAY_VALUE#</span>
+
+  - # ====== Entry: Logo View ====================================
+    id: 1172660342220670830
+    entry: 
+      sequence: 20
+      display: Logo View
+      return: LOGOS
+
+    globalization: 
+      template: <span class="t-Icon fa fa-tiles-2x2" title="#DISPLAY_VALUE#"></span><span class="u-VisuallyHidden">#DISPLAY_VALUE#</span>
+
+    server-side-condition: 
+      type: Expression
+      language: PL/SQL
+      pl/sql-expression: APEX_AUTHORIZATION.IS_AUTHORIZED(p_authorization_name => 'CONTRIBUTION RIGHTS')
+
+- # ====== List of Values: ISSUE TYPES =========================
+  id: 2588619518233331974
+  identification: 
+    name: ISSUE TYPES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Bug ==========================================
+    id: 2588619858462331975
+    entry: 
+      sequence: 1
+      display: Bug
+      return: BUG
+
+  - # ====== Entry: Enhancement Request ==========================
+    id: 2588620263298331977
+    entry: 
+      sequence: 2
+      display: Enhancement Request
+      return: ER
+
+  - # ====== Entry: Other ========================================
+    id: 2588620659715331977
+    entry: 
+      sequence: 3
+      display: Other
+      return: OTHER
+
+- # ====== List of Values: ISSUE STATUSES ======================
+  id: 2588916920524587073
+  identification: 
+    name: ISSUE STATUSES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select name as d,
+             id as r
+        from eba_cust_issue_statuses
+       order by 1
+
+- # ====== List of Values: P68_PROD_USE_EXTERNAL_CONTACT =======
+  id: 14269115654595520845
+  identification: 
+    name: P68_PROD_USE_EXTERNAL_CONTACT
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select '- New Contact -' d, -1 r
+        from dual
+      union all
+      select decode( email, null, name, name || ' (' || email || ')' ) d, id r
+        from eba_cust_contacts
+       where customer_id = :P68_CUSTOMER_ID
+       order by 1
+
+- # ====== List of Values: PRODUCT STATUSES ====================
+  id: 14303652121970411220
+  identification: 
+    name: PRODUCT STATUSES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select status as d,
+             id as r
+        from eba_cust_product_statuses
+       order by 1
+
+- # ====== List of Values: IS ACTIVE ===========================
+  id: 14310523022679118479
+  identification: 
+    name: IS ACTIVE
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Active =======================================
+    id: 14310523221654118483
+    entry: 
+      sequence: 10
+      display: Active
+      return: Y
+
+- # ====== List of Values: REFERENCABLE ========================
+  id: 14781279929123084220
+  identification: 
+    name: REFERENCABLE
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Yes ==========================================
+    id: 14781280136354084224
+    entry: 
+      sequence: 10
+      display: Yes
+      return: Yes
+
+  - # ====== Entry: No ===========================================
+    id: 14781280437089084228
+    entry: 
+      sequence: 20
+      display: No
+      return: No
+
+  - # ====== Entry: Potentially ==================================
+    id: 14781280727967084228
+    entry: 
+      sequence: 30
+      display: Potentially
+      return: Potentially
+
+- # ====== List of Values: MARQUEE =============================
+  id: 14781282145053088842
+  identification: 
+    name: MARQUEE
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Yes ==========================================
+    id: 14781282344020088842
+    entry: 
+      sequence: 10
+      display: Yes
+      return: Y
+
+  - # ====== Entry: No ===========================================
+    id: 14781282624900088842
+    entry: 
+      sequence: 20
+      display: No
+      return: N
+
+- # ====== List of Values: USERNAME_FORMAT =====================
+  id: 14837817325000618836
+  identification: 
+    name: USERNAME_FORMAT
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Email Address ================================
+    id: 14837817631297618837
+    entry: 
+      sequence: 1
+      display: Email Address
+      return: EMAIL
+
+  - # ====== Entry: Non-Email Address ============================
+    id: 14837817936859618837
+    entry: 
+      sequence: 2
+      display: Non-Email Address
+      return: STRING
+
+- # ====== List of Values: P2_INDUSTRY_ID LOOKUP ===============
+  id: 14846316838979074218
+  identification: 
+    name: P2_INDUSTRY_ID LOOKUP
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select INDUSTRY_NAME display_value, ID return_value 
+      from EBA_CUST_INDUSTRIES
+      order by 1
+
+- # ====== List of Values: LABEL_TEMPLATES =====================
+  id: 14875601329243302766
+  identification: 
+    name: LABEL_TEMPLATES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select
+          template_name || ' (' || decode(theme_number, 50, 'Mobile Theme', 42, 'Desktop Theme', theme_number) || ')'  dv,
+          label_template_id rv
+      from apex_application_temp_label
+      where application_id = :APP_ID
+      and theme_number = 42
+      order by 1
+
+- # ====== List of Values: GEOGRAPHY ===========================
+  id: 14887232264328952141
+  identification: 
+    name: GEOGRAPHY
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select GEOGRAPHY_NAME display_value, ID return_value 
+      from EBA_CUST_GEOGRAPHIES
+      order by 1
+
+- # ====== List of Values: CAT =================================
+  id: 14887235504235972832
+  identification: 
+    name: CAT
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select category d, id r
+        from EBA_CUST_CATEGORIES
+       where is_active = 'Y'
+       order by 1
+
+- # ====== List of Values: MAX ROWS ============================
+  id: 14887275822364117068
+  identification: 
+    name: MAX ROWS
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: 20 ===========================================
+    id: 14887275985993117070
+    entry: 
+      sequence: 10
+      display: 20
+      return: 20
+
+  - # ====== Entry: 50 ===========================================
+    id: 14887276323656117074
+    entry: 
+      sequence: 20
+      display: 50
+      return: 50
+
+  - # ====== Entry: 100 ==========================================
+    id: 14887276595804117074
+    entry: 
+      sequence: 30
+      display: 100
+      return: 100
+
+  - # ====== Entry: 200 ==========================================
+    id: 14887276915888117074
+    entry: 
+      sequence: 40
+      display: 200
+      return: 200
+
+  - # ====== Entry: 500 ==========================================
+    id: 14887277234387117074
+    entry: 
+      sequence: 50
+      display: 500
+      return: 500
+
+  - # ====== Entry: 1000 =========================================
+    id: 14887277494692117074
+    entry: 
+      sequence: 60
+      display: 1000
+      return: 1000
+
+  - # ====== Entry: All ==========================================
+    id: 14887277798954117074
+    entry: 
+      sequence: 70
+      display: All
+      return: 100000000
+
+- # ====== List of Values: STATUS  =============================
+  id: 14887281441510221666
+  identification: 
+    name: 'STATUS '
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select status d, id r
+      from   EBA_CUST_STATUS
+      where is_active = 'Y'
+      order by 1
+
+- # ====== List of Values: TIMEFRAME (4 WEEKS) =================
+  id: 14978609724891268970
+  identification: 
+    name: TIMEFRAME (4 WEEKS)
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select wwv_flow_lang.system_message('N_MINUTES','15') d, 
+      trim(to_char(15/(24*60),'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_MINUTES','30') d, 
+      trim(to_char(30/(24*60),'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOUR','1') d, 
+      trim(to_char(1/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_MINUTES','90') d, 
+      trim(to_char(90/(24*60),'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','2') d, 
+      trim(to_char(1/12,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,'''))  t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','3') d, 
+      trim(to_char(3/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,'''))  t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','4') d, 
+      trim(to_char(4/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,'''))  t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','5') d, 
+      trim(to_char(5/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,'''))  t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','6') d, 
+      trim(to_char(6/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','8') d, 
+      trim(to_char(8/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','10') d, 
+      trim(to_char(10/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','12') d, 
+      trim(to_char(12/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','16') d, 
+      trim(to_char(16/24,'00000.9999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_DAY','1') d, trim(to_char(1,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_DAYS','2') d, trim(to_char(2,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_DAYS','3') d, trim(to_char(3,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_DAYS','4') d, trim(to_char(4,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_DAYS','5') d, trim(to_char(5,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_WEEK','1') d, trim(to_char(7,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_WEEKS','2') d, trim(to_char(14,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_WEEKS','3') d, trim(to_char(21,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_WEEKS','4') d, trim(to_char(28,'00000.9999999999')) t from dual
+      order by 2
+
+- # ====== List of Values: LOGO SIZES ==========================
+  id: 15066596820152151948
+  identification: 
+    name: LOGO SIZES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Small ========================================
+    id: 15066597116346151950
+    entry: 
+      sequence: 1
+      display: Small
+      return: S
+
+  - # ====== Entry: Medium =======================================
+    id: 15066597519074151951
+    entry: 
+      sequence: 2
+      display: Medium
+      return: M
+
+  - # ====== Entry: Large ========================================
+    id: 15066597964534151952
+    entry: 
+      sequence: 3
+      display: Large
+      return: L
+
+- # ====== List of Values: REFERENCE_TYPES =====================
+  id: 15664327632360533036
+  identification: 
+    name: REFERENCE_TYPES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select reference_type d, id r
+      from eba_cust_reference_types
+      where is_active = 'Y'
+      order by upper(reference_type)
+
+- # ====== List of Values: DATA_LOAD_OPTION ====================
+  id: 15708909532199430404
+  identification: 
+    name: DATA_LOAD_OPTION
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Upload file, comma separated (*.csv) or tab de
+    id: 15708909817646430405
+    entry: 
+      sequence: 10
+      display: Upload file, comma separated (*.csv) or tab delimited
+      return: UPLOAD
+
+  - # ====== Entry: Copy and Paste ===============================
+    id: 15708910018706430406
+    entry: 
+      sequence: 20
+      display: Copy and Paste
+      return: PASTE
+
+- # ====== List of Values: FIRST_ROW_OPTION ====================
+  id: 15708912032683430410
+  identification: 
+    name: FIRST_ROW_OPTION
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Yes ==========================================
+    id: 15708912337024430410
+    entry: 
+      sequence: 10
+      display: Yes
+      return: Y
+
+- # ====== List of Values: ACCESS_LEVELS =======================
+  id: 15713117033540426261
+  identification: 
+    name: ACCESS_LEVELS
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select access_level d, id r
+        from eba_cust_access_levels
+       order by 1
+
+- # ====== List of Values: LOV_DATALOAD_CUSTOMERS ==============
+  id: 15822133317108919604
+  identification: 
+    name: LOV_DATALOAD_CUSTOMERS
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Category =====================================
+    id: 15822134187098919611
+    entry: 
+      sequence: 30
+      display: Category
+      return: CATEGORY_ID
+
+  - # ====== Entry: Customer Name ================================
+    id: 15822142229139919617
+    entry: 
+      sequence: 10
+      display: Customer Name
+      return: CUSTOMER_NAME
+
+  - # ====== Entry: Customer Profile =============================
+    id: 15822143457581919617
+    entry: 
+      sequence: 250
+      display: Customer Profile
+      return: CUSTOMER_PROFILE
+
+  - # ====== Entry: DUNS # =======================================
+    id: 15822144249061919618
+    entry: 
+      sequence: 210
+      display: 'DUNS #'
+      return: DUNS
+
+  - # ====== Entry: Facebook =====================================
+    id: 15822144611255919618
+    entry: 
+      sequence: 250
+      display: Facebook
+      return: FACEBOOK
+
+  - # ====== Entry: Geography ====================================
+    id: 15822144995737919618
+    entry: 
+      sequence: 40
+      display: Geography
+      return: GEOGRAPHY_ID
+
+  - # ====== Entry: Unique ID ====================================
+    id: 15822145465671919619
+    entry: 
+      sequence: 1
+      display: Unique ID
+      return: ID
+
+  - # ====== Entry: Industry =====================================
+    id: 15822145841817919619
+    entry: 
+      sequence: 50
+      display: Industry
+      return: INDUSTRY_ID
+
+  - # ====== Entry: LinkedIn =====================================
+    id: 15822146219736919621
+    entry: 
+      sequence: 240
+      display: LinkedIn
+      return: LINKEDIN
+
+  - # ====== Entry: Marque Customer Y/N ==========================
+    id: 15822146588663919621
+    entry: 
+      sequence: 80
+      display: Marque Customer Y/N
+      return: MARQUEE_CUSTOMER_YN
+
+  - # ====== Entry: Number of Users ==============================
+    id: 15822146997848919621
+    entry: 
+      sequence: 90
+      display: Number of Users
+      return: NUMBER_OF_USERS
+
+  - # ====== Entry: Referenceable Y/N ============================
+    id: 15822147454254919621
+    entry: 
+      sequence: 70
+      display: Referenceable Y/N
+      return: REFERENCABLE
+
+  - # ====== Entry: SIC ==========================================
+    id: 15822148665840919623
+    entry: 
+      sequence: 220
+      display: SIC
+      return: SIC
+
+  - # ====== Entry: Status =======================================
+    id: 15822149020056919623
+    entry: 
+      sequence: 20
+      display: Status
+      return: STATUS_ID
+
+  - # ====== Entry: Stock Symbol =================================
+    id: 15822149473085919623
+    entry: 
+      sequence: 200
+      display: Stock Symbol
+      return: STOCK_SYMBOL
+
+  - # ====== Entry: Summary ======================================
+    id: 15822149838655919624
+    entry: 
+      sequence: 100
+      display: Summary
+      return: SUMMARY
+
+  - # ====== Entry: Tags =========================================
+    id: 15822150272228919624
+    entry: 
+      sequence: 60
+      display: Tags
+      return: TAGS
+
+  - # ====== Entry: Twitter ======================================
+    id: 15822150625773919624
+    entry: 
+      sequence: 260
+      display: Twitter
+      return: TWITTER
+
+  - # ====== Entry: Web Site =====================================
+    id: 15822151828307919625
+    entry: 
+      sequence: 230
+      display: Web Site
+      return: WEB_SITE
+
+- # ====== List of Values: REFERENCE PHASE =====================
+  id: 15866666334102138100
+  identification: 
+    name: REFERENCE PHASE
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select status||' - '||description, id 
+      from EBA_CUST_REF_PHASE order by 1
+
+- # ====== List of Values: ROWS ================================
+  id: 16331696333162042757
+  identification: 
+    name: ROWS
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: 5 ============================================
+    id: 16331696644889042760
+    entry: 
+      sequence: 10
+      display: 5
+      return: 5
+
+  - # ====== Entry: 10 ===========================================
+    id: 16331696841084042763
+    entry: 
+      sequence: 20
+      display: 10
+      return: 10
+
+  - # ====== Entry: 15 ===========================================
+    id: 16331697026073042763
+    entry: 
+      sequence: 30
+      display: 15
+      return: 15
+
+  - # ====== Entry: 20 ===========================================
+    id: 16331697223836042763
+    entry: 
+      sequence: 40
+      display: 20
+      return: 20
+
+  - # ====== Entry: 50 ===========================================
+    id: 16331697440148042763
+    entry: 
+      sequence: 50
+      display: 50
+      return: 50
+
+  - # ====== Entry: 100 ==========================================
+    id: 16331697638784042763
+    entry: 
+      sequence: 60
+      display: 100
+      return: 100
+
+  - # ====== Entry: 500 ==========================================
+    id: 16331697830908042763
+    entry: 
+      sequence: 70
+      display: 500
+      return: 500
+
+- # ====== List of Values: NOTIFICATION TYPE ===================
+  id: 16369556230541848726
+  identification: 
+    name: NOTIFICATION TYPE
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Alert (Yellow) ===============================
+    id: 16369556522573848728
+    entry: 
+      sequence: 10
+      display: Alert (Yellow)
+      return: YELLOW
+
+  - # ====== Entry: Error (Red) ==================================
+    id: 16369556748203848729
+    entry: 
+      sequence: 20
+      display: Error (Red)
+      return: RED
+
+- # ====== List of Values: ACCESS CONTROL SCOPE ================
+  id: 16608300249218925811
+  identification: 
+    name: ACCESS CONTROL SCOPE
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Reader access for any authenticated user =====
+    id: 14803490427397169080
+    entry: 
+      sequence: 1
+      display: Reader access for any authenticated user
+      return: PUBLIC_READONLY
+
+  - # ====== Entry: Contributor access for any authenticated user 
+    id: 14803490740855169080
+    entry: 
+      sequence: 2
+      display: Contributor access for any authenticated user
+      return: PUBLIC_CONTRIBUTE
+
+  - # ====== Entry: Restricted to users defined in access control 
+    id: 14803491048013169080
+    entry: 
+      sequence: 3
+      display: Restricted to users defined in access control list
+      return: ACL_ONLY
+
+- # ====== List of Values: CONTACTS ============================
+  id: 16612563140439202827
+  identification: 
+    name: CONTACTS
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select name d, id r
+      from   eba_cust_contacts
+      order by 1
+
+- # ====== List of Values: CUSTOMERS ===========================
+  id: 16613396328159843505
+  identification: 
+    name: CUSTOMERS
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select customer_name d, id r 
+      from EBA_CUST_CUSTOMERS
+      order by upper(customer_name)
+
+- # ====== List of Values: AVAILABLE_PRODUCTS ==================
+  id: 16616472043017589911
+  identification: 
+    name: AVAILABLE_PRODUCTS
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select product_name d, id r
+      from   eba_cust_products
+      order by 1
+
+- # ====== List of Values: CONTACT TYPES =======================
+  id: 16617329928151280950
+  identification: 
+    name: CONTACT TYPES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select contact_type d, id r
+        from EBA_CUST_CONTACT_TYPES
+       where is_active = 'Y'
+      order by 1
+
+- # ====== List of Values: P50_PRODUCT =========================
+  id: 16617927522654126074
+  identification: 
+    name: P50_PRODUCT
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select product_name d, id r
+      from   eba_cust_products
+      where id not in (select product_id
+      from eba_cust_product_uses
+      where customer_id = :P50_ID)
+      order by 1
+
+- # ====== List of Values: P68_PRODUCT =========================
+  id: 16617944227811174826
+  identification: 
+    name: P68_PRODUCT
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select product_name d, id r
+      from   eba_cust_products
+      where id = :P68_PRODUCT_ID
+      order by 1
+
+- # ====== List of Values: COUNTRIES ===========================
+  id: 16895159926954835159
+  identification: 
+    name: COUNTRIES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select country_name as d,
+             id as r
+        from EBA_CUST_COUNTRIES
+       where display_yn = 'Y'
+       order by 1
+
+- # ====== List of Values: PRODUCTS ============================
+  id: 16953479276333261491
+  identification: 
+    name: PRODUCTS
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select product_name as d,
+             id as r
+        from EBA_CUST_PRODUCTS
+       order by 1
+
+- # ====== List of Values: TYPE ================================
+  id: 17063710972847568362
+  identification: 
+    name: TYPE
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select type d, id r
+      from   EBA_CUST_TYPE
+      where is_active = 'Y'
+      order by 1
+
+- # ====== List of Values: USE_CASE ============================
+  id: 17149970484050930458
+  identification: 
+    name: USE_CASE
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select use_case d, id r
+      from   EBA_CUST_USE_CASE
+      where is_active = 'Y'
+      order by 1
+
+- # ====== List of Values: COUNTRIES_P2 ========================
+  id: 17331302703422052798
+  identification: 
+    name: COUNTRIES_P2
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select country_name as d,
+             id as r
+        from EBA_CUST_COUNTRIES
+       where display_yn = 'Y'
+         and region_id = :P2_GEOGRAPHY_ID
+       order by 1
+
+- # ====== List of Values: COUNTRIES_P59 =======================
+  id: 17416172866442968797
+  identification: 
+    name: COUNTRIES_P59
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select country_name as d,
+             id as r
+        from EBA_CUST_COUNTRIES
+       where display_yn = 'Y'
+         and (
+                 (nvl(:P59_GEO,0) = 0 and id is not null)
+                 or
+                 (nvl(:P59_GEO,0)  > 0 and region_id = :P59_GEO)
+             )
+       order by 1
+
+- # ====== List of Values: PRODUCT FAMILIES ====================
+  id: 17785194518717014084
+  identification: 
+    name: PRODUCT FAMILIES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select name d, id r
+      from eba_cust_product_families
+      order by lower(name)
+
+- # ====== List of Values: UPLOAD_ACTION =======================
+  id: 17817550258375479342
+  identification: 
+    name: UPLOAD_ACTION
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Insert =======================================
+    id: 17817550451733479346
+    entry: 
+      sequence: 1
+      display: Insert
+      return: INSERT
+
+  - # ====== Entry: Update =======================================
+    id: 17817550639292479351
+    entry: 
+      sequence: 2
+      display: Update
+      return: UPDATE
+
+  - # ====== Entry: No Change ====================================
+    id: 17817550847025479351
+    entry: 
+      sequence: 3
+      display: No Change
+      return: NOTHING
+
+    server-side-condition: 
+      type: Current Page != Page
+      page: 35
+
+- # ====== List of Values: Report Row Per Page =================
+  id: 17822767124973123757
+  identification: 
+    name: Report Row Per Page
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: 10 ===========================================
+    id: 17822767210480123771
+    entry: 
+      sequence: 10
+      display: 10
+      return: 10
+
+  - # ====== Entry: 15 ===========================================
+    id: 17822767316140123775
+    entry: 
+      sequence: 20
+      display: 15
+      return: 15
+
+  - # ====== Entry: 20 ===========================================
+    id: 17822767409704123775
+    entry: 
+      sequence: 30
+      display: 20
+      return: 20
+
+  - # ====== Entry: 30 ===========================================
+    id: 17822767507998123775
+    entry: 
+      sequence: 40
+      display: 30
+      return: 30
+
+  - # ====== Entry: 50 ===========================================
+    id: 17822767613479123775
+    entry: 
+      sequence: 50
+      display: 50
+      return: 50
+
+  - # ====== Entry: 100 ==========================================
+    id: 17822767698112123777
+    entry: 
+      sequence: 60
+      display: 100
+      return: 100
+
+  - # ====== Entry: 200 ==========================================
+    id: 17822767808089123777
+    entry: 
+      sequence: 70
+      display: 200
+      return: 200
+
+  - # ====== Entry: 500 ==========================================
+    id: 17822767911030123777
+    entry: 
+      sequence: 80
+      display: 500
+      return: 500
+
+  - # ====== Entry: 1000 =========================================
+    id: 17822768001164123777
+    entry: 
+      sequence: 90
+      display: 1000
+      return: 1000
+
+  - # ====== Entry: 5000 =========================================
+    id: 17822768102934123777
+    entry: 
+      sequence: 100
+      display: 5000
+      return: 5000
+
+- # ====== List of Values: STATUSES ============================
+  id: 17822787821765635986
+  identification: 
+    name: STATUSES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select status d, id r
+      from   EBA_CUST_STATUS
+      order by 1
+
+- # ====== List of Values: Y_OR_N ==============================
+  id: 17824903739886134846
+  identification: 
+    name: Y_OR_N
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Yes ==========================================
+    id: 17824903948070134856
+    entry: 
+      sequence: 1
+      display: Yes
+      return: Y
+
+  - # ====== Entry: No ===========================================
+    id: 17824904158272134865
+    entry: 
+      sequence: 2
+      display: No
+      return: N
+
+- # ====== List of Values: DATA_LOAD_TAB_STATUS ================
+  id: 17825926541345090798
+  identification: 
+    name: DATA_LOAD_TAB_STATUS
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Enable =======================================
+    id: 17825926750527090805
+    entry: 
+      sequence: 1
+      display: Enable
+      return: ENABLE
+
+  - # ====== Entry: Disable ======================================
+    id: 17825926936777090811
+    entry: 
+      sequence: 2
+      display: Disable
+      return: DISABLE
+
+- # ====== List of Values: EBA_CUST_TABLES =====================
+  id: 17826295555027482648
+  identification: 
+    name: EBA_CUST_TABLES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select table_name d, table_name r
+      from   user_tables
+      where table_name like 'EBA_CUST_%'
+      order by 1
+
+- # ====== List of Values: ACTIVE_CATEGORIES_P2 ================
+  id: 17850458566424972328
+  identification: 
+    name: ACTIVE_CATEGORIES_P2
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select category d, id r
+        from EBA_CUST_CATEGORIES
+       where is_active = 'Y'
+          or ID = :P2_CATEGORY_ID
+       order by 1
+
+- # ====== List of Values: ACTIVE_CONTACT_TYPES_P20 ============
+  id: 17850458964041972328
+  identification: 
+    name: ACTIVE_CONTACT_TYPES_P20
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select contact_type d, id r
+        from EBA_CUST_CONTACT_TYPES
+       where is_active = 'Y'
+          or ID = :P20_CONTACT_TYPE_ID
+      order by 1
+
+- # ====== List of Values: ACTIVE_STATUSES_P2 ==================
+  id: 17850459151615972328
+  identification: 
+    name: ACTIVE_STATUSES_P2
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select status d, id r
+      from   EBA_CUST_STATUS
+      where is_active = 'Y'
+         or id = :P2_STATUS_ID
+      order by 1
+
+- # ====== List of Values: LINK_TYPES ==========================
+  id: 17851420409548219333
+  identification: 
+    name: LINK_TYPES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Other ========================================
+    id: 17820266870999754280
+    entry: 
+      sequence: 10
+      display: Other
+      return: OTH
+
+  - # ====== Entry: Word Document ================================
+    id: 17851420697917219346
+    entry: 
+      sequence: 5
+      display: Word Document
+      return: DOC
+
+  - # ====== Entry: PDF Document =================================
+    id: 17851420899596219346
+    entry: 
+      sequence: 3
+      display: PDF Document
+      return: PDF
+
+  - # ====== Entry: HTML Page ====================================
+    id: 17851421089547219346
+    entry: 
+      sequence: 2
+      display: HTML Page
+      return: HTM
+
+  - # ====== Entry: Excel Worksheet ==============================
+    id: 17851421290980219346
+    entry: 
+      sequence: 1
+      display: Excel Worksheet
+      return: EXL
+
+  - # ====== Entry: Text Document ================================
+    id: 17851421506252219346
+    entry: 
+      sequence: 4
+      display: Text Document
+      return: TXT
+
+- # ====== List of Values: SHOW CUSTOMER VIEWS CHECKBOX ========
+  id: 17972195397655271985
+  identification: 
+    name: SHOW CUSTOMER VIEWS CHECKBOX
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Show Customer Views ==========================
+    id: 17972195807074271989
+    entry: 
+      sequence: 10
+      display: Show Customer Views
+      return: Y
+
+- # ====== List of Values: DATE_FORMAT_OPTION ==================
+  id: 18155956785594456326
+  identification: 
+    name: DATE_FORMAT_OPTION
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Yes ==========================================
+    id: 18155957117802456329
+    entry: 
+      sequence: 10
+      display: Yes
+      return: Y
+
+- # ====== List of Values: DATA_LOAD_CHARSET ===================
+  id: 18155958395567456334
+  identification: 
+    name: DATA_LOAD_CHARSET
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Unicode UTF-16 Little Endian =================
+    id: 18155958806189456335
+    entry: 
+      sequence: 1
+      display: Unicode UTF-16 Little Endian
+      return: utf-16le
+
+  - # ====== Entry: Unicode UTF-16 Big Endian ====================
+    id: 18155959167165456335
+    entry: 
+      sequence: 1
+      display: Unicode UTF-16 Big Endian
+      return: utf-16be
+
+  - # ====== Entry: US-ASCII =====================================
+    id: 18155959551228456335
+    entry: 
+      sequence: 1
+      display: US-ASCII
+      return: us-ascii
+
+  - # ====== Entry: Arabic ISO-8859-6 ============================
+    id: 18155959952886456336
+    entry: 
+      sequence: 1
+      display: Arabic ISO-8859-6
+      return: iso-8859-6
+
+  - # ====== Entry: Arabic Windows 1256 ==========================
+    id: 18155960386254456336
+    entry: 
+      sequence: 1
+      display: Arabic Windows 1256
+      return: windows-1256
+
+  - # ====== Entry: Chinese Big5 =================================
+    id: 18155960738637456336
+    entry: 
+      sequence: 1
+      display: Chinese Big5
+      return: big5
+
+  - # ====== Entry: Chinese GBK ==================================
+    id: 18155961118528456336
+    entry: 
+      sequence: 1
+      display: Chinese GBK
+      return: gbk
+
+  - # ====== Entry: Cyrilic ISO-8859-5 ===========================
+    id: 18155961557423456337
+    entry: 
+      sequence: 1
+      display: Cyrilic ISO-8859-5
+      return: iso-8859-5
+
+  - # ====== Entry: Cyrilic KOI8-R ===============================
+    id: 18155961938894456337
+    entry: 
+      sequence: 1
+      display: Cyrilic KOI8-R
+      return: koi8-r
+
+  - # ====== Entry: Cyrilic KOI8-U ===============================
+    id: 18155962353873456337
+    entry: 
+      sequence: 1
+      display: Cyrilic KOI8-U
+      return: koi8-u
+
+  - # ====== Entry: Cyrilic Windows 1251 =========================
+    id: 18155962787216456338
+    entry: 
+      sequence: 1
+      display: Cyrilic Windows 1251
+      return: windows-1251
+
+  - # ====== Entry: Eastern European ISO-8859-2 ==================
+    id: 18155963189707456338
+    entry: 
+      sequence: 1
+      display: Eastern European ISO-8859-2
+      return: iso-8859-2
+
+  - # ====== Entry: Eastern European Windows 1250 ================
+    id: 18155963538974456338
+    entry: 
+      sequence: 1
+      display: Eastern European Windows 1250
+      return: windows-1250
+
+  - # ====== Entry: Greek ISO-8859-7 =============================
+    id: 18155963948969456338
+    entry: 
+      sequence: 1
+      display: Greek ISO-8859-7
+      return: iso-8859-7
+
+  - # ====== Entry: Greek Windows 1253 ===========================
+    id: 18155964372951456339
+    entry: 
+      sequence: 1
+      display: Greek Windows 1253
+      return: windows-1253
+
+  - # ====== Entry: Hebrew ISO-8859-8-i ==========================
+    id: 18155964738024456339
+    entry: 
+      sequence: 1
+      display: Hebrew ISO-8859-8-i
+      return: iso-8859-8-i
+
+  - # ====== Entry: Hebrew Windows 1255 ==========================
+    id: 18155965118727456339
+    entry: 
+      sequence: 1
+      display: Hebrew Windows 1255
+      return: windows-1255
+
+  - # ====== Entry: Japanese EUC =================================
+    id: 18155965589193456339
+    entry: 
+      sequence: 1
+      display: Japanese EUC
+      return: euc-jp
+
+  - # ====== Entry: Japanese Shift JIS ===========================
+    id: 18155965916596456340
+    entry: 
+      sequence: 1
+      display: Japanese Shift JIS
+      return: shift_jis
+
+  - # ====== Entry: Korean EUC ===================================
+    id: 18155966369253456340
+    entry: 
+      sequence: 1
+      display: Korean EUC
+      return: euc-kr
+
+  - # ====== Entry: Northern European ISO-8859-4 =================
+    id: 18155966801064456340
+    entry: 
+      sequence: 1
+      display: Northern European ISO-8859-4
+      return: iso-8859-4
+
+  - # ====== Entry: Northern European Windows 1257 ===============
+    id: 18155967194013456341
+    entry: 
+      sequence: 1
+      display: Northern European Windows 1257
+      return: windows-1257
+
+  - # ====== Entry: Southern European ISO-8859-3 =================
+    id: 18155967592357456341
+    entry: 
+      sequence: 1
+      display: Southern European ISO-8859-3
+      return: iso-8859-3
+
+  - # ====== Entry: Thai TIS-620 =================================
+    id: 18155967982262456342
+    entry: 
+      sequence: 1
+      display: Thai TIS-620
+      return: tis-620
+
+  - # ====== Entry: Turkish ISO-8859-9 ===========================
+    id: 18155968389394456342
+    entry: 
+      sequence: 1
+      display: Turkish ISO-8859-9
+      return: iso-8859-9
+
+  - # ====== Entry: Turkish Windows 1254 =========================
+    id: 18155968725194456343
+    entry: 
+      sequence: 1
+      display: Turkish Windows 1254
+      return: windows-1254
+
+  - # ====== Entry: Unicode UTF-8 ================================
+    id: 18155969188978456343
+    entry: 
+      sequence: 1
+      display: Unicode UTF-8
+      return: utf-8
+
+  - # ====== Entry: Vietnamese Windows 1258 ======================
+    id: 18155969528569456343
+    entry: 
+      sequence: 1
+      display: Vietnamese Windows 1258
+      return: windows-1258
+
+  - # ====== Entry: Western European ISO-8859-1 ==================
+    id: 18155969962687456343
+    entry: 
+      sequence: 1
+      display: Western European ISO-8859-1
+      return: iso-8859-1
+
+  - # ====== Entry: Western European Windows 1252 ================
+    id: 18155970396928456344
+    entry: 
+      sequence: 1
+      display: Western European Windows 1252
+      return: windows-1252
+
+- # ====== List of Values: ACTIVITY TYPES ======================
+  id: 18168389197930883482
+  identification: 
+    name: ACTIVITY TYPES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select name d, id r
+      from eba_cust_activity_types
+      order by lower(name)
+
+- # ====== List of Values: ACTIVITIES ==========================
+  id: 18168397931574887620
+  identification: 
+    name: ACTIVITIES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select name d, id r
+      from eba_cust_activities
+      order by lower(name)
+
+- # ====== List of Values: FEEDBACK TYPES ======================
+  id: 18753235739833363398
+  identification: 
+    name: FEEDBACK TYPES
+
+  subscription: 
+    version-number: 187946147
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: select feedback_type, id from eba_cust_feedback_types order by id
+
+- # ====== List of Values: FEEDBACK STATUSES ===================
+  id: 18754179514004557887
+  identification: 
+    name: FEEDBACK STATUSES
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: In Progress ==================================
+    id: 18754179829497557894
+    entry: 
+      sequence: 1
+      display: In Progress
+      return: IN_PROGRESS
+
+  - # ====== Entry: No Action ====================================
+    id: 18754180232842557897
+    entry: 
+      sequence: 2
+      display: No Action
+      return: NO_ACTION
+
+  - # ====== Entry: Open =========================================
+    id: 18754180663577557897
+    entry: 
+      sequence: 3
+      display: Open
+      return: OPEN
+
+  - # ====== Entry: Resolved =====================================
+    id: 18754181093235557898
+    entry: 
+      sequence: 4
+      display: Resolved
+      return: RESOLVED
+

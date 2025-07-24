@@ -1,0 +1,2328 @@
+---
+# ====== Page: Data Load Source ==============================
+id: 125
+identification: 
+  name: Data Load Source
+  alias: DATA-LOAD-SOURCE2
+  title: Data Load Source
+  page-group: Administration # 14742626245275273793
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+javascript: 
+  function-and-global-variable-declaration: |
+    function set_item()
+    {
+    $x('P125_COPY_PASTE').value= $v('P125_SAMPLE_DATA');
+    $x('P125_SEPARATOR').value= ',';
+    $s('P125_FIRST_ROW', 'Y');
+    }
+
+security: 
+  authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: '<p>This wizard allows the uploading of customer data into this application. Two options are provided to upload data, by uploading a comma separated file (.CSV), or to copy and paste data directly into the page.  The second step maps database column names with the uploaded data.  The third step, shows the data after lookups keys have been detected and validated.  Customer names that match are updated, new customers are added.  Statuses, types, and/or categories that do not match are not inserted or updated. They are ignored.</p> '
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 18157480296336684051
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 17862590586954210114
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Data Load Process Train =====================
+  id: 18157480847888684057
+  identification: 
+    name: Data Load Process Train
+    type: List
+
+  source: 
+    list: Data Load Process Train - Customers # 18157461269041681274
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Wizard Container
+    template-options: 
+    - '#DEFAULT#'
+    - t-Wizard--hideStepsXSmall
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Wizard Progress
+      template-options: 
+      - '#DEFAULT#'
+      - t-WizardSteps--displayLabels
+
+- # ====== Region: Data Load Source ============================
+  id: 18157481118731684057
+  identification: 
+    name: Data Load Source
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: Data Load Process Train # 18157480847888684057
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    custom-attributes: 
+    - 'style="width:100%;max-width:none;"'
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+- # ====== Region: Globalization ===============================
+  id: 18157489340543684075
+  identification: 
+    name: Globalization
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: Data Load Process Train # 18157480847888684057
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    custom-attributes: 
+    - 'style="width:100%;max-width:none;"'
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+- # ====== Region: Loading Data From Spreadsheets ==============
+  id: 18157598923235644835
+  identification: 
+    name: Loading Data From Spreadsheets
+    type: Static Content
+
+  source: 
+    html-code: |
+      <p>To load or update customer data from a spreadsheet follow the following instructions.</p> 
+      
+      
+      <ol>
+      <li>Organize data in a spreadsheet with column headings of "Customer Name", "Summary", "Category", "Status", "Type", and so forth. </li>
+      
+      <li>If you have additional attributes you want to load you can load these into custom attributes.  Simply add these columns as well and you can map them to custom attributes in the next step of the data loading wizard.</li>
+      
+      <li>Ensure the Categories and Status values match the categories defined in this application.  Administrators of this application can define categories and status values.  The current values are displayed on this page for reference.</li>
+      
+      <li>Once you have your data organized in your spreadsheet you can export the data to CSV format (recommended for larger data sets), or simply cut and paste the data (including column headings) into the text field on this page.</li>
+      
+      <li>Follow the wizard and load your data.</li>
+      </ol>
+      
+      
+      <p>Custom attribute data, data that this application does not natively track, can be loaded into custom attribute fields with character, number and date data types.  To have this data show about customers, Application administrators can define these custom attributes from the administration page.</p>
+
+  layout: 
+    sequence: 30
+    parent-region: Data Load Process Train # 18157480847888684057
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-expanded
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    css-classes: 
+    - infoTextRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Valid Customer Categories ===================
+  id: 18157606431905650142
+  identification: 
+    name: Valid Customer Categories
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select category,
+          description,
+          decode(is_active,'Y',:ACTIVE_MSG,:INACTIVE_MSG) Status
+      from eba_cust_categories
+      order by upper(category)
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 80
+    parent-region: Data Load Process Train # 18157480847888684057
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: <p>Customer categories must be one of the valid values from the list below.  Application administrators can extend this list of values from the administrative console.</p>
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 1500
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: ' - '
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: CATEGORY ====================================
+    id: 18157606726952650144
+    identification: 
+      column-name: CATEGORY
+      type: Plain Text
+
+    heading: 
+      heading: Category
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 18157607131789650146
+    identification: 
+      column-name: DESCRIPTION
+      type: Plain Text
+
+    heading: 
+      heading: Description
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 18157607524152650147
+    identification: 
+      column-name: STATUS
+      type: Plain Text
+
+    heading: 
+      heading: Status
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Loading Sample Data =========================
+  id: 18157608604588696726
+  identification: 
+    name: Loading Sample Data
+    type: Static Content
+
+  source: 
+    html-code: |
+      <p>Click the <strong>Try Sample Data</strong> button to test data loading functionality.  The sample data has 5 columns, 4 of which match the customer data structures.  The location can be used to demonstrate extensibility via flexible attributes.</p> 
+      </p>
+      
+      <table summary="sample data" class="uReport uReportStandard">
+      <thead>
+      <tr>
+      <th>Customer Name</th>
+      <th>Summary</th>
+      <th>Category</th>
+      <th>Location</th>
+      <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>Altiris</td>
+      <td>Software</td>
+      <td>Corporate</td>
+      <td>New York NY</td>
+      <td>Partner</td>
+      </tr>
+      
+      <tr>
+      <td>Cephalon</td>
+      <td>biotechnology</td>
+      <td>Corporate</td>
+      <td>San Francisco</td>
+      <td>Unknown</td>
+      </tr>
+      
+      <tr>
+      <td>Euronet Worldwide</td>
+      <td>banking software</td>
+      <td>Corporate</td>
+      <td>-</td>
+      <td>Unknown</td>
+      </tr>
+      
+      <tr>
+      <td>Illumina</td>
+      <td>biotechnology equipment</td>
+      <td>Corporate</td>
+      <td>-</td>
+      <td>Customer</td>
+      </tr>
+      </tbody>
+      </table>
+
+  layout: 
+    sequence: 50
+    parent-region: Data Load Process Train # 18157480847888684057
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Valid Customer Types  =======================
+  id: 18157611160420698541
+  identification: 
+    name: 'Valid Customer Types '
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select type,
+          description,
+          decode(is_active,'Y',:ACTIVE_MSG,:INACTIVE_MSG) status
+      from eba_cust_type
+      order by upper(type)
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 60
+    parent-region: Data Load Process Train # 18157480847888684057
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    css-classes: 
+    - infoTextRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: <p>Customer status values must be one of the valid status values listed below.  Administrators of this application can extend and modify customer status values from application administration.</p>
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: ' - '
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: DESCRIPTION =================================
+    id: 18157611424776698544
+    identification: 
+      column-name: DESCRIPTION
+      type: Plain Text
+
+    heading: 
+      heading: Description
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 18157611867054698546
+    identification: 
+      column-name: STATUS
+      type: Plain Text
+
+    heading: 
+      heading: Status
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE ========================================
+    id: 18157612282959698546
+    identification: 
+      column-name: TYPE
+      type: Plain Text
+
+    heading: 
+      heading: Type
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Valid Customer Statuses  ====================
+  id: 18157613605160699705
+  identification: 
+    name: 'Valid Customer Statuses '
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select status customer_status,
+          description,
+          decode(is_active,'Y',:ACTIVE_MSG,:INACTIVE_MSG) status
+      from eba_cust_status
+      order by upper(status)
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 70
+    parent-region: Data Load Process Train # 18157480847888684057
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    css-classes: 
+    - infoTextRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: <p>Customer status values must be one of the valid status values listed below.  Administrators of this application can extend and modify customer status values from application administration.</p>
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: ' - '
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: CUSTOMER_STATUS =============================
+    id: 18157613858714699707
+    identification: 
+      column-name: CUSTOMER_STATUS
+      type: Plain Text
+
+    heading: 
+      heading: Customer Status
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 18157614232094699707
+    identification: 
+      column-name: DESCRIPTION
+      type: Plain Text
+
+    heading: 
+      heading: Description
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 18157614617598699708
+    identification: 
+      column-name: STATUS
+      type: Plain Text
+
+    heading: 
+      heading: Status
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P125_IMPORT_FROM =========================
+  id: 18157482427794684061
+  identification: 
+    name: P125_IMPORT_FROM
+    type: Radio Group
+
+  label: 
+    label: Import From
+    alignment: Left
+
+  settings: 
+    number-of-columns: 1
+    page-action-on-selection: None
+
+  layout: 
+    sequence: 30
+    region: Data Load Source # 18157481118731684057
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: DATA_LOAD_OPTION # 15708909532199430404
+    display-extra-values: true
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: PASTE
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P125_FILE_NAME ===========================
+  id: 18157482740314684063
+  identification: 
+    name: P125_FILE_NAME
+    type: File Upload
+
+  label: 
+    label: File Name
+    alignment: Left
+
+  display: 
+    display-as: Inline File Browse
+    capture-using: NONE
+
+  storage:: 
+    type: Table APEX_APPLICATION_TEMP_FILES
+    purge-file-at: End of Request
+    allow-multiple-files: false
+
+  layout: 
+    sequence: 40
+    region: Data Load Source # 18157481118731684057
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: Name of the file to upload
+
+- # ====== Page Item: P125_SEPARATOR ===========================
+  id: 18157484128737684065
+  identification: 
+    name: P125_SEPARATOR
+    type: Text Field
+
+  label: 
+    label: Separator
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 50
+    region: Data Load Source # 18157481118731684057
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required
+    template-options: 
+    - '#DEFAULT#'
+    width: 2
+
+  validation: 
+    value-required: true
+    maximum-length: 2
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: \t
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: Identify a column separator character. Use <code>\t</code> for tab separators.
+
+- # ====== Page Item: P125_ENCLOSED_BY =========================
+  id: 18157485084417684068
+  identification: 
+    name: P125_ENCLOSED_BY
+    type: Text Field
+
+  label: 
+    label: Optionally Enclosed By
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 60
+    region: Data Load Source # 18157481118731684057
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 2
+
+  validation: 
+    value-required: false
+    maximum-length: 2
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: '"'
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: Enter a delimiter character. You can use this character to delineate the starting and ending boundary of a data value. If you specify a delimiter character, Data Workshop ignores whitespace occurring before the starting and ending boundary of a data value. You can also use this option to enclose a data value with the specified delimiter character.
+
+- # ====== Page Item: P125_FIRST_ROW ===========================
+  id: 18157485988077684069
+  identification: 
+    name: P125_FIRST_ROW
+    type: Checkbox Group
+
+  label: 
+    label: First Row has Column Names
+    alignment: Left
+
+  settings: 
+    number-of-columns: 1
+
+  multiple-values: 
+    type: Delimited List
+    separator: ':'
+
+  layout: 
+    sequence: 70
+    region: Data Load Source # 18157481118731684057
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: FIRST_ROW_OPTION # 15708912032683430410
+    display-extra-values: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: Y
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: Select this box if your data contains column names in the first row.
+
+- # ====== Page Item: P125_APP_DATE_FORMAT =====================
+  id: 18157486883271684070
+  identification: 
+    name: P125_APP_DATE_FORMAT
+    type: Checkbox Group
+
+  label: 
+    label: Use Application Date Format
+    alignment: Left
+
+  settings: 
+    number-of-columns: 1
+
+  multiple-values: 
+    type: Delimited List
+    separator: ':'
+
+  layout: 
+    sequence: 80
+    region: Data Load Source # 18157481118731684057
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: DATE_FORMAT_OPTION # 18155956785594456326
+    display-extra-values: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: Y
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: Select this box if you would like to use the application Date/Timestamp formats during your data loading.
+
+- # ====== Page Item: P125_CHAR_SET ============================
+  id: 18157487723386684072
+  identification: 
+    name: P125_CHAR_SET
+    type: Select List
+
+  label: 
+    label: File Character Set
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 90
+    region: Data Load Source # 18157481118731684057
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: DATA_LOAD_CHARSET # 18155958395567456334
+    display-extra-values: true
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: UTF-8
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: DATA_LOAD.CHAR_SET_ITEM_HELP
+
+- # ====== Page Item: P125_COPY_PASTE ==========================
+  id: 18157488993341684073
+  identification: 
+    name: P125_COPY_PASTE
+    type: Textarea
+
+  label: 
+    label: Copy and Paste Delimited Data
+    alignment: Left
+
+  settings: 
+    resizable: true
+    auto-height: false
+    character-counter: false
+    trim-spaces: None
+
+  layout: 
+    sequence: 110
+    region: Data Load Source # 18157481118731684057
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required
+    template-options: 
+    - '#DEFAULT#'
+    width: 80
+    height: 10
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P125_CURRENCY ============================
+  id: 18157489814810684075
+  identification: 
+    name: P125_CURRENCY
+    type: Text Field
+
+  label: 
+    label: Currency Symbol
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: Globalization # 18157489340543684075
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 2
+
+  validation: 
+    value-required: false
+    maximum-length: 2
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: |
+      select value
+        from nls_session_parameters
+       where parameter = 'NLS_CURRENCY'
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: $
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: If your data contains international currency symbol, enter it here. For example, if your data has "&euro;1,234.56" or "&yen;1,234.56", enter "&euro;" or "&yen;".  Otherwise the data will not load correctly.
+
+- # ====== Page Item: P125_GROUP_SEPARATOR =====================
+  id: 18157490767825684076
+  identification: 
+    name: P125_GROUP_SEPARATOR
+    type: Text Field
+
+  label: 
+    label: Group Separator
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: Globalization # 18157489340543684075
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 2
+
+  validation: 
+    value-required: false
+    maximum-length: 2
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: apex_application.get_nls_group_separator
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: |
+      <p>A group separator is a character that separates integer groups, for example to show thousands and millions.</p>
+      <p>Any character can be the group separator. The character specified must be single-byte, and the group separator must be different from any other decimal character. The character can be a space, but cannot be a numeric character or any of the following:</p>
+      <ul class="noIndent">
+      <li>plus (+)</li>
+      <li>hyphen (-)</li> 
+      <li>less than sign (<)</li>
+      <li>greater than sign (>)</li> 
+      </ul>
+
+- # ====== Page Item: P125_DECIMAL_CHARACTER ===================
+  id: 18157491649684684077
+  identification: 
+    name: P125_DECIMAL_CHARACTER
+    type: Text Field
+
+  label: 
+    label: Decimal Character
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 30
+    region: Globalization # 18157489340543684075
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 2
+
+  validation: 
+    value-required: false
+    maximum-length: 2
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: apex_application.get_nls_decimal_separator
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: |
+      <p>The decimal character separates the integer and decimal parts of a number.</p>
+      <p> Any character can be the decimal character. The character specified must be single-byte, and the decimal character must be different from group separator. The character can be a space, but cannot be any numeric character or any of the following characters:</p>
+      <ul class="noIndent">
+      <li>plus (+)</li>
+      <li>hyphen (-)</li> 
+      <li>less than sign (<)</li>
+      <li>greater than sign (>)</li> 
+      </ul>
+
+- # ====== Page Item: P125_SAMPLE_DATA =========================
+  id: 18157608860372696729
+  identification: 
+    name: P125_SAMPLE_DATA
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 110
+    region: Loading Sample Data # 18157608604588696726
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: |
+      "Customer Name","Summary","Category ID","Location","Type ID" 
+      "Customer 1","Software.","Corporate","New York NY","Partner" 
+      "Customer 2","biotechnology.","Corporate","San Francisco","Unknown" 
+      "Euronet Worldwide","banking software.","Corporate","-","Unknown" 
+      "Customer 3","biotechnology equipment","Corporate","-","Customer"
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P125_ORIG_COPY_PASTE =====================
+  id: 18168038797773793785
+  identification: 
+    name: P125_ORIG_COPY_PASTE
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: Data Load Source # 18157481118731684057
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 18157481566789684058
+  identification: 
+    button-name: CANCEL
+    label: Cancel
+
+  layout: 
+    sequence: 20
+    region: Data Load Process Train # 18157480847888684057
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:12:&SESSION.::&DEBUG.'
+      page: 12 # Administration
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: NEXT ========================================
+  id: 18157481992787684060
+  identification: 
+    button-name: NEXT
+    label: Next
+
+  layout: 
+    sequence: 10
+    region: Data Load Process Train # 18157480847888684057
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    - t-Button--iconRight
+    icon: fa-chevron-right
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: TRY_SAMPLE_DATA =============================
+  id: 18157677074852721536
+  identification: 
+    button-name: TRY_SAMPLE_DATA
+    label: Try Sample Data
+
+  layout: 
+    sequence: 30
+    region: Breadcrumb # 18157480296336684051
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+
+  behavior: 
+    action: Redirect to URL
+    target: 'javascript:set_item();'
+    execute-validations: true
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Import From Copy and Paste ==========
+  id: 18157492478680684077
+  identification: 
+    name: Import From Copy and Paste
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P125_IMPORT_FROM
+
+  client-side-condition: 
+    type: Item = Value
+    item: P125_IMPORT_FROM
+    value: PASTE
+
+  actions: 
+  - # ====== Action: Show ========================================
+    id: 18157492968227684078
+    identification: 
+      action: Show
+
+    settings: 
+      show-all-on-the-same-line: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P125_COPY_PASTE
+
+    execution: 
+      sequence: 30
+      event: Import From Copy and Paste # 18157492478680684077
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Hide ========================================
+    id: 18157493466579684079
+    identification: 
+      action: Hide
+
+    settings: 
+      hide-all-page-items-on-the-same-line: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P125_COPY_PASTE
+
+    execution: 
+      sequence: 20
+      event: Import From Copy and Paste # 18157492478680684077
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: Import from File ====================
+  id: 18157493889989684079
+  identification: 
+    name: Import from File
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P125_IMPORT_FROM
+
+  client-side-condition: 
+    type: Item = Value
+    item: P125_IMPORT_FROM
+    value: UPLOAD
+
+  actions: 
+  - # ====== Action: Show ========================================
+    id: 18157494317370684080
+    identification: 
+      action: Show
+
+    settings: 
+      show-all-on-the-same-line: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P125_FILE_NAME
+
+    execution: 
+      sequence: 30
+      event: Import from File # 18157493889989684079
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Hide ========================================
+    id: 18157494873986684081
+    identification: 
+      action: Hide
+
+    settings: 
+      hide-all-page-items-on-the-same-line: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P125_FILE_NAME
+
+    execution: 
+      sequence: 20
+      event: Import from File # 18157493889989684079
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+  - # ====== Action: Show ========================================
+    id: 18168040301807793800
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Region
+      region: Loading Data From Spreadsheets # 18157598923235644835
+
+    execution: 
+      sequence: 40
+      event: Import from File # 18157493889989684079
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Hide ========================================
+    id: 18168040337025793801
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Region
+      region: Loading Data From Spreadsheets # 18157598923235644835
+
+    execution: 
+      sequence: 30
+      event: Import from File # 18157493889989684079
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: Set copy and paste textarea with samp
+  id: 18167871395670734589
+  identification: 
+    name: Set copy and paste textarea with sample data
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: TRY_SAMPLE_DATA # 18157677074852721536
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 18167871768849734592
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: '&P125_SAMPLE_DATA.'
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P125_COPY_PASTE
+
+    execution: 
+      sequence: 20
+      event: Set copy and paste textarea with sample data # 18167871395670734589
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 18167872294585734593
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: Y
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P125_FIRST_ROW
+
+    execution: 
+      sequence: 50
+      event: Set copy and paste textarea with sample data # 18167871395670734589
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 18167872721656734594
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: null;
+      items-to-submit: 
+      - P125_COPY_PASTE
+
+    execution: 
+      sequence: 30
+      event: Set copy and paste textarea with sample data # 18167871395670734589
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 18167873216520734594
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: PASTE
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P125_IMPORT_FROM
+
+    execution: 
+      sequence: 10
+      event: Set copy and paste textarea with sample data # 18167871395670734589
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 18167873744528734594
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: ','
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P125_SEPARATOR
+
+    execution: 
+      sequence: 40
+      event: Set copy and paste textarea with sample data # 18167871395670734589
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: set orig copy paste value and submit 
+  id: 18168038902764793786
+  identification: 
+    name: set orig copy paste value and submit
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: NEXT # 18157481992787684060
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 18168038969274793787
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: JavaScript Expression
+      javascript-expression: $v('P125_COPY_PASTE')
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P125_ORIG_COPY_PASTE
+
+    execution: 
+      sequence: 10
+      event: set orig copy paste value and submit # 18168038902764793786
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 18168039078391793788
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: null;
+      items-to-submit: 
+      - P125_ORIG_COPY_PASTE
+
+    execution: 
+      sequence: 20
+      event: set orig copy paste value and submit # 18168038902764793786
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 18168039125596793789
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: apex.widget.textareaClob.upload('P125_COPY_PASTE', 'NEXT');
+
+    execution: 
+      sequence: 30
+      event: set orig copy paste value and submit # 18168038902764793786
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Set Import From =====================
+  id: 18168040452345793802
+  identification: 
+    name: Set Import From
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: $('li.htmldbStdErr').html() && $('li.htmldbStdErr').html().substr(0, 30) == 'File Name must have some value'
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 18168040509162793803
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: UPLOAD
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P125_IMPORT_FROM
+
+    execution: 
+      sequence: 10
+      event: Set Import From # 18168040452345793802
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+validations: 
+- # ====== Validation: Paste cannot be Null ====================
+  id: 17945101408107265924
+  identification: 
+    name: Paste cannot be Null
+
+  execution: 
+    sequence: 20
+
+  validation: 
+    type: Item is NOT NULL
+    item: P125_ORIG_COPY_PASTE
+    always-execute: false
+
+  error: 
+    error-message: '#LABEL# must have some value.'
+    display-location: Inline with Field and in Notification
+    associated-item: P125_COPY_PASTE # 18157488993341684073
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 18157481992787684060
+    type: Item = Value
+    item: P125_IMPORT_FROM
+    value: PASTE
+
+- # ====== Validation: Filename is not null ====================
+  id: 18157483734397684064
+  identification: 
+    name: Filename is not null
+
+  execution: 
+    sequence: 10
+
+  validation: 
+    type: Item is NOT NULL
+    item: P125_FILE_NAME
+    always-execute: false
+
+  error: 
+    error-message: '#LABEL# must have some value.'
+    display-location: Inline with Field and in Notification
+    associated-item: P125_FILE_NAME # 18157482740314684063
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 18157481992787684060
+    type: Item = Value
+    item: P125_IMPORT_FROM
+    value: UPLOAD
+
+computations: 
+- # ====== Computation: P125_IMPORT_FROM =======================
+  id: 18168040085706793798
+  identification: 
+    item-name: P125_IMPORT_FROM
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: "nvl(:P125_LAST_IMPORT_FROM,'PASTE')"
+
+processes: 
+- # ====== Process: Parse Uploaded Data ========================
+  id: 18157495350703684081
+  identification: 
+    name: Parse Uploaded Data
+    type: Parse Uploaded Data [Legacy]
+    execution-chain: None
+
+  settings: 
+    data-load-definition: Customers # 18157457502862681265
+    import-from-item: P125_IMPORT_FROM
+    separator-item: P125_SEPARATOR
+    enclosed-by-item: P125_ENCLOSED_BY
+    first-row-item: P125_FIRST_ROW
+    currency-symbol-item: P125_CURRENCY
+    group-separator-item: P125_GROUP_SEPARATOR
+    decimal-character-item: P125_DECIMAL_CHARACTER
+    file-name-item: P125_FILE_NAME
+    copy-and-paste-item: P125_COPY_PASTE
+    character-set-item: P125_CHAR_SET
+    date-format-item: P125_APP_DATE_FORMAT
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 18157481992787684060
+
+branches: 
+- # ====== Branch: Go To Page 126 ==============================
+  id: 18157495780152684082
+  identification: 
+    name: Go To Page 126
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:126:&SESSION.&success_msg=#SUCCESS_MSG#'
+      page: 126
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 18157481992787684060
+

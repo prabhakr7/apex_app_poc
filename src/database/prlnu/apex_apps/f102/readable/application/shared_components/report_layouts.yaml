@@ -1,0 +1,13 @@
+---
+- # ====== Report Layout: Customer_Report ======================
+  id: 17850607501416419111
+  identification: 
+    name: Customer_Report
+    type: Named Columns (RTF)
+
+  advanced: 
+    static-id: CUSTOMER_REPORT
+
+  subscription: 
+    version-number: 37166093824750
+

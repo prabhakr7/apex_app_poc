@@ -1,0 +1,761 @@
+---
+# ====== Page: User Details ==================================
+id: 58
+identification: 
+  name: User Details
+  alias: USER_DETAILS
+  title: User Details
+  page-group: ACL # 14742626346660274172
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  chained: false
+  resizable: false
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: First item on page
+  warn-on-unsaved-changes: false
+
+javascript: 
+  function-and-global-variable-declaration: var htmldb_delete_message='"DELETE_CONFIRM_MSG"';
+
+read-only: 
+  type: Expression
+  language: PL/SQL
+  pl/sql-expression: 'upper(:P58_USERNAME) = upper(:APP_USER)'
+
+security: 
+  authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: <p>When Access Control is enabled, Administrators have the ability to restrict access to certain application features, for authenticated users. Customers supports the following 3 access levels; Reader, Contributor and Administrator. <b>Reader's</b> have read-only access and can also view reports. <b>Contributor's</b> can create, edit, delete and view reports. <b>Administrator's</b>, in addition to Contributor's capability, can also perform Customers administration, including configuration of access control, managing application look-up data and installing or uninstalling sample data.</p>
+
+regions: 
+- # ====== Region: Buttons =====================================
+  id: 1678619791780744955
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Form Items ==================================
+  id: 14895597234164025119
+  identification: 
+    name: Form Items
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: User Details # 15851558444494090700
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: User Details ================================
+  id: 15851558444494090700
+  identification: 
+    name: User Details
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noBorder
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P58_ID ===================================
+  id: 15851559825503090706
+  identification: 
+    name: P58_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Form Items # 14895597234164025119
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: ID
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P58_USERNAME =============================
+  id: 15851560041271090714
+  identification: 
+    name: P58_USERNAME
+    type: Text Field
+
+  label: 
+    label: Username
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: Form Items # 14895597234164025119
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 64
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: USERNAME
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: The username for this particular user.
+
+- # ====== Page Item: P58_ACCESS_LEVEL_ID ======================
+  id: 15851560425393090716
+  identification: 
+    name: P58_ACCESS_LEVEL_ID
+    type: Radio Group
+
+  label: 
+    label: Access Level
+    alignment: Left
+
+  settings: 
+    number-of-columns: 3
+    page-action-on-selection: None
+
+  layout: 
+    sequence: 30
+    region: Form Items # 14895597234164025119
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--radioButtonGroup
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: ACCESS_LEVELS # 15713117033540426261
+    display-extra-values: true
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: ACCESS_LEVEL_ID
+    used: Always, replacing any existing value in session state
+
+  default: 
+    type: Static
+    static-value: 2
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+  help: 
+    help-text: There are three access levels (Administrator, Contributor, Reader).
+
+- # ====== Page Item: P58_ACCOUNT_LOCKED =======================
+  id: 16000266928748255486
+  identification: 
+    name: P58_ACCOUNT_LOCKED
+    type: Switch
+
+  label: 
+    label: Account Locked
+    alignment: Left
+
+  settings: 
+    use-defaults: true
+
+  layout: 
+    sequence: 40
+    region: Form Items # 14895597234164025119
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: ACCOUNT_LOCKED
+    used: Always, replacing any existing value in session state
+
+  default: 
+    type: Static
+    static-value: N
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P58_ID
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CREATE ======================================
+  id: 15851558626905090702
+  identification: 
+    button-name: CREATE
+    label: Add User
+
+  layout: 
+    sequence: 40
+    region: Buttons # 1678619791780744955
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--gapLeft
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL INSERT action
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P58_ID
+
+- # ====== Button: SAVE ========================================
+  id: 15851558747755090702
+  identification: 
+    button-name: SAVE
+    label: Apply Changes
+
+  layout: 
+    sequence: 50
+    region: Buttons # 1678619791780744955
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--gapLeft
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select 'show' d
+      from dual
+      where :P58_ID is not null
+          and not exists (
+              select null
+              from eba_cust_users
+              where upper(username) = :APP_USER
+                  and id = :P58_ID )
+
+- # ====== Button: DELETE ======================================
+  id: 15851558836148090702
+  identification: 
+    button-name: DELETE
+    label: Delete
+
+  layout: 
+    sequence: 20
+    region: Buttons # 1678619791780744955
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+    - t-Button--simple
+
+  behavior: 
+    action: Redirect to URL
+    target: "javascript:apex.confirm(htmldb_delete_message,'DELETE');"
+    execute-validations: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select 'show' d
+      from dual
+      where :P58_ID is not null
+          and not exists (
+              select null
+              from eba_cust_users
+              where upper(username) = :APP_USER
+                  and id = :P58_ID )
+
+- # ====== Button: CANCEL ======================================
+  id: 15851559024751090703
+  identification: 
+    button-name: CANCEL
+    label: Cancel
+
+  layout: 
+    sequence: 10
+    region: Buttons # 1678619791780744955
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: CREATE_AGAIN ================================
+  id: 16026577839076141063
+  identification: 
+    button-name: CREATE_AGAIN
+    label: Add and Add Another
+
+  layout: 
+    sequence: 30
+    region: Buttons # 1678619791780744955
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P58_ID
+
+dynamic-actions: 
+- # ====== Dynamic Action: Cancel Dialog =======================
+  id: 1678619586117744953
+  identification: 
+    name: Cancel Dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 15851559024751090703
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 1678619882260744956
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: Cancel Dialog # 1678619586117744953
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+validations: 
+- # ====== Validation: P58_USERNAME Email Username is valid ====
+  id: 14938161028614284635
+  identification: 
+    name: P58_USERNAME Email Username is valid
+
+  execution: 
+    sequence: 40
+
+  validation: 
+    type: Item matches Regular Expression
+    item: P58_USERNAME
+    regular-expression: ^[-!#$%&''''*+/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&''''*+/0-9=?A-Z^_a-z{|}~])*@(-?[a-zA-Z0-9+])+(\.(-?[a-zA-Z0-9+])*)+$
+    always-execute: false
+
+  error: 
+    error-message: Username is not in a valid email address format. Please note the application's username format below.
+    display-location: Inline with Field and in Notification
+    associated-item: P58_USERNAME # 15851560041271090714
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: eba_cust_fw.get_preference_value ('USERNAME_FORMAT') = 'EMAIL'
+
+- # ====== Validation: cannot update yourself ==================
+  id: 16623982543649447603
+  identification: 
+    name: cannot update yourself
+
+  execution: 
+    sequence: 30
+
+  validation: 
+    type: No Rows returned
+    sql-query: |
+      select 1
+        from eba_cust_users
+       where upper(username) = :APP_USER
+         and id = :P58_ID
+    always-execute: false
+
+  error: 
+    error-message: You cannot update your own record.
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: SAVE # 15851558747755090702
+
+computations: 
+- # ====== Computation: P58_USERNAME ===========================
+  id: 14803430137680094805
+  identification: 
+    item-name: P58_USERNAME
+
+  execution: 
+    sequence: 10
+    point: After Submit
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: 'trim(:P58_USERNAME)'
+
+- # ====== Computation: LAST_VIEW ==============================
+  id: 14938159728423254327
+  identification: 
+    item-name: LAST_VIEW
+
+  execution: 
+    sequence: 20
+    point: Before Header
+
+  computation: 
+    type: Static Value
+    static-value: '&APP_PAGE_ID.'
+
+processes: 
+- # ====== Process: Close Dialog ===============================
+  id: 1678619508285744952
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: false
+
+  execution: 
+    sequence: 40
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request != Value
+    value: CREATE_AGAIN
+
+- # ====== Process: Fetch Row from EBA_CUST_USERS ==============
+  id: 15851562434355090723
+  identification: 
+    name: Fetch Row from EBA_CUST_USERS
+    type: Automatic Row Fetch [Legacy]
+    execution-chain: None
+
+  settings: 
+    table-owner: PARSING SCHEMA
+    table-name: EBA_CUST_USERS
+    primary-key-column-: ID
+    primary-key-item: P58_ID
+    row-version-column: ROW_VERSION
+
+  execution: 
+    sequence: 10
+    point: After Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process Row of EBA_CUST_USERS ==============
+  id: 15851562627316090724
+  identification: 
+    name: Process Row of EBA_CUST_USERS
+    type: Automatic Row Processing (DML) [Legacy]
+    execution-chain: None
+
+  settings: 
+    table-owner: PARSING SCHEMA
+    table-name: EBA_CUST_USERS
+    primary-key-column-: ID
+    primary-key-item: P58_ID
+    row-version-column: ROW_VERSION
+    lock-row: true
+    supported-operations: 'I:U:D'
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Action Processed.
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: reset page =================================
+  id: 15851562834880090724
+  identification: 
+    name: reset page
+    type: Clear Session State
+    execution-chain: None
+
+  settings: 
+    type: Clear all Items on the Current Page
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: DELETE # 15851558836148090702
+

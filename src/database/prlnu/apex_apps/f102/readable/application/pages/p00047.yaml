@@ -1,0 +1,775 @@
+---
+# ====== Page: Customer Updates ==============================
+id: 47
+identification: 
+  name: Customer Updates
+  alias: CUSTOMER-UPDATES
+  title: Customer Updates
+  page-group: Customers # 14742626823242276921
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 16446198249211927110
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 17862590586954210114
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Updates =====================================
+  id: 16621805349038107709
+  identification: 
+    name: Updates
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+              '' class, --use grayComment for gray look
+              'Note' note_type,
+              replace(apex_escape.html(dbms_lob.substr(n.note,2000,1)),chr(10),'<br />') comment_text,
+              decode(c.name,null,'',' <strong>['||apex_escape.html(c.name)||']</strong>') attribute_1,
+              '' attribute_2,
+              '' attribute_3,
+              '' attribute_4,
+              lower(n.created_by) user_name,
+              substr(n.created_by,0,2) user_icon,
+              'u-color-'|| (ora_hash(n.created_by,44) + 1) icon_modifier,
+              apex_util.get_since(NVL(n.note_date, nvl(n.updated, n.created))) ||' - '||to_char(NVL(n.note_date, nvl(n.updated, n.created)),'Day DD-MON-YYYY HH24:MI') comment_date,
+              'Edit' as link,
+              '' as actions,
+              n.created,
+              n.id note_id
+      from EBA_CUST_NOTES n
+      ,    EBA_CUST_CONTACTS c
+      where n.CUSTOMER_ID = :P47_ID 
+      and   n.contact_id = c.id (+)
+      union all
+      select
+              'grayComment' class, --use grayComment for gray look
+              'Update' note_type,
+              initcap(replace(replace(COLUMN_NAME,'_ID',null),'_',' ')) comment_text,
+              ' changed from "'||apex_escape.html(OLD_VALUE)||'"' attribute_1,
+              ' to "'||new_value||'"' attribute_2,
+              ' ' attribute_3,
+              ' ' attribute_4,
+              lower(changed_by) user_name,
+              substr(changed_by,0,2) user_icon,
+              'u-color-'|| (ora_hash(changed_by,44) + 1) icon_modifier,
+              apex_util.get_since(CHANGE_DATE)||' - '||to_char(CHANGE_DATE,'Day DD-MON-YYYY HH24:MI') comment_date,
+              ' ' as link,
+              ' ' as actions,
+              change_date as created,
+              null note_id
+      from EBA_CUST_HISTORY f
+      where component_id = :P47_ID
+          and table_name = 'CUSTOMERS'
+      union all
+      select
+              'grayComment' class, --use grayComment for gray look
+              'Product Update' note_type,
+              initcap(replace(replace(COLUMN_NAME,'_ID',null),'_',' ')) comment_text,
+              ' changed from "'||apex_escape.html(OLD_VALUE)||'"' attribute_1,
+              ' to "'||new_value||'"' attribute_2,
+              ' ' attribute_3,
+              ' ' attribute_4,
+              lower(changed_by) user_name,
+              substr(changed_by,0,2) user_icon,
+              'u-color-'|| (ora_hash(changed_by,44) + 1) icon_modifier,
+              apex_util.get_since(CHANGE_DATE)||' - '||to_char(CHANGE_DATE,'Day DD-MON-YYYY HH24:MI') comment_date,
+              ' ' as link,
+              ' ' as actions,
+              change_date as created,
+              null note_id
+      from EBA_CUST_HISTORY f
+      where component_id = :P47_ID
+          and table_name = 'PRODUCT_USES'
+      union all
+      select
+              'grayComment' class, --use grayComment for gray look
+              'Contact Update' note_type,
+              decode(sign(eba_cust.get_authorization_level(:APP_USER)-1),
+                  1, '<a href="'||apex_util.prepare_url('f?p='||:APP_ID||':37:'||:APP_SESSION||'::NO::P37_ID:'||cc.id)
+                      ||'">'||apex_escape.html(cc.name)||'</a>',
+                  apex_escape.html(cc.name))
+                  ||' '||initcap(replace(replace(f.COLUMN_NAME,'_ID',null),'_',' ')) comment_text,
+              ' changed from "'||apex_escape.html(f.OLD_VALUE)||'"' attribute_1,
+              ' to "'||f.new_value||'"' attribute_2,
+              ' ' attribute_3,
+              ' ' attribute_4,
+              lower(f.changed_by) user_name,
+              substr(f.changed_by,0,2) user_icon,
+              'u-color-'|| (ora_hash(f.changed_by,44) + 1) icon_modifier,
+              apex_util.get_since(f.CHANGE_DATE)||' - '||to_char(f.CHANGE_DATE,'Day DD-MON-YYYY HH24:MI') comment_date,
+              ' ' as link,
+              ' ' as actions,
+              f.change_date as created,
+              null as note_id
+      from EBA_CUST_HISTORY f,
+          eba_cust_contacts cc
+      where f.component_id = cc.id
+          and cc.customer_id = :P47_ID
+          and table_name = 'CONTACTS'
+      order by 11 desc
+    page-items-to-submit: 
+    - P47_ID
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 25
+
+    appearance: 
+      template-type: Theme
+      template: Comments
+      template-options: 
+      - '#DEFAULT#'
+      - t-Comments--chat
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: No updates found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Column Names
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: COMMENT_TEXT ================================
+    id: 13549250257920666214
+    identification: 
+      column-name: COMMENT_TEXT
+      type: Plain Text
+
+    heading: 
+      heading: Comment Text
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: USER_NAME ===================================
+    id: 13549250346775666215
+    identification: 
+      column-name: USER_NAME
+      type: Plain Text
+
+    heading: 
+      heading: User Name
+      alignment: start
+
+    layout: 
+      sequence: 11
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: USER_ICON ===================================
+    id: 13549250442655666216
+    identification: 
+      column-name: USER_ICON
+      type: Plain Text
+
+    heading: 
+      heading: User Icon
+      alignment: start
+
+    layout: 
+      sequence: 12
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_MODIFIER ===============================
+    id: 13549250573665666217
+    identification: 
+      column-name: ICON_MODIFIER
+      type: Plain Text
+
+    heading: 
+      heading: Icon Modifier
+      alignment: start
+
+    layout: 
+      sequence: 13
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COMMENT_DATE ================================
+    id: 13549250630578666218
+    identification: 
+      column-name: COMMENT_DATE
+      type: Plain Text
+
+    heading: 
+      heading: Comment Date
+      alignment: start
+
+    layout: 
+      sequence: 14
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ACTIONS =====================================
+    id: 13549250795285666219
+    identification: 
+      column-name: ACTIONS
+      type: Plain Text
+
+    heading: 
+      heading: Actions
+      alignment: start
+
+    layout: 
+      sequence: 15
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLASS =======================================
+    id: 16621805633683107719
+    identification: 
+      column-name: CLASS
+      type: Plain Text
+
+    heading: 
+      heading: Class
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NOTE_TYPE ===================================
+    id: 16621805722654107719
+    identification: 
+      column-name: NOTE_TYPE
+      type: Plain Text
+
+    heading: 
+      heading: Note Type
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ATTRIBUTE_1 =================================
+    id: 16621805947540107719
+    identification: 
+      column-name: ATTRIBUTE_1
+      type: Hidden
+
+    layout: 
+      sequence: 3
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: ATTRIBUTE_2 =================================
+    id: 16621806025611107719
+    identification: 
+      column-name: ATTRIBUTE_2
+      type: Hidden
+
+    layout: 
+      sequence: 4
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ATTRIBUTE_3 =================================
+    id: 16621806129409107719
+    identification: 
+      column-name: ATTRIBUTE_3
+      type: Hidden
+
+    layout: 
+      sequence: 5
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ATTRIBUTE_4 =================================
+    id: 16621806234222107720
+    identification: 
+      column-name: ATTRIBUTE_4
+      type: Hidden
+
+    layout: 
+      sequence: 6
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CREATED =====================================
+    id: 16621806647203107720
+    identification: 
+      column-name: CREATED
+      type: Plain Text
+
+    heading: 
+      heading: Created
+      alignment: start
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK ========================================
+    id: 16642410121120313635
+    identification: 
+      column-name: LINK
+      type: Link
+
+    heading: 
+      heading: Link
+      alignment: start
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:7:&SESSION.:CUST_NOTE:&DEBUG.:7:P7_ID:#NOTE_ID#'
+        page: 7 # Maintain Update
+        request: CUST_NOTE
+        clear-cache: 7
+        values: 
+          p7_id: '#NOTE_ID#'
+
+      link-text: '#LINK#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Expression
+      language: PL/SQL
+      pl/sql-expression: "'#NOTE_ID#' is not null"
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+      escape-special-characters: true
+
+  - # ====== Column: NOTE_ID =====================================
+    id: 16656580821916772427
+    identification: 
+      column-name: NOTE_ID
+      type: Hidden
+
+    layout: 
+      sequence: 9
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P47_ID ===================================
+  id: 16760707746704769536
+  identification: 
+    name: P47_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Updates # 16621805349038107709
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: POPNOTE =====================================
+  id: 16656579941609749726
+  identification: 
+    button-name: POPNOTE
+    label: Add Update
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 16446198249211927110
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:97:&SESSION.::&DEBUG.:RP,97:P97_CUSTOMER_ID:&P47_ID.'
+      page: 97 # Update
+      clear-cache: RP,97
+      values: 
+        p97_customer_id: '&P47_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+dynamic-actions: 
+- # ====== Dynamic Action: Refresh IRR on Close ================
+  id: 13549250828287666220
+  identification: 
+    name: Refresh IRR on Close
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: POPNOTE # 16656579941609749726
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 13549250916458666221
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Updates # 16621805349038107709
+
+    execution: 
+      sequence: 10
+      event: Refresh IRR on Close # 13549250828287666220
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

@@ -1,0 +1,881 @@
+---
+- # ====== Text Message: BAU_STRING_INSTRUCTIONS ===============
+  id: 14808692436933076845
+  identification: 
+    name: BAU_STRING_INSTRUCTIONS
+
+  message: 
+    text: Enter or copy and paste usernames separated by commas, semicolons, or whitespace. All usernames provided will be added as the selected role. Existing or duplicate usernames will be ignored.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: BAU_EMAIL_INSTRUCTIONS ================
+  id: 14808692833914078200
+  identification: 
+    name: BAU_EMAIL_INSTRUCTIONS
+
+  message: 
+    text: Enter or copy and paste email addresses separated by commas, semicolons, or new lines. Note that if you copy and paste email addresses from email messages, extraneous text will be filtered out. All email users provided will be added as the selected role. Existing or duplicate email addresses will be ignored.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: MISSING_DOT ===========================
+  id: 14808693031110079511
+  identification: 
+    name: MISSING_DOT
+
+  message: 
+    text: Missing dot
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: MISSING_AT_SIGN =======================
+  id: 14808693927875081062
+  identification: 
+    name: MISSING_AT_SIGN
+
+  message: 
+    text: Missing @ sign
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: USERNAME_TOO_LONG =====================
+  id: 14808694124856082410
+  identification: 
+    name: USERNAME_TOO_LONG
+
+  message: 
+    text: Username too long
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: DUPLICATE_USER ========================
+  id: 14808694322699083421
+  identification: 
+    name: DUPLICATE_USER
+
+  message: 
+    text: Duplicate user in list
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ALREADY_IN_ACL ========================
+  id: 14808694620111084640
+  identification: 
+    name: ALREADY_IN_ACL
+
+  message: 
+    text: User is already in Access Control List
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: INVALID_USERS_NOT_CREATED =============
+  id: 14808694817739085694
+  identification: 
+    name: INVALID_USERS_NOT_CREATED
+
+  message: 
+    text: Note that %0 string(s) were invalid usernames.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ABOUT_TO_CREATE =======================
+  id: 14808695148135086798
+  identification: 
+    name: ABOUT_TO_CREATE
+
+  message: 
+    text: Please confirm adding the following %0 <strong>%1</strong> user(s) to your access control list.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ABOUT_TO_CREATE_WITH_INVALIDS =========
+  id: 14853271028389244405
+  identification: 
+    name: ABOUT_TO_CREATE_WITH_INVALIDS
+
+  message: 
+    text: Please confirm adding the following %0 <strong>%1</strong> user(s) to your access control list. Note that %2 string(s) were invalid usernames.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: HELP_SIDEBAR ==========================
+  id: 14876917321185238692
+  identification: 
+    name: HELP_SIDEBAR
+
+  message: 
+    text: |
+      <h1 class="appNameHeader">
+          <img src="%0f_spacer.gif" class="appIcon %1" alt="" />
+          %2
+      </h1>
+      <ul class="vapList">
+          <li>
+              <span class="vLabel">App Version</span>
+              <span class="vValue">%3</span>
+          </li>
+          <li>
+              <span class="vLabel">Pages</span>
+              <span class="vValue">%4</span>
+          </li>
+          <li>
+              <span class="vLabel">Vendor</span>
+              <span class="vValue">%5 </span>
+          </li>
+      </ul>
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: HELP_SUPPORT ==========================
+  id: 14876917517519240436
+  identification: 
+    name: HELP_SUPPORT
+
+  message: 
+    text: |
+      <div class="textRegion">
+      <h2>Additional Information</h2>
+      <p>If you have questions, ask them on the <a href="%0" target="_blank">%1</a>.
+      </p>
+      </div>
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: HELP_ABOUT ============================
+  id: 14876917739504245372
+  identification: 
+    name: HELP_ABOUT
+
+  message: 
+    text: |
+      <div class="aboutApp">
+      <h2>About this Application</h2>
+      <p>Customers helps you improve your customer interactions by offering a centralized repository of information.</p>
+      <p>Each customer can have multiple contacts and be associated with multiple products.  Each contact has a variety of standard attributes, such as category, geography, industry and status, as well as the ability to add tags to a customer for further ad hoc classification.  You can indicate the reference status for a customer and enter free form text as a customer profile.</p>
+      <p>You can create activity records to log interactions with each customer.  Customers includes a variety of reports which let you view recent activities, status changes and tags.  You can also use interactive reports to give your users the ability to filter and shape customer, contact, activity and interaction data.</p>
+      <p>Customers gives you the ability to define your own standards for attributes such as categories, statuses, customer and activity types, and products, allowing you to create a customized version of Customers to meet your own needs.</p>
+      </div>
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: HELP_GETTING_STARTED ==================
+  id: 14876918228505250461
+  identification: 
+    name: HELP_GETTING_STARTED
+
+  message: 
+    text: |
+      <div class="textRegion">
+      <h2>Getting Started</h2>
+         <p>1. Create Customer</p>
+         <ul>
+         <li>Click the Customers tab</li>
+         <li>Click the Add Customer button</li>
+         <li>Add your customer details</li>
+         </ul>
+         <p>2. Define your Contacts:</p>
+         <ul>
+         <li>Click the Contacts tab</li>
+         <li>Click the Create Contact button</li>
+         <li>Select the customer the contact is associated with</li>
+         <li>Add your contact details</li>
+         </ul>
+         <p>3. Define your Products:</p>
+         <ul>
+         <li>Click the Administration link</li>
+         <li>Click the Manage Products list entry</li>
+         <li>Click the Create Product button</li>
+         <li>Add your product details</li>
+         </ul>
+         <p>4. Associate Products to Customers:</p>
+         <ul>
+         <li>Click the Customers tab</li>
+         <li>Select the Customer you wish to add products for</li>
+         <li>Click the ''+'' button on the Products region</li>
+         <li>Select your product</li>
+         </ul>
+      </div>
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: HELP_FEATURES =========================
+  id: 14876918419879254482
+  identification: 
+    name: HELP_FEATURES
+
+  message: 
+    text: |
+      <div class="textRegion">
+      <h2>Features</h2>
+      <ul>
+      <li>Track and Manage Customers</li>
+      <li>Flexible and updateable customer contacts</li>
+      <li>Flexible and updateable procucts</li>
+      <li>Robust Reporting</li>
+      <li>Link, Note, and File Attachments</li>
+      <li>Mobile Interface</li>
+      <li>Flexible Access Control (reader, contributor, administrator model)</li>
+      </ul>
+      </div>
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ACCESS_CONTROL_IS_DISABLED ============
+  id: 14905353210106977067
+  identification: 
+    name: ACCESS_CONTROL_IS_DISABLED
+
+  message: 
+    text: Access control for this application is currently disabled. All users are currently Administrators. Navigate to <a href="%0">application administration</a> to enable access control.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: EMAIL_USERNAME_FORMAT_MSG =============
+  id: 14933952721428208487
+  identification: 
+    name: EMAIL_USERNAME_FORMAT_MSG
+
+  message: 
+    text: 'This application is currently using an <strong>email address</strong> username format (e.g. xyz@xyz.com). <a href="f?p=%0:%1:%2:">Change Username Format</a>'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: STRING_USERNAME_FORMAT_MSG ============
+  id: 14933953350099210352
+  identification: 
+    name: STRING_USERNAME_FORMAT_MSG
+
+  message: 
+    text: 'This application is currently using a <strong>non-email address</strong> username format (e.g. JOHNDOE). <a href="f?p=%0:%1:%2:">Change Username Format</a>'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ANY_AUTHENTICATED_USER ================
+  id: 14953116831989624721
+  identification: 
+    name: ANY_AUTHENTICATED_USER
+
+  message: 
+    text: Any Authenticated User
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ACL_PUBLIC_READONLY ===================
+  id: 14953117027460626843
+  identification: 
+    name: ACL_PUBLIC_READONLY
+
+  message: 
+    text: <p>All authenticated users have <strong>Reader</strong> access.</p><p>Contributors and Administrators are restricted by the Access Control List.</p>
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ACL_PUBLIC_CONTRIBUTE =================
+  id: 14953117224225628341
+  identification: 
+    name: ACL_PUBLIC_CONTRIBUTE
+
+  message: 
+    text: <p>All authenticated users have <strong>Reader</strong> and <strong>Contributor</strong> access.</p><p>Administrators are restricted by the Access Control List.</p>
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ACL_ENABLED ===========================
+  id: 14953117421421629678
+  identification: 
+    name: ACL_ENABLED
+
+  message: 
+    text: <p>Only users defined in the Access Control List have access to this application.</p>
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ACL_DISABLED ==========================
+  id: 14953118118186631190
+  identification: 
+    name: ACL_DISABLED
+
+  message: 
+    text: <p>All users are currently <strong>Administrators</strong>. Please enable Access Control to restrict user access to this application.</p>
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: PAGES_WITH_CUSTOM_AUTH ================
+  id: 14953567844639851378
+  identification: 
+    name: PAGES_WITH_CUSTOM_AUTH
+
+  message: 
+    text: Authorization Protected
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: PUBLIC_PAGES ==========================
+  id: 14953568041835852634
+  identification: 
+    name: PUBLIC_PAGES
+
+  message: 
+    text: Public Pages
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: AUTHENTICATION_REQUIRED_PAGES =========
+  id: 14953568238600854217
+  identification: 
+    name: AUTHENTICATION_REQUIRED_PAGES
+
+  message: 
+    text: Login Required Pages
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: N_DAY =================================
+  id: 15002391617553304580
+  identification: 
+    name: N_DAY
+
+  message: 
+    text: '%0 day'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: N_DAYS ================================
+  id: 15002391848165305630
+  identification: 
+    name: N_DAYS
+
+  message: 
+    text: '%0 days'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: N_HOUR ================================
+  id: 15002392046008306570
+  identification: 
+    name: N_HOUR
+
+  message: 
+    text: '%0 hour'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: N_HOURS ===============================
+  id: 15002392244283307380
+  identification: 
+    name: N_HOURS
+
+  message: 
+    text: '%0 hours'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: N_MINUTES =============================
+  id: 15002392441048308913
+  identification: 
+    name: N_MINUTES
+
+  message: 
+    text: '%0 minutes'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: N_WEEK ================================
+  id: 15002392638676310024
+  identification: 
+    name: N_WEEK
+
+  message: 
+    text: '%0 week'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: N_WEEKS ===============================
+  id: 15002392836951310794
+  identification: 
+    name: N_WEEKS
+
+  message: 
+    text: '%0 weeks'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: REFERENCE_TYPES_HELP ==================
+  id: 15664278313682350426
+  identification: 
+    name: REFERENCE_TYPES_HELP
+
+  message: 
+    text: Reference Types are used for indicating how references are willing to be used. The Reference Type will be available when you Add, Modify or Search for a Contact. Reference Types can be made Active or Inactive but only active Reference Types will be shown when adding or modifying a Contact.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: HELP ==================================
+  id: 15907342928731884226
+  identification: 
+    name: HELP
+
+  message: 
+    text: Help
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ACL_CONFIGURATION_INFO ================
+  id: 15988752232178085078
+  identification: 
+    name: ACL_CONFIGURATION_INFO
+
+  message: 
+    text: |
+      <p><strong>Enabling Access Control</strong> allows the application and its features to be controlled by the <strong>Access Control List</strong>, as defined by the application administrator. This application has 3 access levels available that can be granted to a user; Administrator, Contributor and Reader. Please see the Manage Access Control List page for further details on what each level provides.</p>
+      
+      <p>In addition, if you want to make every authenticated user a 'Reader' of your application, you can select Reader access for any authenticated user from the Access Control Scope configuration option. Similarly, selecting Contributor access for any authenticated user will provide contributor access to any user who can authenticate into your application.</p>
+      
+      <br>
+      <p><b>Disabling Access Control</b> means that access to the application and all of its features including Administration are open to any user who can authenticate to the application.</p>
+      <br>
+      <p>Note: Irrespective of whether Access Control is enabled or disabled, a user still has to authenticate successfully into the application.</p>
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ACCESS_CONTROL_INFO ===================
+  id: 16026205348239030218
+  identification: 
+    name: ACCESS_CONTROL_INFO
+
+  message: 
+    text: |
+      <p>When Access Control is enabled, Administrators have the ability to restrict access to certain application features, for authenticated users. Customers supports the following 3 access levels; Reader, Contributor and Administrator.
+        <b>Reader's</b> have read-only access and can also view reports.
+        <b>Contributor's</b> can create, edit, delete and view reports.
+        <b>Administrator's</b>, in addition to Contributor's capability, can also perform Customers administration, including configuration of access control, managing application look-up data and installing or uninstalling sample data.</p> 
+      
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ADMINISTRATION ========================
+  id: 16392343237343874678
+  identification: 
+    name: ADMINISTRATION
+
+  message: 
+    text: Administration
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: MOBILE ================================
+  id: 16392370146001877229
+  identification: 
+    name: MOBILE
+
+  message: 
+    text: Mobile
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: USER ==================================
+  id: 16392374249810878333
+  identification: 
+    name: USER
+
+  message: 
+    text: User
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ADDITIONAL_INFORMATION ================
+  id: 16687049827497682940
+  identification: 
+    name: ADDITIONAL_INFORMATION
+
+  message: 
+    text: Additional Information
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: FEATURES ==============================
+  id: 16687050030268683701
+  identification: 
+    name: FEATURES
+
+  message: 
+    text: Features
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: GETTING_STARTED =======================
+  id: 16687050334770685058
+  identification: 
+    name: GETTING_STARTED
+
+  message: 
+    text: Getting Started
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ABOUT_THIS_APPLICATION ================
+  id: 16687050537540685798
+  identification: 
+    name: ABOUT_THIS_APPLICATION
+
+  message: 
+    text: About this Application
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: CUSTOMER_TYPE_HELP ====================
+  id: 17024475786767262970
+  identification: 
+    name: CUSTOMER_TYPE_HELP
+
+  message: 
+    text: Types are used for identifying the type of Customer. The Type will be available when you Add, Modify or Search for a Customer. Type can be made Active or Inactive but only active Types will be shown when adding or modifying a Customer.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: CUSTOMER_USE_CASE_HELP ================
+  id: 17149069435544685824
+  identification: 
+    name: CUSTOMER_USE_CASE_HELP
+
+  message: 
+    text: Use Cases are used for identifying the type of Customer. The Use Case will be available when you Add, Modify or Search for a Customer. Use Case can be made Active or Inactive but only active Use Cases will be shown when adding or modifying a Customer.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: CREATE ================================
+  id: 17855374693364269750
+  identification: 
+    name: CREATE
+
+  message: 
+    text: Create
+
+  attributes: 
+    language: English (United States) (en-us)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: UNLINK_CONFIRMATION ===================
+  id: 17857500497953316239
+  identification: 
+    name: UNLINK_CONFIRMATION
+
+  message: 
+    text: This will remove the Contact from the Customer's Contact list but will not delete the Contact.
+
+  attributes: 
+    language: English (United States) (en-us)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: ACTIVE ================================
+  id: 17858236207504141622
+  identification: 
+    name: ACTIVE
+
+  message: 
+    text: Active
+
+  attributes: 
+    language: English (United States) (en-us)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: INACTIVE ==============================
+  id: 17858236689627145853
+  identification: 
+    name: INACTIVE
+
+  message: 
+    text: Inactive
+
+  attributes: 
+    language: English (United States) (en-us)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: CATEGORY_HELP =========================
+  id: 17858258991377297794
+  identification: 
+    name: CATEGORY_HELP
+
+  message: 
+    text: Categories are used for grouping Customers. The Category will be available when you Add, Modify or Search for a Customer. Category can be made Active or Inactive but only active Categories will be shown when adding or modifying a Customer.
+
+  attributes: 
+    language: English (United States) (en-us)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: CUSTOMER_STATUS_HELP ==================
+  id: 17858259387698306151
+  identification: 
+    name: CUSTOMER_STATUS_HELP
+
+  message: 
+    text: Statuses are used for identifying the current Status of a Customer. The Status will be available when you Add, Modify or Search for a Customer.  Status can be made Active or Inactive but only active Statuses will be shown when adding or modifying a Customer.
+
+  attributes: 
+    language: English (United States) (en-us)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+
+- # ====== Text Message: CONTACT_TYPES_HELP ====================
+  id: 17858259779864313391
+  identification: 
+    name: CONTACT_TYPES_HELP
+
+  message: 
+    text: Contact Types are used for grouping Contacts. The Contact Type will be available when you Add, Modify or Search for a Contact. Contact Types can be made Active or Inactive but only active Contact Types will be shown when adding or modifying a Contact.
+
+  attributes: 
+    language: English (United States) (en-us)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 37166093824750
+

@@ -1,0 +1,128 @@
+---
+- # ====== Authorization: Copy of ADMINISTRATION RIGHTS ========
+  id: 1370230792982377265
+  identification: 
+    name: Copy of ADMINISTRATION RIGHTS
+
+  subscription: 
+    version-number: 1089051550
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: 'return eba_cust.get_authorization_level(:APP_USER) = 3;'
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: Insufficient privileges, user is not an Administrator
+
+- # ====== Authorization: Edit Competitors =====================
+  id: 1382959018097128307
+  identification: 
+    name: Edit Competitors
+
+  subscription: 
+    version-number: 1089051550
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: "return eba_cust.get_feature_level(:APP_USER, 'EDIT_COMPETITORS');"
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: Insufficient privileges, user is not allowed to edit competitors.
+
+- # ====== Authorization: View Competitors =====================
+  id: 1382996476893427415
+  identification: 
+    name: View Competitors
+
+  subscription: 
+    version-number: 1089051550
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: "return eba_cust.get_feature_level(:APP_USER, 'VIEW_COMPETITORS');"
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: Insufficient privileges, user is not allowed to view competitors.
+
+- # ====== Authorization: ADMINISTRATION RIGHTS ================
+  id: 15698200031781635234
+  identification: 
+    name: ADMINISTRATION RIGHTS
+
+  subscription: 
+    version-number: 1089051550
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: 'return eba_cust.get_authorization_level(:APP_USER) = 3;'
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: Insufficient privileges, user is not an Administrator
+
+- # ====== Authorization: APPLICATION SENTRY ===================
+  id: 15989112447556174685
+  identification: 
+    name: APPLICATION SENTRY
+
+  subscription: 
+    version-number: 1089051550
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: |
+      begin
+          if :APP_PAGE_ID = 101 then
+              return true;
+          else
+              return (eba_cust.get_authorization_level(:APP_USER) > 0);
+          end if;
+      end;
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: You are not authorized to view this application, either because you have not been granted access, or your account has been locked. Please contact the application administrator.
+
+- # ====== Authorization: CONTRIBUTION RIGHTS ==================
+  id: 15989128224831177580
+  identification: 
+    name: CONTRIBUTION RIGHTS
+
+  subscription: 
+    version-number: 1089051550
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: 'return eba_cust.get_authorization_level(:APP_USER) >= 2;'
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: Insufficient privileges, user is not a Contributor
+
