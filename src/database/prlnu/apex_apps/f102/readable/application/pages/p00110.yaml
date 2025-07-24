@@ -1,0 +1,682 @@
+---
+# ====== Page: Implementation Partner(s) =====================
+id: 110
+identification: 
+  name: Implementation Partner(s)
+  alias: IMPLEMENTATION-PARTNER-S
+  title: Implementation Partner(s)
+  page-group: Customers # 14742626823242276921
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  chained: true
+  resizable: false
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: First item on page
+  warn-on-unsaved-changes: false
+
+javascript: 
+  function-and-global-variable-declaration: var htmldb_delete_message='"DELETE_CONFIRM_MSG"';
+
+security: 
+  authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: Implementation Partner ======================
+  id: 17769272070596176514
+  identification: 
+    name: Implementation Partner
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Select Implementation Partners ==============
+  id: 17769291239139176545
+  identification: 
+    name: Select Implementation Partners
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+          apex_item.checkbox2(p_idx        => 1,
+                              p_value      => ip.id,
+                              p_attributes => case
+                                                  when exists (   select null
+                                                                  from eba_cust_cust_partner_ref rf
+                                                                  where rf.customer_id = :P110_CUSTOMER_ID
+                                                                      and rf.partner_id = ip.id )
+                                                      then 'CHECKED'
+                                              else
+                                                  null
+                                              end,
+                              p_checked_values => null,
+                              p_item_id    => 'P110_PARTNER_IDS',    
+                              p_item_label => 'Select/Unselect' || name) as partner_id,
+          ip.name,
+          ( select count(*) from eba_cust_cust_partner_ref rf where rf.partner_id = ip.id ) references
+      from eba_cust_impl_partners ip
+      order by ip.name
+    page-items-to-submit: 
+    - P110_CUSTOMER_ID
+
+  layout: 
+    sequence: 20
+    parent-region: Implementation Partner # 17769272070596176514
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    - t-IRR-region--noBorders
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: partnersIRR
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    header-text: <label for="P68_PRODUCT_IDS">Select applicable partners from the report below. Use the search field to find partners quickly.</label>
+    footer-text: <br>
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 17769291621311176547
+    link: 
+      link-column: Exclude Link Column
+
+    pagination: 
+      type: None
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: false
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 17769292530032176556
+      identification: 
+        name: Primary Report
+        alias: 166897813
+
+    columns: 
+    - # ====== Column: PARTNER_ID ==================================
+      id: 15671440660837645310
+      identification: 
+        column-name: PARTNER_ID
+        type: Plain Text
+
+      heading: 
+        heading: <input type="checkbox" id="selectUnselectAll" title="Select/Unselect All">
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: NAME ========================================
+      id: 15671440791779645311
+      identification: 
+        column-name: NAME
+        type: Plain Text
+
+      heading: 
+        heading: Name
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: REFERENCES ==================================
+      id: 17771183060825605879
+      identification: 
+        column-name: REFERENCES
+        type: Plain Text
+
+      heading: 
+        heading: References
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+- # ====== Region: Buttons =====================================
+  id: 17769293414937176561
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P110_REFRESHED ===========================
+  id: 2037593057314885445
+  identification: 
+    name: P110_REFRESHED
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 30
+    region: Implementation Partner # 17769272070596176514
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: N
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_CUSTOMER_ID =========================
+  id: 17769272873562176523
+  identification: 
+    name: P110_CUSTOMER_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: Implementation Partner # 17769272070596176514
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 17769294677523176565
+  identification: 
+    button-name: CANCEL
+    label: Cancel
+
+  layout: 
+    sequence: 10
+    region: Buttons # 17769293414937176561
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: UPDATE_PARTNERS =============================
+  id: 17769295079269176565
+  identification: 
+    button-name: UPDATE_PARTNERS
+    label: Update Partner(s)
+
+  layout: 
+    sequence: 20
+    region: Buttons # 17769293414937176561
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--gapLeft
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Refresh Region ======================
+  id: 2037593185437885446
+  identification: 
+    name: Refresh Region
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: After Refresh
+    selection-type: Region
+    region: Select Implementation Partners # 17769291239139176545
+
+  client-side-condition: 
+    type: Item = Value
+    item: P110_REFRESHED
+    value: N
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 2037593293157885447
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Select Implementation Partners # 17769291239139176545
+
+    execution: 
+      sequence: 10
+      event: Refresh Region # 2037593185437885446
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Set Value ===================================
+    id: 2037593346332885448
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: Y
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P110_REFRESHED
+
+    execution: 
+      sequence: 20
+      event: Refresh Region # 2037593185437885446
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: cancel dialog =======================
+  id: 17769298441831176591
+  identification: 
+    name: cancel dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 17769294677523176565
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 17769298977800176593
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: cancel dialog # 17769298441831176591
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Select/Unselect All Partners ========
+  id: 17769299330232176595
+  identification: 
+    name: Select/Unselect All Partners
+
+  execution: 
+    sequence: 30
+    event-scope: Dynamic
+    static-container-(jquery-selector): '#partnersIRR'
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: jQuery Selector
+    jquery-selector: '#selectUnselectAll'
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 17769299869134176596
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        if ( $( '#selectUnselectAll' ).is(':checked') ) {
+          $('input[type=checkbox][name=f01]').attr('checked',true);
+        }
+        else {
+          $('input[type=checkbox][name=f01]').attr('checked',false);
+        }
+
+    execution: 
+      sequence: 10
+      event: Select/Unselect All Partners # 17769299330232176595
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+processes: 
+- # ====== Process: Close Dialog ===============================
+  id: 17769296606922176586
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: false
+
+  execution: 
+    sequence: 40
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: Update Partners ============================
+  id: 17769298069050176589
+  identification: 
+    name: Update Partners
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      declare
+          l_collection varchar2(30) := 'IMP_PARTNERS';
+      begin
+          apex_collection.create_or_truncate_collection( l_collection );
+      
+          for i in 1..apex_application.g_f01.count loop
+              apex_collection.add_member( p_collection_name => l_collection,
+                                          p_n001 => to_number( apex_application.g_f01(i) ) );
+          end loop;
+      
+          delete from eba_cust_cust_partner_ref rf
+          where rf.customer_id = :P110_CUSTOMER_ID
+              and not exists (select null
+                              from apex_collections c
+                              where c.collection_name = l_collection
+                                  and c.n001 = rf.partner_id
+                              );
+      
+      
+          merge into eba_cust_cust_partner_ref rf using (
+              select :P110_CUSTOMER_ID customer_id,
+                  c.n001 partner_id
+              from apex_collections c
+              where c.collection_name = l_collection
+          ) src
+              on ( rf.customer_id = src.customer_id and rf.partner_id = src.partner_id )
+          when not matched then
+              insert ( customer_id, partner_id )
+              values ( src.customer_id, src.partner_id );
+      
+          apex_collection.delete_collection( l_collection );
+      end;
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+

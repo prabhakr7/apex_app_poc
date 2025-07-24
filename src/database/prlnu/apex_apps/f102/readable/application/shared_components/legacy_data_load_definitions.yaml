@@ -1,0 +1,11 @@
+---
+- # ====== Legacy Data Load Definition: contacts ===============
+  id: 15910198929507915833
+  identification: 
+    name: contacts
+
+- # ====== Legacy Data Load Definition: Customers ==============
+  id: 18157457502862681265
+  identification: 
+    name: Customers
+

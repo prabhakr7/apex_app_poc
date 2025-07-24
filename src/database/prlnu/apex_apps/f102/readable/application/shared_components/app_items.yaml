@@ -1,0 +1,384 @@
+---
+- # ====== Application Item: APPLICATION_TITLE =================
+  id: 14759782446277714108
+  identification: 
+    name: APPLICATION_TITLE
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CUSTOMERS =========================
+  id: 14882087923860092502
+  identification: 
+    name: CUSTOMERS
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: PRODUCTS ==========================
+  id: 14882089659688151729
+  identification: 
+    name: PRODUCTS
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CONTACTS ==========================
+  id: 14882089919875157164
+  identification: 
+    name: CONTACTS
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CUSTOMER ==========================
+  id: 14882153523293534802
+  identification: 
+    name: CUSTOMER
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CNT_01 ============================
+  id: 14977697217859498100
+  identification: 
+    name: CNT_01
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CNT_02 ============================
+  id: 14977697448471499078
+  identification: 
+    name: CNT_02
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CNT_03 ============================
+  id: 14977697646530499915
+  identification: 
+    name: CNT_03
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CNT_04 ============================
+  id: 14977718642677261461
+  identification: 
+    name: CNT_04
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CNT_05 ============================
+  id: 14977718841599261984
+  identification: 
+    name: CNT_05
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CNT_06 ============================
+  id: 14977719040305262549
+  identification: 
+    name: CNT_06
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CNT_07 ============================
+  id: 14977719239011263153
+  identification: 
+    name: CNT_07
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CNT_08 ============================
+  id: 14977719437932263672
+  identification: 
+    name: CNT_08
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: TZ ================================
+  id: 14977719636854264130
+  identification: 
+    name: TZ
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CNT_09 ============================
+  id: 14977737445578670373
+  identification: 
+    name: CNT_09
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: GET_ID ============================
+  id: 15053705253953114219
+  identification: 
+    name: GET_ID
+    scope: Application
+
+  security: 
+    session-state-protection: Unrestricted
+    escape-special-characters: false
+
+  comments: 
+    comments: This is a generic item used to fetch things via ajax. Used for fetching image for customer Logos.
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CNT_10 ============================
+  id: 17024397333523233262
+  identification: 
+    name: CNT_10
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CUSTOMER_TYPE_HELP ================
+  id: 17024406996997195976
+  identification: 
+    name: CUSTOMER_TYPE_HELP
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CUSTOMER_USE_CASE_HELP ============
+  id: 17149110014135745338
+  identification: 
+    name: CUSTOMER_USE_CASE_HELP
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: RETURN_URL ========================
+  id: 17818699239051646672
+  identification: 
+    name: RETURN_URL
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: LAST_VIEW =========================
+  id: 17843257804525859881
+  identification: 
+    name: LAST_VIEW
+    scope: Application
+
+  security: 
+    session-state-protection: Unrestricted
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CREATE_MSG ========================
+  id: 17855377280120284886
+  identification: 
+    name: CREATE_MSG
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: UNLINK_CONFIRM_MSG ================
+  id: 17857503403541346308
+  identification: 
+    name: UNLINK_CONFIRM_MSG
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: ACTIVE_MSG ========================
+  id: 17858234686379135477
+  identification: 
+    name: ACTIVE_MSG
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: INACTIVE_MSG ======================
+  id: 17858235191920137102
+  identification: 
+    name: INACTIVE_MSG
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CATEGORY_HELP =====================
+  id: 17858260388522315809
+  identification: 
+    name: CATEGORY_HELP
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CUSTOMER_STATUS_HELP ==============
+  id: 17858260793717317356
+  identification: 
+    name: CUSTOMER_STATUS_HELP
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: CONTACT_TYPES_HELP ================
+  id: 17858261200643319385
+  identification: 
+    name: CONTACT_TYPES_HELP
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Item: ACTIVITIES ========================
+  id: 18168218409956786595
+  identification: 
+    name: ACTIVITIES
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: true
+
+  configuration: 
+    build-option: Activities # 18161405259992530478
+
+  subscription: 
+    version-number: 37166093824741
+

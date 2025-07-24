@@ -1,0 +1,3991 @@
+---
+- # ====== List: Mobile Main Menu ==============================
+  id: 14599246941505963482
+  identification: 
+    name: Mobile Main Menu
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+- # ====== List: Application Navigation ========================
+  id: 14881819248322741220
+  identification: 
+    name: Application Navigation
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: ACL Features =================================
+    id: 1382960431767146723
+    label: 
+      label: ACL Features
+
+    layout: 
+      sequence: 530
+      parent-entry: Access Control # 14896336920728843085
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 123
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:123:&SESSION.::&DEBUG.'
+        page: 123 # ACL Features
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Timeline =====================================
+    id: 2054629735098360272
+    label: 
+      label: Timeline
+
+    layout: 
+      sequence: 210
+      parent-entry: Reports # 14881819771793741225
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:124:&SESSION.::&DEBUG.::::'
+        page: 124 # Timeline
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Issue Statuses ===============================
+    id: 2589061214957370534
+    label: 
+      label: Issue Statuses
+
+    layout: 
+      sequence: 410
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:132:&SESSION.::&DEBUG.::::'
+        page: 132 # Issue Statuses
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Issues # 2588670701787762510
+
+  - # ====== Entry: Issues =======================================
+    id: 2589062989666403637
+    label: 
+      label: Issues
+
+    icon: 
+      image/icon-css-classes: fa-alert
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 134
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:134:&SESSION.::&DEBUG.::::'
+        page: 134 # Issues
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_issues
+
+    configuration: 
+      build-option: Issues # 2588670701787762510
+
+  - # ====== Entry: All Customers ================================
+    id: 13565268251570139062
+    label: 
+      label: All Customers
+
+    layout: 
+      sequence: 200
+      parent-entry: Reports # 14881819771793741225
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 93
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:93:&SESSION.::&DEBUG.::::'
+        page: 93 # All Customers
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Reference Statuses ===========================
+    id: 14303602796863388154
+    label: 
+      label: Reference Statuses
+
+    layout: 
+      sequence: 370
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:94:&SESSION.::&DEBUG.::::'
+        page: 94 # Product Reference Statuses
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Product Referencability # 14310859967654260855
+
+  - # ====== Entry: Referencability ==============================
+    id: 14881819357788741224
+    label: 
+      label: Referencability
+
+    layout: 
+      sequence: 150
+      parent-entry: Products [&PRODUCTS.] # 14881819616681741225
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 100
+      - 122
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::::'
+        page: 100 # Referenceability
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      10.: 33,31,59,15,76,100
+
+    configuration: 
+      build-option: Product Referencability # 14310859967654260855
+
+  - # ====== Entry: Customers [&CUSTOMERS.] ======================
+    id: 14881819469634741225
+    label: 
+      label: Customers [&CUSTOMERS.]
+
+    icon: 
+      image/icon-css-classes: fa-home
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 2
+      - 10
+      - 13
+      - 25
+      - 47
+      - 50
+      - 51
+      - 52
+      - 59
+      - 67
+      - 92
+      - 149
+      - 150
+      - 131
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:59:&SESSION.::&DEBUG.:RP,RIR,CIR:::'
+        page: 59 # Customers
+        clear-cache: RP,RIR,CIR
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      10.: 2,13,47,53,54,55,56,50,52,64,51,66,68,67,37,25,69,7,10,13,1
+
+  - # ====== Entry: Contacts [&CONTACTS.] ========================
+    id: 14881819522266741225
+    label: 
+      label: Contacts [&CONTACTS.]
+
+    icon: 
+      image/icon-css-classes: fa-user
+
+    layout: 
+      sequence: 70
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 18
+      - 20
+      - 60
+      - 61
+      - 62
+      - 63
+      - 38
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:18:&SESSION.::&DEBUG.::::'
+        page: 18 # Contacts
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: Contacts # 14978649220461663676
+
+  - # ====== Entry: Products [&PRODUCTS.] ========================
+    id: 14881819616681741225
+    label: 
+      label: Products [&PRODUCTS.]
+
+    icon: 
+      image/icon-css-classes: fa-archive
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 19
+      - 44
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:44:&SESSION.::&DEBUG.::::'
+        page: 44 # Products
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: Products and Services # 14978641932588597225
+
+  - # ====== Entry: Reports ======================================
+    id: 14881819771793741225
+    label: 
+      label: Reports
+
+    icon: 
+      image/icon-css-classes: fa-file-text-o
+
+    layout: 
+      sequence: 90
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:17:&SESSION.::&DEBUG.::::'
+        page: 17 # Reports
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: Reports # 14978715924658722132
+
+  - # ====== Entry: Administration ===============================
+    id: 14881819871387741225
+    label: 
+      label: Administration
+
+    icon: 
+      image/icon-css-classes: fa-gear
+
+    layout: 
+      sequence: 100
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:12:&SESSION.::&DEBUG.::::'
+        page: 12 # Administration
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Code Tables ==================================
+    id: 14884378303860282458
+    label: 
+      label: Code Tables
+
+    layout: 
+      sequence: 240
+      parent-entry: Administration # 14881819871387741225
+
+    is-current: 
+      type: Target Page
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Categories ===================================
+    id: 14884416205967284956
+    label: 
+      label: Categories
+
+    layout: 
+      sequence: 290
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 3
+      - 4
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.:RP,3:::'
+        page: 3 # Categories
+        clear-cache: RP,3
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Customers ====================================
+    id: 14887230649433934914
+    label: 
+      label: Customers
+
+    layout: 
+      sequence: 160
+      parent-entry: Reports # 14881819771793741225
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.:RP:::'
+        page: 1 # Dashboard
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Never
+
+  - # ====== Entry: Customer Types ===============================
+    id: 14896196393518703933
+    label: 
+      label: Customer Types
+
+    layout: 
+      sequence: 310
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 5
+      - 6
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:5:&SESSION.::&DEBUG.:RP,5:::'
+        page: 5 # Customer Types
+        clear-cache: RP,5
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Contact Types ================================
+    id: 14896196792940712269
+    label: 
+      label: Contact Types
+
+    layout: 
+      sequence: 330
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 8
+      - 9
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:8:&SESSION.::&DEBUG.:RP,8:::'
+        page: 8 # Contact Types
+        clear-cache: RP,8
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Contacts # 14978649220461663676
+
+  - # ====== Entry: Products =====================================
+    id: 14896197736370714834
+    label: 
+      label: Products
+
+    layout: 
+      sequence: 360
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 42
+      - 43
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:42:&SESSION.::&DEBUG.:RP,42:::'
+        page: 42 # Products
+        clear-cache: RP,42
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Products and Services # 14978641932588597225
+
+  - # ====== Entry: Geographies ==================================
+    id: 14896198132477717439
+    label: 
+      label: Geographies
+
+    layout: 
+      sequence: 380
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 48
+      - 49
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:48:&SESSION.::&DEBUG.:RP,48:::'
+        page: 48 # Geographies
+        clear-cache: RP,48
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Geography # 14978618648110331788
+
+  - # ====== Entry: Industries ===================================
+    id: 14896199023835720326
+    label: 
+      label: Industries
+
+    layout: 
+      sequence: 400
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 27
+      - 30
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:27:&SESSION.::&DEBUG.:RP,27:::'
+        page: 27 # Industry
+        clear-cache: RP,27
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Build Options ================================
+    id: 14896243787878761781
+    label: 
+      label: Build Options
+
+    layout: 
+      sequence: 450
+      parent-entry: Configuration # 14896248735890799758
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&SESSION.::&DEBUG.:RP,11:::'
+        page: 11 # Build Options
+        clear-cache: RP,11
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Error Logs ===================================
+    id: 14896246970656787485
+    label: 
+      label: Error Logs
+
+    layout: 
+      sequence: 540
+      parent-entry: Logging # 18757933010320406961
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:175:&SESSION.::&DEBUG.:RP,175:::'
+        page: 175 # Application Error Log
+        clear-cache: RP,175
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Configuration ================================
+    id: 14896248735890799758
+    label: 
+      label: Configuration
+
+    layout: 
+      sequence: 230
+      parent-entry: Administration # 14881819871387741225
+
+    is-current: 
+      type: Target Page
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Application Settings =========================
+    id: 14896250286796809329
+    label: 
+      label: Application Settings
+
+    layout: 
+      sequence: 470
+      parent-entry: Configuration # 14896248735890799758
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:28:&SESSION.::&DEBUG.:RP,28:::'
+        page: 28 # Application Settings
+        clear-cache: RP,28
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Sample Data ==================================
+    id: 14896255349758819263
+    label: 
+      label: Sample Data
+
+    layout: 
+      sequence: 480
+      parent-entry: Configuration # 14896248735890799758
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:77:&SESSION.::&DEBUG.:RP,77:::'
+        page: 77 # Manage Sample Data
+        clear-cache: RP,77
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Notifications ================================
+    id: 14896256803622831173
+    label: 
+      label: Notifications
+
+    layout: 
+      sequence: 270
+      parent-entry: Administration # 14881819871387741225
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 34
+      - 36
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:34:&SESSION.::&DEBUG.:RP,34:::'
+        page: 34 # Notifications
+        clear-cache: RP,34
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Welcome Text =================================
+    id: 14896258053671834695
+    label: 
+      label: Welcome Text
+
+    layout: 
+      sequence: 280
+      parent-entry: Administration # 14881819871387741225
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:14:&SESSION.::&DEBUG.:RP,14:::'
+        page: 14 # Welcome Text
+        clear-cache: RP,14
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Access Control ===============================
+    id: 14896336920728843085
+    label: 
+      label: Access Control
+
+    layout: 
+      sequence: 220
+      parent-entry: Administration # 14881819871387741225
+
+    is-current: 
+      type: Target Page
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Settings =====================================
+    id: 14896337658881848989
+    label: 
+      label: Settings
+
+    layout: 
+      sequence: 510
+      parent-entry: Access Control # 14896336920728843085
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 16
+      - 35
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:35:&SESSION.::&DEBUG.:RP,35:::'
+        page: 35 # Access Control Configuration
+        clear-cache: RP,35
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Users ========================================
+    id: 14896338271997852531
+    label: 
+      label: Users
+
+    layout: 
+      sequence: 520
+      parent-entry: Access Control # 14896336920728843085
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 57
+      - 58
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:57:&SESSION.::&DEBUG.:RP,57:::'
+        page: 57 # Access Control List
+        clear-cache: RP,57
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Recent Updates ===============================
+    id: 14896725640285958568
+    label: 
+      label: Recent Updates
+
+    layout: 
+      sequence: 170
+      parent-entry: Reports # 14881819771793741225
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:29:&SESSION.::&DEBUG.:RP:::'
+        page: 29 # Recent Activities
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Activity Calendar ============================
+    id: 14896726564885967779
+    label: 
+      label: Activity Calendar
+
+    layout: 
+      sequence: 180
+      parent-entry: Reports # 14881819771793741225
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:22:&SESSION.::&DEBUG.::::'
+        page: 22 # Updates
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Tags =========================================
+    id: 14896726739085971040
+    label: 
+      label: Tags
+
+    layout: 
+      sequence: 190
+      parent-entry: Reports # 14881819771793741225
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:40:&SESSION.::&DEBUG.:RP:::'
+        page: 40 # Tags
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Theme Style ==================================
+    id: 15257694203099597806
+    label: 
+      label: Theme Style
+
+    layout: 
+      sequence: 490
+      parent-entry: Configuration # 14896248735890799758
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 70
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:70:&SESSION.::&DEBUG.::::'
+        page: 70 # Application Theme Style
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Reference Types ==============================
+    id: 15664294230795403175
+    label: 
+      label: Reference Types
+
+    layout: 
+      sequence: 340
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 78
+      - 79
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:78:&SESSION.::&DEBUG.:RP,78:::'
+        page: 78 # Reference Types
+        clear-cache: RP,78
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Categories ===================================
+    id: 15793460852617173306
+    label: 
+      label: Categories
+
+    layout: 
+      sequence: 110
+      parent-entry: Customers [&CUSTOMERS.] # 14881819469634741225
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:32:&SESSION.::&DEBUG.:RP:::'
+        page: 32 # Customers by Category
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Geographies ==================================
+    id: 15793466569423227416
+    label: 
+      label: Geographies
+
+    layout: 
+      sequence: 120
+      parent-entry: Customers [&CUSTOMERS.] # 14881819469634741225
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:85:&SESSION.::&DEBUG.::::'
+        page: 85 # Geographies
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: Geography # 14978618648110331788
+
+  - # ====== Entry: Referenceability =============================
+    id: 15794380799558331525
+    label: 
+      label: Referenceability
+
+    layout: 
+      sequence: 130
+      parent-entry: Customers [&CUSTOMERS.] # 14881819469634741225
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 86
+      - 91
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:86:&SESSION.::&DEBUG.::::'
+        page: 86 # Referenceability
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: Customer Referencability # 14310801550925186703
+
+  - # ====== Entry: Reference Phases =============================
+    id: 15866599045946770788
+    label: 
+      label: Reference Phases
+
+    layout: 
+      sequence: 420
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:87:&SESSION.::&DEBUG.::::'
+        page: 87 # Reference Phases
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Customer Referencability # 14310801550925186703
+
+  - # ====== Entry: Sales Channels ===============================
+    id: 15866610654323810151
+    label: 
+      label: Sales Channels
+
+    layout: 
+      sequence: 430
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:89:&SESSION.::&DEBUG.:RP:::'
+        page: 89 # Sales Channel
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Products =====================================
+    id: 15892553753722687251
+    label: 
+      label: Products
+
+    layout: 
+      sequence: 140
+      parent-entry: Customers [&CUSTOMERS.] # 14881819469634741225
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:92:&SESSION.::&DEBUG.::::'
+        page: 92 # Products
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: Products and Services # 14978641932588597225
+
+  - # ====== Entry: Countries ====================================
+    id: 16953001230248126266
+    label: 
+      label: Countries
+
+    layout: 
+      sequence: 390
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:98:&SESSION.::&DEBUG.::::'
+        page: 98 # Countries
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Countries # 16950233968074845408
+
+  - # ====== Entry: Customer Statuses ============================
+    id: 17024346629641210406
+    label: 
+      label: Customer Statuses
+
+    layout: 
+      sequence: 300
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 102
+      - 103
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:102:&SESSION.::&DEBUG.::::'
+        page: 102 # Customer Statuses
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Customer Status # 17161977605374595769
+
+  - # ====== Entry: Customer Use Cases ===========================
+    id: 17149816619235840765
+    label: 
+      label: Customer Use Cases
+
+    layout: 
+      sequence: 320
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 104
+      - 105
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:104:&SESSION.::&DEBUG.::::'
+        page: 104 # Customer Use Cases
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Customer Use Case # 17140176199358517547
+
+  - # ====== Entry: Product Families =============================
+    id: 17785373164118027333
+    label: 
+      label: Product Families
+
+    layout: 
+      sequence: 350
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 112
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:112:&SESSION.::&DEBUG.:RP,RIR,112:::'
+        page: 112 # Product Families
+        clear-cache: RP,RIR,112
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Products and Services # 14978641932588597225
+
+  - # ====== Entry: Partners =====================================
+    id: 17800421475119994506
+    label: 
+      label: Partners
+
+    icon: 
+      image/icon-css-classes: fa-thumbs-o-up
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 115
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:115:&SESSION.::&DEBUG.::::'
+        page: 115 # Partners
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: Partners # 1362479409422679976
+
+  - # ====== Entry: Competitors ==================================
+    id: 17800590442576053365
+    label: 
+      label: Competitors
+
+    icon: 
+      image/icon-css-classes: fa-emoji-cringe
+
+    layout: 
+      sequence: 60
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 116
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:116:&SESSION.::&DEBUG.::::'
+        page: 116 # Competitors
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: View Competitors # 1382996476893427415
+
+    configuration: 
+      build-option: Competitors # 1359327821518655294
+
+  - # ====== Entry: Activity Types ===============================
+    id: 18167880488027683612
+    label: 
+      label: Activity Types
+
+    layout: 
+      sequence: 440
+      parent-entry: Code Tables # 14884378303860282458
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:53:&SESSION.::&DEBUG.:RP,RIR,53:::'
+        page: 53 # Activity Types
+        clear-cache: RP,RIR,53
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Activities # 18161405259992530478
+
+  - # ====== Entry: Activities [&ACTIVITIES.] ====================
+    id: 18168208023368782751
+    label: 
+      label: Activities [&ACTIVITIES.]
+
+    icon: 
+      image/icon-css-classes: fa-newspaper-o
+
+    layout: 
+      sequence: 80
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 55
+      - 56
+      - 145
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:55:&SESSION.::&DEBUG.:RP,RIR,55:::'
+        page: 55 # Activities
+        clear-cache: RP,RIR,55
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: Activities # 18161405259992530478
+
+  - # ====== Entry: Upload Customers =============================
+    id: 18169265820601896637
+    label: 
+      label: Upload Customers
+
+    layout: 
+      sequence: 500
+      parent-entry: Configuration # 14896248735890799758
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 125
+      - 126
+      - 127
+      - 128
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:125:&SESSION.::&DEBUG.::::'
+        page: 125 # Data Load Source
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Feedback =====================================
+    id: 18756091873234849405
+    label: 
+      label: Feedback
+
+    layout: 
+      sequence: 260
+      parent-entry: Administration # 14881819871387741225
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:119:&SESSION.::&DEBUG.:RP,119:::'
+        page: 119 # Review Feedback
+        clear-cache: RP,119
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Feedback # 18753787845013484146
+
+  - # ====== Entry: Logging ======================================
+    id: 18757933010320406961
+    label: 
+      label: Logging
+
+    layout: 
+      sequence: 250
+      parent-entry: Administration # 14881819871387741225
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: '#'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Email Logs ===================================
+    id: 18757984251122481387
+    label: 
+      label: Email Logs
+
+    layout: 
+      sequence: 550
+      parent-entry: Logging # 18757933010320406961
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:121:&SESSION.::&DEBUG.:RP,121:::'
+        page: 121 # Email Log
+        clear-cache: RP,121
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Feedback # 18753787845013484146
+
+  - # ====== Entry: Dashboard ====================================
+    id: 20269279024001415125
+    label: 
+      label: Dashboard
+
+    icon: 
+      image/icon-css-classes: fa-dial-gauge-chart
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.::::'
+        page: 1 # Dashboard
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+- # ====== List: customers =====================================
+  id: 14887215594271868528
+  identification: 
+    name: customers
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: SQL Query
+    sql-query: |
+      select the_level, label, 
+            apex_util.prepare_url('f?p='||:APP_ID||':50:'||:APP_SESSION||':::50:P50_ID:'||id) target,
+             'YES' is_current,
+             null image,
+             null image_attrib,
+             null image_alt,
+             a01,
+             a02,
+             a03
+      from
+      (
+      select null the_level,
+             a.customer_name label,
+             a.summary     a01,
+             c.status||', '||nvl((select INDUSTRY_NAME from EBA_CUST_INDUSTRIES i where i.id = a.INDUSTRY_ID),'')||decode(geography_name,null,null,', '|| geography_name)    a02,
+             upper(
+                decode(instr(a.customer_name,' '),
+                       0, 
+                       substr(a.customer_name,1,2),
+                       substr(a.customer_name,1,1)||substr(a.customer_name,instr(a.customer_name,' ')+1,1)
+                 )) a03,
+             a.id
+      from eba_cust_customers a,
+          eba_cust_categories b,
+          eba_cust_status c,
+          eba_cust_geographies d
+      where a.category_id = b.id(+)
+          and a.status_id = c.id(+)
+          and a.geography_id = d.id(+)
+          and (:P59_SEARCH is null or
+                  instr(upper(a.customer_name),upper(:P59_SEARCH)) > 0 or
+                             instr(upper(a.summary),upper(:P59_SEARCH)) > 0 )
+          and (NVL(:P59_GEO,0) = 0 or :P59_GEO = a.geography_id)
+          and (NVL(:P59_INDUSTRY,0) = 0 or  :P59_INDUSTRY = a.industry_id)
+          and (NVL(:P59_STATUS,0) = 0 or :P59_STATUS = a.status_id)
+      ) x
+      where rownum <= nvl(:P59_MAX_ROWS,200)
+      order by label
+      
+      
+
+- # ====== List: Navigation Bar ================================
+  id: 14896127078164405024
+  identification: 
+    name: Navigation Bar
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Help =========================================
+    id: 14896127656615405036
+    label: 
+      label: Help
+
+    icon: 
+      image/icon-css-classes: a-Icon icon-help
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1001:&SESSION.::&DEBUG.:1001:P1001_PAGE_ID:&APP_PAGE_ID.:'
+        page: 1001 # Page Help Dialog
+        clear-cache: 1001
+        values: 
+          p1001_page_id: '&APP_PAGE_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: &APP_USER. ===================================
+    id: 14896127883012405037
+    label: 
+      label: '&APP_USER.'
+
+    icon: 
+      image/icon-css-classes: a-Icon icon-user
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: '#'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      2.: has-username
+
+  - # ====== Entry: Preferences ==================================
+    id: 14896128222625405037
+    label: 
+      label: Preferences
+
+    icon: 
+      image/icon-css-classes: fa-heart
+
+    layout: 
+      sequence: 40
+      parent-entry: '&APP_USER.' # 14896127883012405037
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:65:&SESSION.::&DEBUG.::::'
+        page: 65 # Preferences
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Sign Out =====================================
+    id: 14896128557549405037
+    label: 
+      label: Sign Out
+
+    layout: 
+      sequence: 50
+      parent-entry: '&APP_USER.' # 14896127883012405037
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: '&LOGOUT_URL.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Feedback =====================================
+    id: 18754072738002516928
+    label: 
+      label: Feedback
+
+    icon: 
+      image/icon-css-classes: fa-comment-o
+
+    layout: 
+      sequence: 15
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:118:&SESSION.::&DEBUG.:118:P118_APPLICATION_ID,P118_PAGE_ID:&APP_ID.,&APP_PAGE_ID.:'
+        page: 118 # Feedback
+        clear-cache: 118
+        values: 
+          p118_application_id: '&APP_ID.'
+          p118_page_id: '&APP_PAGE_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: Feedback # 18753787845013484146
+
+- # ====== List: Preferences ===================================
+  id: 14896151932737525679
+  identification: 
+    name: Preferences
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Time Zone ====================================
+    id: 14896152118043525681
+    label: 
+      label: Time Zone
+
+    icon: 
+      image/icon-css-classes: fa-globe
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:76:&SESSION.::&DEBUG.::::'
+        page: 76 # Preferences
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Set my time zone preference for this application.
+      2.: switchIcon
+      3.: '&TZ.'
+
+- # ====== List: Customer Actions ==============================
+  id: 14922168855754126229
+  identification: 
+    name: Customer Actions
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Add Issue ====================================
+    id: 2588618755397304058
+    label: 
+      label: Add Issue
+
+    icon: 
+      image/icon-css-classes: fa-alert
+
+    layout: 
+      sequence: 22
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:129:&SESSION.::&DEBUG.:129:P129_CUSTOMER_ID:&P50_ID.:'
+        page: 129 # Customer Issue
+        clear-cache: 129
+        values: 
+          p129_customer_id: '&P50_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+    configuration: 
+      build-option: Issues # 2588670701787762510
+
+  - # ====== Entry: Add Contact ==================================
+    id: 14922169353606126231
+    label: 
+      label: Add Contact
+
+    icon: 
+      image/icon-css-classes: fa-user
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:37:&SESSION.::&DEBUG.:37:P37_CUSTOMER_ID:&P50_ID.:'
+        page: 37 # Customer Contact
+        clear-cache: 37
+        values: 
+          p37_customer_id: '&P50_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: Contacts # 14978649220461663676
+
+  - # ====== Entry: Add Product(s) ===============================
+    id: 14922169646904126231
+    label: 
+      label: Add Product(s)
+
+    icon: 
+      image/icon-css-classes: fa-square-o
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:68:&SESSION.::&DEBUG.:RP,68,RIR:P68_CUSTOMER_ID:&P50_ID.:'
+        page: 68 # Customer Product(s)
+        clear-cache: RP,68,RIR
+        values: 
+          p68_customer_id: '&P50_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: Products and Services # 14978641932588597225
+
+  - # ====== Entry: Add Update ===================================
+    id: 14922169892403126231
+    label: 
+      label: Add Update
+
+    icon: 
+      image/icon-css-classes: fa-comment-o
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:97:&SESSION.::&DEBUG.:97:P97_CUSTOMER_ID:&P50_ID.:'
+        page: 97 # Update
+        clear-cache: 97
+        values: 
+          p97_customer_id: '&P50_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Add Link =====================================
+    id: 14922170257576126232
+    label: 
+      label: Add Link
+
+    icon: 
+      image/icon-css-classes: fa-chain
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:66:&SESSION.::&DEBUG.:66:P66_CUSTOMER_ID:&P50_ID.:'
+        page: 66 # Link
+        clear-cache: 66
+        values: 
+          p66_customer_id: '&P50_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Add Attachment ===============================
+    id: 14922171926817134005
+    label: 
+      label: Add Attachment
+
+    icon: 
+      image/icon-css-classes: fa-paperclip
+
+    layout: 
+      sequence: 60
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:64:&SESSION.::&DEBUG.:64:P64_CUSTOMER_ID:&P50_ID.:'
+        page: 64 # Customer Attachment
+        clear-cache: 64
+        values: 
+          p64_customer_id: '&P50_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Referenceability =============================
+    id: 16886176416699475079
+    label: 
+      label: Referenceability
+
+    icon: 
+      image/icon-css-classes: fa-phone
+
+    layout: 
+      sequence: 15
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:96:&SESSION.::&DEBUG.:96:P96_ID:&P50_ID.:'
+        page: 96 # Customer Referenceability
+        clear-cache: 96
+        values: 
+          p96_id: '&P50_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+  - # ====== Entry: Add Partner(s) ===============================
+    id: 17771229004552621940
+    label: 
+      label: Add Partner(s)
+
+    icon: 
+      image/icon-css-classes: fa-thumbs-o-up
+
+    layout: 
+      sequence: 35
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:110:&SESSION.::&DEBUG.:RP,110,RIR:P110_CUSTOMER_ID:&P50_ID.:'
+        page: 110 # Implementation Partner(s)
+        clear-cache: RP,110,RIR
+        values: 
+          p110_customer_id: '&P50_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    configuration: 
+      build-option: Partners # 1362479409422679976
+
+  - # ====== Entry: Add Competitor(s) ============================
+    id: 17774071757211207767
+    label: 
+      label: Add Competitor(s)
+
+    icon: 
+      image/icon-css-classes: fa-emoji-cringe
+
+    layout: 
+      sequence: 36
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:111:&SESSION.::&DEBUG.:RP,111,RIR:P111_CUSTOMER_ID:&P50_ID.:'
+        page: 111 # Competitor(s)
+        clear-cache: RP,111,RIR
+        values: 
+          p111_customer_id: '&P50_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: View Competitors # 1382996476893427415
+
+    configuration: 
+      build-option: Competitors # 1359327821518655294
+
+  - # ====== Entry: Add Activity =================================
+    id: 18203829081083937711
+    label: 
+      label: Add Activity
+
+    icon: 
+      image/icon-css-classes: fa-newspaper-o
+
+    layout: 
+      sequence: 25
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:150:&SESSION.::&DEBUG.:150:P150_CUSTOMER_ID:&P50_ID.:'
+        page: 150 # Customer Activity
+        clear-cache: 150
+        values: 
+          p150_customer_id: '&P50_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+    configuration: 
+      build-option: Activities # 18161405259992530478
+
+- # ====== List: Data Load Process Train - customers ===========
+  id: 15708906423784430396
+  identification: 
+    name: Data Load Process Train - customers
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+- # ====== List: Administrative Code Tables ====================
+  id: 15866553752620694644
+  identification: 
+    name: Administrative Code Tables
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Issue Statuses ===============================
+    id: 2589022781160902046
+    label: 
+      label: Issue Statuses
+
+    icon: 
+      image/icon-css-classes: fa-alert
+
+    layout: 
+      sequence: 95
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:132:&SESSION.::&DEBUG.::::'
+        page: 132 # Issue Statuses
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage the domain of statuses a customer issue can be assigned to
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Issues # 2588670701787762510
+
+  - # ====== Entry: Reference Statuses ===========================
+    id: 14303510273963373947
+    label: 
+      label: Reference Statuses
+
+    icon: 
+      image/icon-css-classes: fa-tags
+
+    layout: 
+      sequence: 130
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:94:&SESSION.::&DEBUG.:RP:::'
+        page: 94 # Product Reference Statuses
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage the reference statuses for customer product assignments.
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Product Referencability # 14310859967654260855
+
+  - # ====== Entry: Categories ===================================
+    id: 15866554707419694645
+    label: 
+      label: Categories
+
+    icon: 
+      image/icon-css-classes: fa-bullseye
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 3
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.:RP:::'
+        page: 3 # Categories
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage the categories used to bucket customers.
+      2.: formIcon
+      3.: '&CNT_02.'
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Customer Types ===============================
+    id: 15866555138802694645
+    label: 
+      label: Customer Types
+
+    icon: 
+      image/icon-css-classes: fa-edit
+
+    layout: 
+      sequence: 60
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 5
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:5:&SESSION.::&DEBUG.:RP:::'
+        page: 5 # Customer Types
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage domain of customer types.
+      2.: formIcon
+      3.: '&CNT_03.'
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Contact Types ================================
+    id: 15866555486016694646
+    label: 
+      label: Contact Types
+
+    icon: 
+      image/icon-css-classes: fa-crosshairs
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 8
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:8:&SESSION.::&DEBUG.:RP:::'
+        page: 8 # Contact Types
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage domain of customer contact types.
+      2.: formIcon
+      3.: '&CNT_04.'
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Contacts # 14978649220461663676
+
+  - # ====== Entry: Reference Types ==============================
+    id: 15866555891042694646
+    label: 
+      label: Reference Types
+
+    icon: 
+      image/icon-css-classes: fa-group
+
+    layout: 
+      sequence: 140
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 78
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:78:&SESSION.::&DEBUG.:RP:::'
+        page: 78 # Reference Types
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage domain of customer reference types.
+
+    server-side-condition: 
+      type: Expression
+      language: PL/SQL
+      pl/sql-expression: |
+        APEX_UTIL.GET_BUILD_OPTION_STATUS(
+            P_APPLICATION_ID => :APP_ID,
+            P_BUILD_OPTION_NAME => 'Customer Referencability') = 'INCLUDE'
+        or
+        APEX_UTIL.GET_BUILD_OPTION_STATUS(
+            P_APPLICATION_ID => :APP_ID,
+            P_BUILD_OPTION_NAME => 'Product Referencability') = 'INCLUDE'
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Product Referencability # 14310859967654260855
+
+  - # ====== Entry: Products =====================================
+    id: 15866556367663694646
+    label: 
+      label: Products
+
+    icon: 
+      image/icon-css-classes: fa-tag
+
+    layout: 
+      sequence: 110
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 42
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:42:&SESSION.::&DEBUG.:RP:::'
+        page: 42 # Products
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage the list of available products that can be associated with a customer.
+      2.: formIcon
+      3.: '&CNT_05.'
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Products and Services # 14978641932588597225
+
+  - # ====== Entry: Geographies ==================================
+    id: 15866556697049694646
+    label: 
+      label: Geographies
+
+    icon: 
+      image/icon-css-classes: fa-globe
+
+    layout: 
+      sequence: 80
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 48
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:48:&SESSION.::&DEBUG.::::'
+        page: 48 # Geographies
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage the list of geographies used to organize customers.
+      2.: formIcon
+      3.: '&CNT_06.'
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Geography # 14978618648110331788
+
+  - # ====== Entry: Industries ===================================
+    id: 15866557164844694646
+    label: 
+      label: Industries
+
+    icon: 
+      image/icon-css-classes: fa-building-o
+
+    layout: 
+      sequence: 90
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:27:&SESSION.::&DEBUG.:RP:::'
+        page: 27 # Industry
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage the domain of industries a customer can be assigned to
+      2.: formIcon
+      3.: '&CNT_09.'
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Reference Phases =============================
+    id: 15866595356643723762
+    label: 
+      label: Reference Phases
+
+    icon: 
+      image/icon-css-classes: fa-moon-o
+
+    layout: 
+      sequence: 120
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:87:&SESSION.::&DEBUG.:RP:::'
+        page: 87 # Reference Phases
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage reference life cycle using phases.
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Customer Referencability # 14310801550925186703
+
+  - # ====== Entry: Sales Channels ===============================
+    id: 15866610923784814390
+    label: 
+      label: Sales Channels
+
+    icon: 
+      image/icon-css-classes: fa-exchange
+
+    layout: 
+      sequence: 150
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:89:&SESSION.::&DEBUG.:RP:::'
+        page: 89 # Sales Channel
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage domain of available sales channels
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Countries ====================================
+    id: 16953028856725141328
+    label: 
+      label: Countries
+
+    icon: 
+      image/icon-css-classes: fa-globe
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:98:&SESSION.::&DEBUG.:98,RIR:::'
+        page: 98 # Countries
+        clear-cache: 98,RIR
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage the list of countries used to organize customers.
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Countries # 16950233968074845408
+
+  - # ====== Entry: Customer Statuses ============================
+    id: 17024352504937215948
+    label: 
+      label: Customer Statuses
+
+    icon: 
+      image/icon-css-classes: fa-edit
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 5
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:102:&SESSION.::&DEBUG.:RP:::'
+        page: 102 # Customer Statuses
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage domain of customer statuses.
+      2.: formIcon
+      3.: '&CNT_03.'
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Customer Status # 17161977605374595769
+
+  - # ====== Entry: Customer Use Cases ===========================
+    id: 17149902571384913345
+    label: 
+      label: Customer Use Cases
+
+    icon: 
+      image/icon-css-classes: fa-check
+
+    layout: 
+      sequence: 70
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:104:&SESSION.::&DEBUG.::::'
+        page: 104 # Customer Use Cases
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage domain of customer use cases.
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Customer Use Case # 17140176199358517547
+
+  - # ====== Entry: Product Families =============================
+    id: 17785235870956023007
+    label: 
+      label: Product Families
+
+    icon: 
+      image/icon-css-classes: fa-tags
+
+    layout: 
+      sequence: 100
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 112
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:112:&SESSION.::&DEBUG.:RP,RIR,112:::'
+        page: 112 # Product Families
+        clear-cache: RP,RIR,112
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage the list of available product families that a product can belong to.
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Products and Services # 14978641932588597225
+
+  - # ====== Entry: Activity Types ===============================
+    id: 18162177548108649098
+    label: 
+      label: Activity Types
+
+    icon: 
+      image/icon-css-classes: fa-newspaper-o
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:53:&SESSION.::&DEBUG.:RP,RIR,53:::'
+        page: 53 # Activity Types
+        clear-cache: RP,RIR,53
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage the types of activities tracked by the system.
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Activities # 18161405259992530478
+
+- # ====== List: Data Load Process Train - contacts ============
+  id: 15910199445280915852
+  identification: 
+    name: Data Load Process Train - contacts
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Data Load Source =============================
+    id: 15910199818143915853
+    label: 
+      label: Data Load Source
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:60:&SESSION.::&DEBUG.::::'
+        page: 60 # Data Load Source
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+  - # ====== Entry: Data / Table Mapping =========================
+    id: 15910200145296915855
+    label: 
+      label: Data / Table Mapping
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:61:&SESSION.::&DEBUG.::::'
+        page: 61
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+  - # ====== Entry: Data Validation ==============================
+    id: 15910200424494915855
+    label: 
+      label: Data Validation
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:62:&SESSION.::&DEBUG.::::'
+        page: 62 # Data Validation
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+  - # ====== Entry: Data Load Results ============================
+    id: 15910200723876915855
+    label: 
+      label: Data Load Results
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:63:&SESSION.::&DEBUG.::::'
+        page: 63 # Data Load Results
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: Never
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+- # ====== List: Additional Administration =====================
+  id: 16368884436270753245
+  identification: 
+    name: Additional Administration
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Manage Notifications =========================
+    id: 16368884648293753246
+    label: 
+      label: Manage Notifications
+
+    icon: 
+      image/icon-css-classes: fa-comment
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:34:&SESSION.::&DEBUG.:RP,34:::'
+        page: 34 # Notifications
+        clear-cache: RP,34
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage application notification text displayed on home page.  Requires Administrative privilege.
+      2.: formIcon
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Manage Feedback ==============================
+    id: 18755533816918764084
+    label: 
+      label: Manage Feedback
+
+    icon: 
+      image/icon-css-classes: fa-comments-o
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:119:&SESSION.::&DEBUG.:RP,119:::'
+        page: 119 # Review Feedback
+        clear-cache: RP,119
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Report of all feedback left by application users. Feedback types include general comments, enhancement requests, and bugs.
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Feedback # 18753787845013484146
+
+- # ====== List: + Mobile Menu =================================
+  id: 16665499538346350570
+  identification: 
+    name: + Mobile Menu
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+- # ====== List: User Activity Reports =========================
+  id: 17815558558289687939
+  identification: 
+    name: User Activity Reports
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Application Activity by Page =================
+    id: 14978616037351306375
+    label: 
+      label: Application Activity by Page
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:24:&SESSION.::&DEBUG.:RP:::'
+        page: 24 # Application Activity by Page
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: 'Review application page performance and popularity.  A weighted page performance column multiplies page views by median rendering time. '
+      2.: Interactive Report
+
+  - # ====== Entry: Application Activity =========================
+    id: 14988736048692103528
+    label: 
+      label: Application Activity
+
+    icon: 
+      image/icon-css-classes: fa-calendar
+
+    layout: 
+      sequence: 5
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:46:&SESSION.::&DEBUG.::::'
+        page: 46 # Application Activity
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Monthly calendar reporting historical usage, number of users and number of page views by day.  Requires contributor rights.
+      2.: Monthly Calendar
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+  - # ====== Entry: Activity Calendar ============================
+    id: 16760083117502535382
+    label: 
+      label: Activity Calendar
+
+    icon: 
+      image/icon-css-classes: fa-calendar
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:21:&SESSION.::&DEBUG.:RP,21:::'
+        page: 21 # Activity Calendar
+        clear-cache: RP,21
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Summary of page views by user by day.  Requires contributor rights.
+      2.: Monthly Calendar
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+  - # ====== Entry: Top Users ====================================
+    id: 17815558755479687947
+    label: 
+      label: Top Users
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 23
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:23:&SESSION.::&DEBUG.::::'
+        page: 23 # User Activities
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Summary report of page view activity by user.  Requires contributor rights.
+      2.: Interactive Report
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+  - # ====== Entry: Page View Activity ===========================
+    id: 17827908840908310216
+    label: 
+      label: Page View Activity
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Pages
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:45:&SESSION.::&DEBUG.:RP:::'
+        page: 45 # Page View Activity
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Interactive report of each application page view.  Requires contributor rights.
+      2.: Interactive Report
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+- # ====== List: Load Customers Train ==========================
+  id: 17817327751677076507
+  identification: 
+    name: Load Customers Train
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+- # ====== List: Administration ================================
+  id: 17823826503912273514
+  identification: 
+    name: Administration
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Page Privileges ==============================
+    id: 14742638449003298663
+    label: 
+      label: Page Privileges
+
+    icon: 
+      image/icon-css-classes: fa-eye
+
+    layout: 
+      sequence: 100
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:26:&SESSION.::&DEBUG.:RP:::'
+        page: 26 # Page Privileges
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Report of the pages within this application and their corresponding access control security level.
+      2.: reportIcon
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Application Settings =========================
+    id: 14759789726123766666
+    label: 
+      label: Application Settings
+
+    icon: 
+      image/icon-css-classes: fa-pencil
+
+    layout: 
+      sequence: 700
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:28:&SESSION.::&DEBUG.:RP:::'
+        page: 28 # Application Settings
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Change the application settings including the name, displayed on the top left of each page, to one of your choosing. By default, the application name is "&APP_NAME.".
+      2.: formIcon
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Build Options ================================
+    id: 14959281944431462601
+    label: 
+      label: Build Options
+
+    icon: 
+      image/icon-css-classes: fa-adjust
+
+    layout: 
+      sequence: 5
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&SESSION.::&DEBUG.:RP:::'
+        page: 11 # Build Options
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Manage the status of build options. Build options allow application functionality to be included or excluded from an application.  Use build options to factor your application.
+      2.: formIcon
+      3.: '&CNT_07.'
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from apex_application_build_options
+         where application_id = :APP_ID
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Upload Customers =============================
+    id: 15019233085498375703
+    label: 
+      label: Upload Customers
+
+    icon: 
+      image/icon-css-classes: fa-cloud-upload
+
+    layout: 
+      sequence: 730
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:125:&SESSION.::&DEBUG.:125,126,127,128:::'
+        page: 125 # Data Load Source
+        clear-cache: 125,126,127,128
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Bulk add customers to the system using file upload from csv or cut and paste.
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Welcome Text =================================
+    id: 15090452535982945332
+    label: 
+      label: Welcome Text
+
+    icon: 
+      image/icon-css-classes: fa-comment-o
+
+    layout: 
+      sequence: 710
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:14:&SESSION.::&DEBUG.::::'
+        page: 14 # Welcome Text
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Define the welcome text that is displayed on application home page.
+      2.: formIcon
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Theme Style ==================================
+    id: 15257701456128605182
+    label: 
+      label: Theme Style
+
+    icon: 
+      image/icon-css-classes: fa-desktop
+
+    layout: 
+      sequence: 720
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:70:&SESSION.::&DEBUG.:RP:::'
+        page: 70 # Application Theme Style
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Change user interface theme style for all users.
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Manage Sample Data ===========================
+    id: 15408395579558228301
+    label: 
+      label: Manage Sample Data
+
+    icon: 
+      image/icon-css-classes: fa-database
+
+    layout: 
+      sequence: 80
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:77:&SESSION.::&DEBUG.::::'
+        page: 77 # Manage Sample Data
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Remove, create, or re-create sample data provided with this application.
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+- # ====== List: Reports =======================================
+  id: 17828062795377752816
+  identification: 
+    name: Reports
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Timeline =====================================
+    id: 2054631786227372834
+    label: 
+      label: Timeline
+
+    icon: 
+      image/icon-css-classes: fa-clock-o
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:124:&SESSION.::&DEBUG.::::'
+        page: 124 # Timeline
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Recent activity, changes to this customer repository
+
+  - # ====== Entry: Customer Detail ==============================
+    id: 14896715006459942782
+    label: 
+      label: Customer Detail
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.:RP:::'
+        page: 1 # Dashboard
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Customer detail report with options to download and subscribe.
+
+    server-side-condition: 
+      type: Never
+
+  - # ====== Entry: Customers by Category ========================
+    id: 15793461810215187978
+    label: 
+      label: Customers by Category
+
+    icon: 
+      image/icon-css-classes: fa-bar-chart
+
+    layout: 
+      sequence: 1
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:32:&SESSION.::&DEBUG.::::'
+        page: 32 # Customers by Category
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Chart of customer counts
+
+  - # ====== Entry: Customers by Geography =======================
+    id: 15793465981574223985
+    label: 
+      label: Customers by Geography
+
+    icon: 
+      image/icon-css-classes: fa-bar-chart
+
+    layout: 
+      sequence: 2
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:85:&SESSION.::&DEBUG.::::'
+        page: 85 # Geographies
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Chart of customer counts
+
+  - # ====== Entry: Customers by Reference Type ==================
+    id: 15794381323152341391
+    label: 
+      label: Customers by Reference Type
+
+    icon: 
+      image/icon-css-classes: fa-bar-chart
+
+    layout: 
+      sequence: 3
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:86:&SESSION.::&DEBUG.::::'
+        page: 86 # Referenceability
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: 'Chart of customer counts '
+
+    configuration: 
+      build-option: Customer Referencability # 14310801550925186703
+
+  - # ====== Entry: Updates ======================================
+    id: 16616359549590065462
+    label: 
+      label: Updates
+
+    icon: 
+      image/icon-css-classes: fa-calendar
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:22:&SESSION.::&DEBUG.:RP:::'
+        page: 22 # Updates
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: View date of last update to customers in a calendar format.  Use this report to see what customers have been recently updated.
+
+  - # ====== Entry: Recent Updates ===============================
+    id: 17828271105511253164
+    label: 
+      label: Recent Updates
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Pages
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:29:&SESSION.::&DEBUG.:RP,29:::'
+        page: 29 # Recent Activities
+        clear-cache: RP,29
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Recent activity, changes to this customer repository
+
+  - # ====== Entry: Tags =========================================
+    id: 17834873435278504083
+    label: 
+      label: Tags
+
+    icon: 
+      image/icon-css-classes: fa-tag
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Pages
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:40:&SESSION.::&DEBUG.:RP:::'
+        page: 40 # Tags
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Display tag clouds
+
+- # ====== List: Access Control ================================
+  id: 17829389448139804218
+  identification: 
+    name: Access Control
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: ACL Features =================================
+    id: 1382992462037262085
+    label: 
+      label: ACL Features
+
+    icon: 
+      image/icon-css-classes: fa-check-square-o
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:123:&SESSION.::&DEBUG.::::'
+        page: 123 # ACL Features
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: 'Manage the access levels required to access specific functionality. '
+
+    server-side-condition: 
+      type: Expression
+      language: PL/SQL
+      pl/sql-expression: eba_cust_fw.get_preference_value('ACCESS_CONTROL_ENABLED') = 'Y'
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Username Format ==============================
+    id: 14837848723861710495
+    label: 
+      label: Username Format
+
+    icon: 
+      image/icon-css-classes: fa-user
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:16:&SESSION.::&DEBUG.::::'
+        page: 16 # Username Format
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Define the username format for new users in this application.
+      2.: formIcon
+
+    server-side-condition: 
+      type: Never
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Access Control ===============================
+    id: 15948523819661846189
+    label: 
+      label: Access Control
+
+    icon: 
+      image/icon-css-classes: fa-key
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:130:&SESSION.::&DEBUG.::::'
+        page: 130 # Access Control Configuration
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Use to change the Access Control Scope or to disable Access Control.
+      2.: switchIcon
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Users ========================================
+    id: 15990193036202426818
+    label: 
+      label: Users
+
+    icon: 
+      image/icon-css-classes: fa-users
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:57:&SESSION.:57,RIR:&DEBUG.::::'
+        page: 57 # Access Control List
+        request: 57,RIR
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Administrators can define the domain of users and assign each a role.
+      2.: userIcon
+
+    server-side-condition: 
+      type: Expression
+      language: PL/SQL
+      pl/sql-expression: eba_cust_fw.get_preference_value('ACCESS_CONTROL_ENABLED') = 'Y'
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+- # ====== List: Welome Actions ================================
+  id: 18001966637924966460
+  identification: 
+    name: Welome Actions
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Add a New Customer ===========================
+    id: 18001966833735966463
+    label: 
+      label: Add a New Customer
+
+    icon: 
+      image/icon-css-classes: fa-user
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.:RP,2:::'
+        page: 2 # Customer Details
+        clear-cache: RP,2
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Start by adding your first customer.
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+  - # ====== Entry: Load Sample Data =============================
+    id: 18001967280023966465
+    label: 
+      label: Load Sample Data
+
+    icon: 
+      image/icon-css-classes: fa-download
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:77:&SESSION.::&DEBUG.::::'
+        page: 77 # Manage Sample Data
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Easily load and manage sample data.
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+- # ====== List: Data Load Process Train - customers-18131972262
+  id: 18155948605484456299
+  identification: 
+    name: Data Load Process Train - customers-1813197226293355060
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+- # ====== List: Data Load Process Train - Customers ===========
+  id: 18157461269041681274
+  identification: 
+    name: Data Load Process Train - Customers
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Data Load Source =============================
+    id: 18157461614888681276
+    label: 
+      label: Data Load Source
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:125:&SESSION.::&DEBUG.'
+        page: 125 # Data Load Source
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Data / Table Mapping =========================
+    id: 18157462009276681278
+    label: 
+      label: Data / Table Mapping
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:126:&SESSION.::&DEBUG.'
+        page: 126
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Data Validation ==============================
+    id: 18157462476438681279
+    label: 
+      label: Data Validation
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:127:&SESSION.::&DEBUG.'
+        page: 127 # Data Validation
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Data Load Results ============================
+    id: 18157462870079681279
+    label: 
+      label: Data Load Results
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:128:&SESSION.::&DEBUG.'
+        page: 128 # Data Load Results
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+- # ====== List: Data Load Process Train - Customers-18165028139
+  id: 18189004481930291876
+  identification: 
+    name: Data Load Process Train - Customers-1816502813937938617
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+- # ====== List: Activity Actions ==============================
+  id: 18196590846206235137
+  identification: 
+    name: Activity Actions
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Add Attachment ===============================
+    id: 18196593814468235146
+    label: 
+      label: Add Attachment
+
+    icon: 
+      image/icon-css-classes: fa-paperclip
+
+    layout: 
+      sequence: 60
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:114:&SESSION.::&DEBUG.:114:P114_ACTIVITY_ID:&P145_ID.:'
+        page: 114 # Activity Attachment
+        clear-cache: 114
+        values: 
+          p114_activity_id: '&P145_ID.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+- # ====== List: Administrative Logs ===========================
+  id: 18758101293912466108
+  identification: 
+    name: Administrative Logs
+
+  subscription: 
+    version-number: 1089051550
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Application Error Log ========================
+    id: 18758101435966466111
+    label: 
+      label: Application Error Log
+
+    icon: 
+      image/icon-css-classes: fa-alert
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:175:&SESSION.::&DEBUG.:RP,RIR,CIR:::'
+        page: 175 # Application Error Log
+        clear-cache: RP,RIR,CIR
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Report of all internal errors encountered within the application.
+      2.: reportIcon
+      3.: '&CNT_08.'
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+  - # ====== Entry: Application Email Log ========================
+    id: 18758101960110466115
+    label: 
+      label: Application Email Log
+
+    icon: 
+      image/icon-css-classes: fa-envelope-o
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:121:&SESSION.::&DEBUG.:RP,RIR,CIR:::'
+        page: 121 # Email Log
+        clear-cache: RP,RIR,CIR
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Report of all emails sent from the application.
+
+    security: 
+      authorization-scheme: ADMINISTRATION RIGHTS # 15698200031781635234
+
+    configuration: 
+      build-option: Feedback # 18753787845013484146
+

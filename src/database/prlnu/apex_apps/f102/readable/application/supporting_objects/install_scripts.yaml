@@ -1,0 +1,465 @@
+---
+- # ====== Install Script: Set First Run Preference ============
+  id: 1186460158462555500
+  identification: 
+    name: Set First Run Preference
+
+  execution: 
+    sequence: 560
+
+- # ====== Install Script: Create eba_cust_acl_features ========
+  id: 1382998840788474584
+  identification: 
+    name: Create eba_cust_acl_features
+
+  execution: 
+    sequence: 420
+
+- # ====== Install Script: populate eba_cust_acl_features ======
+  id: 1383043874740564083
+  identification: 
+    name: populate eba_cust_acl_features
+
+  execution: 
+    sequence: 570
+
+- # ====== Install Script: issues ==============================
+  id: 2588890490770375868
+  identification: 
+    name: issues
+
+  execution: 
+    sequence: 330
+
+- # ====== Install Script: customer after delete trigger =======
+  id: 4036965700932970870
+  identification: 
+    name: customer after delete trigger
+
+  execution: 
+    sequence: 580
+
+- # ====== Install Script: product statuses ====================
+  id: 14302778941525166812
+  identification: 
+    name: product statuses
+
+  execution: 
+    sequence: 260
+
+- # ====== Install Script: Click Counting Table ================
+  id: 14955991044622105153
+  identification: 
+    name: Click Counting Table
+
+  execution: 
+    sequence: 490
+
+- # ====== Install Script: Content Validation Table ============
+  id: 14956429341087611205
+  identification: 
+    name: Content Validation Table
+
+  execution: 
+    sequence: 500
+
+- # ====== Install Script: Reference Types =====================
+  id: 15633843690249633887
+  identification: 
+    name: Reference Types
+
+  execution: 
+    sequence: 270
+
+- # ====== Install Script: phase ===============================
+  id: 15841592888290585780
+  identification: 
+    name: phase
+
+  execution: 
+    sequence: 510
+
+- # ====== Install Script: eba_cust_sales_channel ==============
+  id: 15920049260374661781
+  identification: 
+    name: eba_cust_sales_channel
+
+  execution: 
+    sequence: 210
+
+- # ====== Install Script: eba_cust spec =======================
+  id: 15947995937912718999
+  identification: 
+    name: eba_cust spec
+
+  execution: 
+    sequence: 60
+
+- # ====== Install Script: eba_cust body =======================
+  id: 15948057328132735094
+  identification: 
+    name: eba_cust body
+
+  execution: 
+    sequence: 430
+
+- # ====== Install Script: load acl data =======================
+  id: 15949166420158007255
+  identification: 
+    name: load acl data
+
+  execution: 
+    sequence: 410
+
+- # ====== Install Script: notifications =======================
+  id: 16310541319722123280
+  identification: 
+    name: notifications
+
+  execution: 
+    sequence: 440
+
+- # ====== Install Script: notes ===============================
+  id: 16445869328504848467
+  identification: 
+    name: notes
+
+  execution: 
+    sequence: 450
+
+- # ====== Install Script: eba_cust_sample_data spec ===========
+  id: 16610746338724840582
+  identification: 
+    name: eba_cust_sample_data spec
+
+  execution: 
+    sequence: 70
+
+- # ====== Install Script: eba_cust_sample_data body ===========
+  id: 16610747041972850972
+  identification: 
+    name: eba_cust_sample_data body
+
+  execution: 
+    sequence: 460
+
+- # ====== Install Script: countries ===========================
+  id: 16617426819136252906
+  identification: 
+    name: countries
+
+  execution: 
+    sequence: 90
+
+- # ====== Install Script: history =============================
+  id: 16621787440642774156
+  identification: 
+    name: history
+
+  execution: 
+    sequence: 100
+
+- # ====== Install Script: eba_cust_customers trigger ==========
+  id: 16621803323486005738
+  identification: 
+    name: eba_cust_customers trigger
+
+  execution: 
+    sequence: 380
+
+- # ====== Install Script: view ================================
+  id: 16623681621411117833
+  identification: 
+    name: view
+
+  execution: 
+    sequence: 480
+
+- # ====== Install Script: timezone ============================
+  id: 16633851120222160069
+  identification: 
+    name: timezone
+
+  execution: 
+    sequence: 50
+
+- # ====== Install Script: Load base data ======================
+  id: 16634907832737818000
+  identification: 
+    name: Load base data
+
+  execution: 
+    sequence: 400
+
+- # ====== Install Script: lookup ==============================
+  id: 16683088449308720918
+  identification: 
+    name: lookup
+
+  execution: 
+    sequence: 120
+
+- # ====== Install Script: preferences =========================
+  id: 16683088625197723384
+  identification: 
+    name: preferences
+
+  execution: 
+    sequence: 130
+
+- # ====== Install Script: industries ==========================
+  id: 16683088834548726112
+  identification: 
+    name: industries
+
+  execution: 
+    sequence: 140
+
+- # ====== Install Script: geographies =========================
+  id: 16683089042513728391
+  identification: 
+    name: geographies
+
+  execution: 
+    sequence: 80
+
+- # ====== Install Script: categories ==========================
+  id: 16683089217710730700
+  identification: 
+    name: categories
+
+  execution: 
+    sequence: 150
+
+- # ====== Install Script: Customer Statuses ===================
+  id: 16683089424982732809
+  identification: 
+    name: Customer Statuses
+
+  execution: 
+    sequence: 160
+
+- # ====== Install Script: products ============================
+  id: 16683089632601735015
+  identification: 
+    name: products
+
+  execution: 
+    sequence: 200
+
+- # ====== Install Script: customers ===========================
+  id: 16683089818187740308
+  identification: 
+    name: customers
+
+  execution: 
+    sequence: 220
+
+- # ====== Install Script: product uses ========================
+  id: 16683090025806742527
+  identification: 
+    name: product uses
+
+  execution: 
+    sequence: 250
+
+- # ====== Install Script: contact types =======================
+  id: 16683090233424744727
+  identification: 
+    name: contact types
+
+  execution: 
+    sequence: 230
+
+- # ====== Install Script: contacts ============================
+  id: 16683090440697746748
+  identification: 
+    name: contacts
+
+  execution: 
+    sequence: 240
+
+- # ====== Install Script: customer files ======================
+  id: 16683090647277748733
+  identification: 
+    name: customer files
+
+  execution: 
+    sequence: 280
+
+- # ====== Install Script: customer links ======================
+  id: 16683090821435750736
+  identification: 
+    name: customer links
+
+  execution: 
+    sequence: 290
+
+- # ====== Install Script: customer view log ===================
+  id: 16683091029746753059
+  identification: 
+    name: customer view log
+
+  execution: 
+    sequence: 300
+
+- # ====== Install Script: customer admins =====================
+  id: 16683091237018755237
+  identification: 
+    name: customer admins
+
+  execution: 
+    sequence: 310
+
+- # ====== Install Script: tags ================================
+  id: 16683091446715757949
+  identification: 
+    name: tags
+
+  execution: 
+    sequence: 320
+
+- # ====== Install Script: error log ===========================
+  id: 16729826725050448555
+  identification: 
+    name: error log
+
+  execution: 
+    sequence: 20
+
+- # ====== Install Script: Framework Spec ======================
+  id: 16732104119528179315
+  identification: 
+    name: Framework Spec
+
+  execution: 
+    sequence: 30
+
+- # ====== Install Script: Framework Body ======================
+  id: 16732104325415181024
+  identification: 
+    name: Framework Body
+
+  execution: 
+    sequence: 390
+
+- # ====== Install Script: Set plscope_settings ================
+  id: 16786876019133541256
+  identification: 
+    name: Set plscope_settings
+
+  execution: 
+    sequence: 10
+
+- # ====== Install Script: Customer Types ======================
+  id: 17137356998017438528
+  identification: 
+    name: Customer Types
+
+  execution: 
+    sequence: 170
+
+- # ====== Install Script: Customer Use Cases ==================
+  id: 17140036266588514107
+  identification: 
+    name: Customer Use Cases
+
+  execution: 
+    sequence: 180
+
+- # ====== Install Script: Competitors =========================
+  id: 17735914187042678372
+  identification: 
+    name: Competitors
+
+  execution: 
+    sequence: 350
+
+- # ====== Install Script: Implementation Partners =============
+  id: 17735918719395624223
+  identification: 
+    name: Implementation Partners
+
+  execution: 
+    sequence: 340
+
+- # ====== Install Script: Product Families ====================
+  id: 17777807690579611538
+  identification: 
+    name: Product Families
+
+  execution: 
+    sequence: 190
+
+- # ====== Install Script: access levels and users =============
+  id: 17816077274010144224
+  identification: 
+    name: access levels and users
+
+  execution: 
+    sequence: 110
+
+- # ====== Install Script: add ddl comments ====================
+  id: 17816078284756184809
+  identification: 
+    name: add ddl comments
+
+  execution: 
+    sequence: 470
+
+- # ====== Install Script: create sequence =====================
+  id: 17817168356582781838
+  identification: 
+    name: create sequence
+
+  execution: 
+    sequence: 40
+
+- # ====== Install Script: create triggers =====================
+  id: 17830935751209998349
+  identification: 
+    name: create triggers
+
+  execution: 
+    sequence: 370
+
+- # ====== Install Script: Activities ==========================
+  id: 18158262714084881736
+  identification: 
+    name: Activities
+
+  execution: 
+    sequence: 360
+
+- # ====== Install Script: Feedback tables, data, and triggers =
+  id: 18752949265568284177
+  identification: 
+    name: Feedback tables, data, and triggers
+
+  execution: 
+    sequence: 520
+
+- # ====== Install Script: email log DDL =======================
+  id: 18757371057579286964
+  identification: 
+    name: email log DDL
+
+  execution: 
+    sequence: 530
+
+- # ====== Install Script: eba_cust_email package spec =========
+  id: 18757597687258364318
+  identification: 
+    name: eba_cust_email package spec
+
+  execution: 
+    sequence: 540
+
+- # ====== Install Script: eba_cust_email package body =========
+  id: 18757684797347380931
+  identification: 
+    name: eba_cust_email package body
+
+  execution: 
+    sequence: 550
+

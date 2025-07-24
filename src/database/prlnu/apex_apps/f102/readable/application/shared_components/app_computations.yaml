@@ -1,0 +1,183 @@
+---
+- # ====== Application Computation: APPLICATION_TITLE ==========
+  id: 14759782625574723732
+  identification: 
+    item-name: APPLICATION_TITLE
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Function Body
+    language: PL/SQL
+    pl/sql-function-body: |
+      declare
+          l_app_name varchar2(255);
+      begin
+          select nvl(preference_value,:APP_NAME)
+            into l_app_name
+            from eba_cust_preferences
+           where preference_name = 'APPLICATION_TITLE';
+          return l_app_name;
+      exception
+          when others then
+              return :APP_NAME;
+      end;
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Computation: CUSTOMER_TYPE_HELP =========
+  id: 17024490784582267289
+  identification: 
+    item-name: CUSTOMER_TYPE_HELP
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: htmldb_lang.message('CUSTOMER_TYPE_HELP');
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Computation: CUSTOMER_USE_CASE_HELP =====
+  id: 17149137290093751000
+  identification: 
+    item-name: CUSTOMER_USE_CASE_HELP
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: htmldb_lang.message('CONTACT_USE_CASE_HELP');
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Computation: CREATE_MSG =================
+  id: 17855378288778287409
+  identification: 
+    item-name: CREATE_MSG
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: htmldb_lang.message('CREATE');
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Computation: UNLINK_CONFIRM_MSG =========
+  id: 17857503983586349930
+  identification: 
+    item-name: UNLINK_CONFIRM_MSG
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: htmldb_lang.message('UNLINK_CONFIRMATION');
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Computation: ACTIVE_MSG =================
+  id: 17858237584563153907
+  identification: 
+    item-name: ACTIVE_MSG
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: htmldb_lang.message('ACTIVE');
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Computation: INACTIVE_MSG ===============
+  id: 17858238293913156564
+  identification: 
+    item-name: INACTIVE_MSG
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: htmldb_lang.message('INACTIVE');
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Computation: CATEGORY_HELP ==============
+  id: 17858261981034323145
+  identification: 
+    item-name: CATEGORY_HELP
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: htmldb_lang.message('CATEGORY_HELP');
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Computation: CUSTOMER_STATUS_HELP =======
+  id: 17858262696272327541
+  identification: 
+    item-name: CUSTOMER_STATUS_HELP
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: htmldb_lang.message('CUSTOMER_STATUS_HELP');
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Application Computation: CONTACT_TYPES_HELP =========
+  id: 17858263101813329134
+  identification: 
+    item-name: CONTACT_TYPES_HELP
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: htmldb_lang.message('CONTACT_TYPES_HELP');
+
+  subscription: 
+    version-number: 37166093824741
+

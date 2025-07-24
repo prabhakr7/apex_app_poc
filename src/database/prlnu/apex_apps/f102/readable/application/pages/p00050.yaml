@@ -1,0 +1,8139 @@
+---
+# ====== Page: Customer ======================================
+id: 50
+identification: 
+  name: Customer
+  alias: CUSTOMER
+  title: Customer
+  page-group: Customers # 14742626823242276921
+
+appearance: 
+  page-mode: Normal
+  page-template: Marquee
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+javascript: 
+  function-and-global-variable-declaration: var htmldb_delete_message='"DELETE_CONFIRM_MSG"';
+  execute-when-page-loads: "$('dd.t-AVPList-value img').attr('style','max-height:250px;max-width:500px;');"
+
+css: 
+  inline: |
+    .js-dynamicHideShowRegion { display: none }
+    .apex-rds { visibility: hidden }
+    .t-Report--cleanBorders .t-Report-colHead { border-bottom: 1px solid rgba(0, 0, 0, .05); background-color: #fcfcfc; color: #707070; font-weight: normal; padding-bottom: .8rem; padding-top: .8rem }
+    .t-Report--cleanBorders .js-stickyTableHeader.is-stuck .t-Report-colHead { border-bottom: 0; }
+    .t-Report--cleanBorders .t-Report-cell { border-top: 1px solid #F4F4F4; }
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Details =====================================
+  id: 170325164586725168
+  identification: 
+    name: Details
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+         a.id,
+         a.status_id,
+         a.parent_customer_id,
+         ( select p.customer_name from eba_cust_customers p where p.id = a.parent_customer_id ) parent_customer,
+         a.type_id,
+         a.use_case_id,
+         a.strategic_customer_program_yn,
+         customer_name,
+         sys.dbms_lob.substr(customer_profile,100,1) customer_profile,
+         /*case when a.logo_mimetype like 'image%' then
+             '<img src="'||APEX_UTIL.GET_BLOB_FILE_SRC (
+                 p_item_name => 'P2_LOGO_BLOB',
+                 p_v1        => :P50_ID,
+                 p_content_disposition => 'inline')||'" />'
+         else
+             '<a href="'||APEX_UTIL.GET_BLOB_FILE_SRC (
+                 p_item_name => 'P2_LOGO_BLOB',
+                 p_v1        => :P50_ID,
+                 p_content_disposition => 'attachment')||'">Download</a>'
+         end as logo,
+      */
+         --dbms_lob.getlength(logo_blob) logo,
+         category,
+         a.created,
+         geography_name,
+         country_id,
+         (select INDUSTRY_NAME 
+          from EBA_CUST_INDUSTRIES i
+          where a.industry_id = i.id) industry,
+         referencable,
+         number_of_users,
+         stock_symbol,
+         sic,
+         duns,
+         (select channel from eba_cust_sales_channel where id = a.sales_channel_id) sales_channel_id,
+         marquee_customer_yn,
+         trim(decode(web_site,null,null,'<a href="'||apex_escape.html(web_site)||'" target="_blank">'||
+           apex_escape.html(web_site)||'</a>')||' '||
+           decode(Facebook,null,null,'<a href="'||apex_escape.html(Facebook)||'" target="_blank">Facebook</a>')||' '||
+           decode(linkedIn,null,null,'<a href="'||apex_escape.html(LinkedIn)||'" target="_blank">LinkedIn</a>')||' '||
+           decode(twitter,null,null,'<a href="'||apex_escape.html(twitter)||'" target="_blank">twitter</a>')
+         ) web_site,
+         --(select listagg(p.product_name, ', ') within group (order by p.product_name) product_uses
+         -- from eba_cust_customers c, eba_cust_product_uses u, eba_cust_products p
+         -- where c.id = u.customer_id
+         -- and u.product_id = p.id
+         -- and c.id = a.id
+         --  group by c.customer_name
+         --) product_uses,
+          (   select listagg(rt.reference_type, ', ') within group (order by rt.reference_type) reference_types
+              from eba_cust_reference_types rt, eba_cust_customer_reftype_ref ref
+              where ref.customer_id = a.id
+                  and rt.id = ref.reference_type_id
+          ) reference_types,
+          (select status from EBA_CUST_REF_PHASE p where p.id = a.reference_phase_id) reference_phase,
+          a.REF_RECRUITMENT_OWNER,
+          (   select listagg(pf.name, ', ') within group (order by pf.name)
+              from eba_cust_product_families pf
+              where pf.id in (select p.product_family_id
+                              from eba_cust_product_uses pu,
+                                  eba_cust_products p
+                              where pu.customer_id = a.id
+                                  and p.id = pu.product_id
+                                  and p.product_family_id is not null)
+          ) product_familes,
+          a.updated,
+          lower(a.updated_by) updated_by
+      from
+         eba_cust_customers a , eba_cust_categories b, eba_cust_status c, eba_cust_geographies d
+      where 
+         a.category_id = b.id (+) and 
+         a.status_id = c.id (+) and 
+         a.geography_id = d.id (+) and
+         a.id = :P50_ID
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 110
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: DETAILS
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Value Attribute Pairs - Column
+      template-options: 
+      - '#DEFAULT#'
+      - t-AVPList--leftAligned
+      css-classes: 
+      - t-Report--cleanBorders
+      show-null-values-as: ' - '
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: WEB_SITE ====================================
+    id: 170326974062725186
+    identification: 
+      column-name: WEB_SITE
+      type: Plain Text
+
+    heading: 
+      heading: Web Site(s)
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: 'select 1 from eba_cust_customers where id = :P50_ID and web_site is not null'
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: REFERENCE_TYPES =============================
+    id: 170327034130725187
+    identification: 
+      column-name: REFERENCE_TYPES
+      type: Hidden
+
+    layout: 
+      sequence: 4
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from dual
+         where (
+                select listagg(rt.reference_type, ', ') within group (order by rt.reference_type)
+                  from eba_cust_reference_types rt, eba_cust_customer_reftype_ref ref
+                 where ref.customer_id = :P50_ID
+                   and rt.id = ref.reference_type_id
+               ) is not null
+            and (APEX_UTIL.GET_BUILD_OPTION_STATUS(
+            P_APPLICATION_ID => :APP_ID,
+            P_BUILD_OPTION_NAME => 'Customer Referencability') = 'INCLUDE' or APEX_UTIL.GET_BUILD_OPTION_STATUS(
+            P_APPLICATION_ID => :APP_ID,
+            P_BUILD_OPTION_NAME => 'Product Referencability') = 'INCLUDE')
+
+    security: 
+      escape-special-characters: true
+
+    comments: 
+      comments: |
+        select 1
+        from eba_cust_customers
+        where referencable != 'No' and referencable is not null and id = :P50_ID
+
+  - # ====== Column: ID ==========================================
+    id: 170327142680725188
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 5
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS_ID ===================================
+    id: 1129841543816753650
+    identification: 
+      column-name: STATUS_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Status
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: 'STATUS ' # 14887281441510221666
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARENT_CUSTOMER_ID ==========================
+    id: 1172033679755556939
+    identification: 
+      column-name: PARENT_CUSTOMER_ID
+      type: Link
+
+    heading: 
+      heading: Parent
+      alignment: start
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:50:&SESSION.::&DEBUG.:RP,50:P50_ID:#PARENT_CUSTOMER_ID#'
+        page: 50 # Customer
+        clear-cache: RP,50
+        values: 
+          p50_id: '#PARENT_CUSTOMER_ID#'
+
+      link-text: '#PARENT_CUSTOMER#'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+        from eba_cust_customers c
+        where c.id = :P50_ID
+            and c.parent_customer_id is not null
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARENT_CUSTOMER =============================
+    id: 1172033724574556940
+    identification: 
+      column-name: PARENT_CUSTOMER
+      type: Hidden
+
+    layout: 
+      sequence: 7
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE_ID =====================================
+    id: 1172033871550556941
+    identification: 
+      column-name: TYPE_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Type
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: TYPE # 17063710972847568362
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and type_id is not null
+           and 'Include' = (select build_option_status
+          from apex_application_build_options
+         where build_option_name = 'Customer Status'
+           and application_id = :APP_ID)
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: USE_CASE_ID =================================
+    id: 1172033925675556942
+    identification: 
+      column-name: USE_CASE_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Use Case
+      alignment: start
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: USE_CASE # 17149970484050930458
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and use_case_id is not null
+           and 'Include' = (select build_option_status
+          from apex_application_build_options
+         where build_option_name = 'Customer Use Case'
+           and application_id = :APP_ID)
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STRATEGIC_CUSTOMER_PROGRAM_YN ===============
+    id: 1172034024293556943
+    identification: 
+      column-name: STRATEGIC_CUSTOMER_PROGRAM_YN
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Strategic Customer Program
+      alignment: start
+
+    layout: 
+      sequence: 9
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: Y_OR_N # 17824903739886134846
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and strategic_customer_program_yn is not null
+           and 'Include' = (select build_option_status
+          from apex_application_build_options
+         where build_option_name = 'Strategic Customer Program'
+           and application_id = :APP_ID)
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CUSTOMER_NAME ===============================
+    id: 1172034173342556944
+    identification: 
+      column-name: CUSTOMER_NAME
+      type: Hidden
+
+    layout: 
+      sequence: 10
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CUSTOMER_PROFILE ============================
+    id: 1172034280993556945
+    identification: 
+      column-name: CUSTOMER_PROFILE
+      type: Plain Text
+
+    heading: 
+      heading: Profile
+      alignment: start
+
+    layout: 
+      sequence: 15
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+        from eba_cust_customers
+        where id = :P50_ID
+            and customer_profile is not null
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CATEGORY ====================================
+    id: 1172034567304556948
+    identification: 
+      column-name: CATEGORY
+      type: Plain Text
+
+    heading: 
+      heading: Category
+      alignment: start
+
+    layout: 
+      sequence: 13
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and category_id is not null
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CREATED =====================================
+    id: 1172034628691556949
+    identification: 
+      column-name: CREATED
+      type: Hidden
+
+    layout: 
+      sequence: 43
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEOGRAPHY_NAME ==============================
+    id: 1172034806973556950
+    identification: 
+      column-name: GEOGRAPHY_NAME
+      type: Plain Text
+
+    heading: 
+      heading: Geography
+      alignment: start
+
+    layout: 
+      sequence: 16
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Function Body
+      language: PL/SQL
+      pl/sql-function-body: |
+        declare
+            l_geography_id number;
+        begin
+            begin
+            select geography_id
+              into l_geography_id
+              from eba_cust_customers
+             where id = :P50_ID;
+            exception when no_data_found then
+                l_geography_id := null;
+                return false;
+            end;
+            return (wwv_flow_utilities.is_build_option_enabled('Geography') and l_geography_id is not null);
+        end;
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COUNTRY_ID ==================================
+    id: 1172034869135556951
+    identification: 
+      column-name: COUNTRY_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Country
+      alignment: start
+
+    layout: 
+      sequence: 17
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: COUNTRIES # 16895159926954835159
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Function Body
+      language: PL/SQL
+      pl/sql-function-body: |
+        declare
+            l_country_id number;
+        begin
+            select country_id
+              into l_country_id
+              from eba_cust_customers
+             where id = :P50_ID;
+            return (wwv_flow_utilities.is_build_option_enabled('Countries') and l_country_id is not null);
+        end;
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INDUSTRY ====================================
+    id: 1172034979932556952
+    identification: 
+      column-name: INDUSTRY
+      type: Plain Text
+
+    heading: 
+      heading: Industry
+      alignment: start
+
+    layout: 
+      sequence: 14
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and industry_id is not null
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: REFERENCE_PHASE =============================
+    id: 1172035044887556953
+    identification: 
+      column-name: REFERENCE_PHASE
+      type: Hidden
+
+    layout: 
+      sequence: 19
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and reference_phase_id is not null
+           and APEX_UTIL.GET_BUILD_OPTION_STATUS(
+            P_APPLICATION_ID => :APP_ID,
+            P_BUILD_OPTION_NAME => 'Customer Referencability') = 'INCLUDE'
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: REF_RECRUITMENT_OWNER =======================
+    id: 1172035121807556954
+    identification: 
+      column-name: REF_RECRUITMENT_OWNER
+      type: Hidden
+
+    layout: 
+      sequence: 20
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select 1
+        from EBA_CUST_CUSTOMERS
+        where id = :P50_ID 
+        and REF_RECRUITMENT_OWNER is not null
+        and APEX_UTIL.GET_BUILD_OPTION_STATUS(
+            P_APPLICATION_ID => :APP_ID,
+            P_BUILD_OPTION_NAME => 'Customer Referencability') = 'INCLUDE'
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRODUCT_FAMILES =============================
+    id: 1172035300922556955
+    identification: 
+      column-name: PRODUCT_FAMILES
+      type: Plain Text
+
+    heading: 
+      heading: Product Families
+      alignment: start
+
+    layout: 
+      sequence: 21
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+        from eba_cust_product_uses pu,
+            eba_cust_products p
+        where pu.customer_id = :P50_ID
+            and p.id = pu.product_id
+            and p.product_family_id is not null
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: UPDATED =====================================
+    id: 1172035380964556956
+    identification: 
+      column-name: UPDATED
+      type: Plain Text
+
+    heading: 
+      heading: Last Updated
+      alignment: center
+
+    layout: 
+      sequence: 44
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: UPDATED_BY ==================================
+    id: 1172035414444556957
+    identification: 
+      column-name: UPDATED_BY
+      type: Hidden
+
+    layout: 
+      sequence: 45
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NUMBER_OF_USERS =============================
+    id: 1172035565167556958
+    identification: 
+      column-name: NUMBER_OF_USERS
+      type: Plain Text
+
+    heading: 
+      heading: Number of Users
+      alignment: start
+
+    layout: 
+      sequence: 22
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Function Body
+      language: PL/SQL
+      pl/sql-function-body: |
+        declare
+           c int;
+           is_not_null boolean default false;
+           is_enabled boolean default true;
+        begin
+        for c1 in (select 1 from eba_cust_customers where id = :P50_ID and number_of_users is not null) loop
+           is_not_null := true;
+        end loop;
+        is_enabled := wwv_flow_utilities.is_build_option_enabled('Number_of_users');
+        if is_not_null and is_enabled then return true; else return false; end if;
+        end;
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STOCK_SYMBOL ================================
+    id: 1172035801423556960
+    identification: 
+      column-name: STOCK_SYMBOL
+      type: Plain Text
+
+    heading: 
+      heading: Stock Symbol
+      alignment: start
+
+    layout: 
+      sequence: 18
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and stock_symbol is not null
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SIC =========================================
+    id: 1172035831287556961
+    identification: 
+      column-name: SIC
+      type: Plain Text
+
+    heading: 
+      heading: SIC Code
+      alignment: start
+
+    layout: 
+      sequence: 23
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and sic is not null
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DUNS ========================================
+    id: 1172035967080556962
+    identification: 
+      column-name: DUNS
+      type: Plain Text
+
+    heading: 
+      heading: DUNS Identifier
+      alignment: start
+
+    layout: 
+      sequence: 24
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and duns is not null
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALES_CHANNEL_ID ============================
+    id: 1172036022194556963
+    identification: 
+      column-name: SALES_CHANNEL_ID
+      type: Plain Text
+
+    heading: 
+      heading: Sales Channel
+      alignment: start
+
+    layout: 
+      sequence: 25
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and sales_channel_id is not null
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MARQUEE_CUSTOMER_YN =========================
+    id: 1172036175923556964
+    identification: 
+      column-name: MARQUEE_CUSTOMER_YN
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Marquee Customer
+      alignment: start
+
+    layout: 
+      sequence: 11
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: Y_OR_N # 17824903739886134846
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and marquee_customer_yn is not null
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: REFERENCABLE ================================
+    id: 1172036290959556965
+    identification: 
+      column-name: REFERENCABLE
+      type: Hidden
+
+    layout: 
+      sequence: 12
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and REFERENCABLE is not null
+           and APEX_UTIL.GET_BUILD_OPTION_STATUS(
+            P_APPLICATION_ID => :APP_ID,
+            P_BUILD_OPTION_NAME => 'Customer Referencability') = 'INCLUDE'
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Customer Account ============================
+  id: 1120133876641135565
+  identification: 
+    name: Customer Account
+    type: Badge List
+
+  source: 
+    sql-query: |
+      select
+        'Discount Level' label,
+        to_char(nvl(DISCOUNT_LEVEL,0),'999G999G999G999G999G999G990') || '%' return_val
+      from
+         eba_cust_customers
+      where 
+         id = :P50_ID and nvl(DISCOUNT_LEVEL,0) != 0
+      union all
+      select
+        'Total Contract Value (TCV)' label,
+        '$' || to_char(nvl(TOTAL_CONTRACT_VALUE,0),'999G999G999G999G999G999G990') return_val
+      from
+         eba_cust_customers
+      where 
+         id = :P50_ID and nvl(TOTAL_CONTRACT_VALUE,0) != 0
+      union all
+      select
+        'Annual Recurring Revenue (ARR)' label,
+        '$' || to_char(nvl(annual_recurring_revenue,0),'999G999G999G999G999G999G990') return_val
+      from
+         eba_cust_customers
+      where 
+         id = :P50_ID and nvl(annual_recurring_revenue,0) != 0
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      badge-style: Default
+      value: RETURN_VAL
+      bottom-label: LABEL
+      layout: Fit to Page
+      color: No
+
+- # ====== Region: Customer Summary ============================
+  id: 1343812102456139948
+  identification: 
+    name: Customer Summary
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: |
+      begin
+      
+      for c1 in (
+      select
+         summary
+      from
+         eba_cust_customers
+      where
+         id = :P50_ID
+      ) loop
+      
+      sys.htp.p('<p>'||apex_escape.html(c1.summary)||'</p>');
+      
+      end loop;
+      
+      end;
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - margin-md
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select null
+        from eba_cust_customers
+       where id = :P50_ID
+         and summary is not null
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+- # ====== Region: Issues ======================================
+  id: 2337564365080495684
+  identification: 
+    name: Issues
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+          id,
+          name,
+          status_id,
+          product_id,
+          issue_type,
+          created,
+          created_by,
+          updated,
+          lower(updated_by) as updated_by
+      from
+          eba_cust_issues
+      where
+          customer_id = :P50_ID
+      order by updated
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--scrollBody
+    css-classes: 
+    - js-dynamicHideShowRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: rptIssues
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select
+          null
+      from
+          eba_cust_issues
+      where
+          customer_id = :P50_ID
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Issues # 2588670701787762510
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--noBorders
+      css-classes: 
+      - t-Report--cleanBorders
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: STATUS_ID ===================================
+    id: 1882094038790290661
+    identification: 
+      column-name: STATUS_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Status
+      alignment: start
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ISSUE STATUSES # 2588916920524587073
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 2337564481593495685
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:129:&SESSION.::&DEBUG.:129:P129_ID:#ID#'
+        page: 129 # Customer Issue
+        clear-cache: 129
+        values: 
+          p129_id: '#ID#'
+
+      link-text: '<img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="Edit #NAME#">'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NAME ========================================
+    id: 2337564526167495686
+    identification: 
+      column-name: NAME
+      type: Plain Text
+
+    heading: 
+      heading: Name
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ISSUE_TYPE ==================================
+    id: 2337564641203495687
+    identification: 
+      column-name: ISSUE_TYPE
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Issue Type
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ISSUE TYPES # 2588619518233331974
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CREATED =====================================
+    id: 2337564777460495688
+    identification: 
+      column-name: CREATED
+      type: Hidden
+
+    layout: 
+      sequence: 6
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CREATED_BY ==================================
+    id: 2588621321509373839
+    identification: 
+      column-name: CREATED_BY
+      type: Hidden
+
+    layout: 
+      sequence: 7
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: UPDATED =====================================
+    id: 2588621425807373840
+    identification: 
+      column-name: UPDATED
+      type: Plain Text
+
+    heading: 
+      heading: Updated
+      alignment: end
+
+    layout: 
+      sequence: 9
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: SINCE
+
+    column-formatting: 
+      html-expression: '#UPDATED# &bull; #UPDATED_BY#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: UPDATED_BY ==================================
+    id: 2588621593032373841
+    identification: 
+      column-name: UPDATED_BY
+      type: Hidden
+
+    layout: 
+      sequence: 8
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRODUCT_ID ==================================
+    id: 2588624200483373867
+    identification: 
+      column-name: PRODUCT_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Product
+      alignment: start
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: PRODUCTS # 16953479276333261491
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Tags ========================================
+  id: 14846589523782973709
+  identification: 
+    name: Tags
+    type: Tag Cloud
+
+  source: 
+    sql-query: |
+      select
+          t.tag, 
+          (select TAG_COUNT from eba_cust_tags_sum x where x.tag = t.tag) tag_count
+      from
+          EBA_CUST_TAGS t,
+          eba_cust_tags_type_sum s
+      where
+          t.content_id = :P50_ID
+      and
+          s.tag = t.tag
+      and
+          s.content_type = 'CUSTOMER'
+
+  layout: 
+    sequence: 130
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - js-dynamicHideShowRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      link-target: 
+        url: 'f?p=&APP_ID.:59:&SESSION.::&DEBUG.:RIR:IRC_TAGS,P59_DISPLAY_AS:#TAG#,REPORT'
+        page: 59 # Customers
+        clear-cache: RIR
+        values: 
+          irc_tags: '#TAG#'
+          p59_display_as: REPORT
+
+      show-count: true
+
+    messages: 
+      when-no-data-found: No tags found.
+
+- # ====== Region: Page Actions ================================
+  id: 14859305906520705426
+  identification: 
+    name: Page Actions
+    type: List
+
+  source: 
+    list: Customer Actions # 14922168855754126229
+
+  layout: 
+    sequence: 120
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--stacked
+    - t-Region--hiddenOverflow
+    - t-Form--stretchInputs
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: listPageActions
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Links List
+      template-options: 
+      - '#DEFAULT#'
+      - t-LinksList--actions
+      - t-LinksList--showIcons
+
+- # ====== Region: Region display selector =====================
+  id: 14881924186520919116
+  identification: 
+    name: Region display selector
+    type: Region Display Selector
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      mode: View Single Region
+      display-region-icons: false
+      include-'show-all': true
+      remember-selection: No
+
+- # ====== Region: Customer Added ==============================
+  id: 14897244334173337215
+  identification: 
+    name: Customer Added
+    type: Mini Calendar
+
+  source: 
+    sql-query: |
+      select created, 'Customer Added' lbl
+      from eba_cust_customers
+      where id = :P50_ID
+
+  layout: 
+    sequence: 170
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hiddenOverflow
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Never
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      date-column: CREATED
+      label-column: LBL
+
+- # ====== Region: Usage Metrics - 90 days =====================
+  id: 14955992546054133919
+  identification: 
+    name: Usage Metrics - 90 days
+    type: Badge List
+
+  source: 
+    sql-query: |
+      select
+          count(*) c,
+          'Views' l,
+          1 disp
+      from
+          eba_cust_clicks
+      where
+          cust_id = :P50_ID 
+      and
+          view_timestamp > sysdate - 90
+      UNION
+      select
+          count(distinct app_username)  c,
+          'Users' l,
+          2 disp
+      from
+          eba_cust_clicks
+      where
+          cust_id = :P50_ID 
+      and
+          view_timestamp > sysdate - 90
+      order by disp    
+
+  layout: 
+    sequence: 160
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      badge-style: Circular
+      value: C
+      bottom-label: L
+      link-target: 
+        url: 'f?p=&APP_ID.:13:&APP_SESSION.:::13:P13_ID:&P50_ID.'
+        page: 13 # Customer Usage Metrics
+        clear-cache: 13
+        values: 
+          p13_id: '&P50_ID.'
+
+      layout: 2 columns
+      badge-size: Large
+      color: No
+
+- # ====== Region: Validations =================================
+  id: 14956437923865662955
+  identification: 
+    name: Validations
+    type: Validate Content
+
+  source: 
+    sql-query: |
+      select
+          verified_by,
+          created
+      from
+          eba_cust_verifications
+      where
+          cust_id = :P50_ID
+      order by
+          created desc
+
+  layout: 
+    sequence: 150
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hiddenOverflow
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Validations Widget # 14959251936995293720
+
+  attributes: 
+    settings: 
+      validation-link: 
+        url: 'f?p=&APP_ID.:10:&SESSION.::&DEBUG.:RP,10:P10_ID,LAST_VIEW:&P50_ID.,50'
+        page: 10 # Validate Customer
+        clear-cache: RP,10
+        values: 
+          p10_id: '&P50_ID.'
+          last_view: 50
+
+- # ====== Region: Customer Validations ========================
+  id: 14956438434039675381
+  identification: 
+    name: Customer Validations
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      	lower(verified_by) as validated_by,
+              created last_validated,
+      	created validation_date,
+      	verification_comment
+      from
+      	eba_cust_verifications
+      where
+      	cust_id = :P50_ID
+      order by
+      	created desc
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 180
+    parent-region: No Parent
+    slot: REGION_POSITION_04
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Inline Dialog
+    template-options: 
+    - '#DEFAULT#'
+    - js-dialog-size600x400
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: view_validations
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 4
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: ' - '
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    messages: 
+      when-no-data-found: No validations have been recorded
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: VALIDATED_BY ================================
+    id: 14956438731578675399
+    identification: 
+      column-name: VALIDATED_BY
+      type: Plain Text
+
+    heading: 
+      heading: Validated By
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VALIDATION_DATE =============================
+    id: 14956438837815675403
+    identification: 
+      column-name: VALIDATION_DATE
+      type: Plain Text
+
+    heading: 
+      heading: Validation Date
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: DD-MON-YYYY
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VERIFICATION_COMMENT ========================
+    id: 14956438936568675403
+    identification: 
+      column-name: VERIFICATION_COMMENT
+      type: Plain Text
+
+    heading: 
+      heading: Comment
+      alignment: start
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LAST_VALIDATED ==============================
+    id: 14956499233917272972
+    identification: 
+      column-name: LAST_VALIDATED
+      type: Plain Text
+
+    heading: 
+      heading: Last Validated
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: since
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Content Completeness ========================
+  id: 14959169527348432275
+  identification: 
+    name: Content Completeness
+    type: Completeness
+
+  source: 
+    sql-query: |
+      select
+          metric,
+          the_score,
+          max_value 
+      from
+          (
+              select  'Customer is publicly referenceable' metric, 
+                      decode(referencable,null,0,10) the_score,
+                      10 max_value
+              from eba_cust_customers where id = :P50_ID and APEX_UTIL.GET_BUILD_OPTION_STATUS(P_APPLICATION_ID => :APP_ID, P_BUILD_OPTION_NAME => 'Customer Referencability') = 'INCLUDE'
+              union all
+              select  'Customer is marquee customer' metric, 
+                      decode(nvl(marquee_customer_yn,'N'),'N',0,20) the_score,
+                      20 max_value
+              from eba_cust_customers where id = :P50_ID
+              union all 
+              select  'Customer has summary longer then 200 characters' metric, 
+                      decode(length(summary),0,0,20) the_score,
+                      20 max_value 
+              from eba_cust_customers where id = :P50_ID
+              and nvl(length(summary),0) >= 200
+              union all 
+              select  'Customer has tags' metric, 
+                      decode(tags,null,0,10) the_score,
+                      10 max_value 
+              from eba_cust_customers where id = :P50_ID
+              union all 
+              select  'Customer has description' metric, 
+                      decode(length(summary),0,0,20) the_score,
+                      20 max_value 
+              from eba_cust_customers where id = :P50_ID
+              union all
+              select
+                  nvl(max('Customer has links'),'Customer has links') metric, 
+                  decode(count(*),0,0,10) the_score,
+                  nvl(max(10),10) max_value 
+              from
+                  eba_cust_customers c,
+                  eba_cust_links l
+              where
+                  c.id = :P50_ID
+              and
+                  l.customer_id = c.id
+              union all
+              select
+                  nvl(max('Customer has updates'),'Customer has updates') metric, 
+                  decode(count(*),0,0,10) the_score,
+                  nvl(max(10),10) max_value 
+              from
+                  eba_cust_customers c,
+                  eba_cust_notes n
+              where
+                  c.id = :P50_ID
+              and
+                  n.customer_id = c.id
+              union all
+              select
+                  nvl(max('Customer has Customer updates in last week'),'Customer has Customer updates in last week') metric, 
+                  decode(count(*),0,0,10) the_score,
+                  nvl(max(10),10) max_value 
+              from
+                  eba_cust_customers c,
+                  eba_cust_notes n
+              where
+                  c.id = :P50_ID
+              and
+                  n.customer_id = c.id
+              and
+                  n.updated > (sysdate - 7)
+              union all
+              select
+                  nvl(max('Customer has attachments'),'Customer has attachments') metric, 
+                  decode(count(*),0,0,5) the_score,
+                  nvl(max(5),5) max_value 
+              from
+                  eba_cust_customers c,
+                  eba_cust_files f
+              where
+                  c.id = :P50_ID
+              and
+                  f.customer_id = c.id
+              union all
+              select  nvl(max('Customer verifications exist'),'Customer verifications exist') metric, 
+                      decode(max((select count(*) from eba_cust_verifications v
+              where v.cust_id = :P50_ID )),0,0,20) the_score,
+                      nvl(max(20),20) max_value 
+              from eba_cust_customers where id = :P50_ID
+              union all
+              select  nvl(max('Customer verifications exist in last week'),'Customer verifications exist in last week') metric, 
+                      decode(max((select count(*) from eba_cust_verifications v
+              where v.cust_id = :P50_ID and v.created > (sysdate - 7))),0,0,30) the_score,
+                      nvl(max(30),30) max_value 
+              from eba_cust_customers where id = :P50_ID
+              union all
+              select  nvl(max('Customer verifications exist in last week by Customer creator'),'Customer verifications exist in last week by Customer creator') metric, 
+                      decode(max((select count(*) from eba_cust_verifications v
+              where v.cust_id = :P50_ID and v.created > (sysdate - 7) and (
+              upper(:app_user) = upper(created_by)
+              ))),0,0,30) the_score,
+                      nvl(max(30),30) max_value 
+              from eba_cust_customers where id = :P50_ID
+          ) x
+      order by
+          1
+
+  layout: 
+    sequence: 140
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hiddenOverflow
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Content Completeness Widget # 14959251743681290603
+
+  attributes: 
+    settings: 
+      threshold-1-percentage: 66
+      threshold-1-label: Strong
+      threshold-2-percentage: 33
+      threshold-2-label: Moderate
+      threshold-3-percentage: 0
+      threshold-3-label: Weak
+      under-threshold-3-label: Very Weak
+      title-for-results-modal: Completeness Score Details
+
+- # ====== Region: Partners ====================================
+  id: 15671440824537645312
+  identification: 
+    name: Partners
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select rf.id,
+          p.name partner_name,
+          p.website,
+          p.description,
+          rf.created added,
+          lower(rf.created_by) added_by
+      from eba_cust_cust_partner_ref rf,
+           eba_cust_impl_partners p
+      where rf.customer_id = :P50_ID
+        and p.id = rf.partner_id
+      order by p.name, rf.created desc
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - js-showMaximizeButton
+    - t-Region--hiddenOverflow
+    css-classes: 
+    - js-dynamicHideShowRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: rptPartners
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Partners # 1362479409422679976
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--noBorders
+      css-classes: 
+      - t-Report--cleanBorders
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: No partners found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ADDED =======================================
+    id: 15671441250029645316
+    identification: 
+      column-name: ADDED
+      type: Plain Text
+
+    heading: 
+      heading: Added
+      alignment: end
+
+    layout: 
+      sequence: 7
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: SINCE
+
+    column-formatting: 
+      html-expression: '#ADDED# &middot; #ADDED_BY#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ADDED_BY ====================================
+    id: 15671441348594645317
+    identification: 
+      column-name: ADDED_BY
+      type: Plain Text
+
+    heading: 
+      heading: Added By
+      alignment: start
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Never
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 15671442118627645325
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: <span class="u-VisuallyHidden">Edit</span>
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:110:&SESSION.::&DEBUG.:RP,110:P110_CUSTOMER_ID:&P50_ID.'
+        page: 110 # Implementation Partner(s)
+        clear-cache: RP,110
+        values: 
+          p110_customer_id: '&P50_ID.'
+
+      link-text: '<img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="Edit #PARTNER_NAME#">'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARTNER_NAME ================================
+    id: 15671442249949645326
+    identification: 
+      column-name: PARTNER_NAME
+      type: Plain Text
+
+    heading: 
+      heading: Partner
+      alignment: start
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: WEBSITE =====================================
+    id: 15671442309621645327
+    identification: 
+      column-name: WEBSITE
+      type: Link
+
+    heading: 
+      heading: Website
+      alignment: start
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: '#WEBSITE#'
+      link-text: '#WEBSITE#'
+      link-attributes: target="_blank"
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 17771182925245605878
+    identification: 
+      column-name: DESCRIPTION
+      type: Hidden
+
+    layout: 
+      sequence: 6
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Hidden Items ================================
+  id: 16445127525473723869
+  identification: 
+    name: Hidden Items
+    type: Static Content
+
+  layout: 
+    sequence: 140
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Updates =====================================
+  id: 16445128336301723871
+  identification: 
+    name: Updates
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+          '' class, --use grayComment for gray look
+          'Note' note_type,
+          null as attribute_1,
+          null as attribute_2,
+          null as attribute_3,
+          null as attribute_4,
+          replace(apex_escape.html(dbms_lob.substr(n.note,2000,1)),chr(10),'<br />') comment_text,
+          lower(n.created_by) user_name,
+          substr(n.created_by,0,2) user_icon,
+          'u-color-'|| (ora_hash(n.created_by,44) + 1) icon_modifier,
+          apex_util.get_since(NVL(n.note_date, nvl(n.updated, n.created))) ||' - '||to_char(NVL(n.note_date, nvl(n.updated, n.created)),'Day DD-MON-YYYY HH24:MI') comment_date,
+          'Edit' as link,
+          'Edit' as actions,
+          n.created,
+          n.id note_id
+      from eba_cust_notes n,
+          eba_cust_contacts c
+      where n.customer_id = :P50_ID 
+          and n.contact_id = c.id (+)
+      order by 11 desc
+    page-items-to-submit: 
+    - P50_ID
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 120
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    css-classes: 
+    - js-dynamicHideShowRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: rptUpdates
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Comments
+      template-options: 
+      - '#DEFAULT#'
+      - t-Comments--chat
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: No updates found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Column Names
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ATTRIBUTE_1 =================================
+    id: 136050420494127134
+    identification: 
+      column-name: ATTRIBUTE_1
+      type: Hidden
+
+    layout: 
+      sequence: 25
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ATTRIBUTE_2 =================================
+    id: 136050514763127135
+    identification: 
+      column-name: ATTRIBUTE_2
+      type: Hidden
+
+    layout: 
+      sequence: 35
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ATTRIBUTE_3 =================================
+    id: 136050560616127136
+    identification: 
+      column-name: ATTRIBUTE_3
+      type: Hidden
+
+    layout: 
+      sequence: 45
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ATTRIBUTE_4 =================================
+    id: 136050690909127137
+    identification: 
+      column-name: ATTRIBUTE_4
+      type: Hidden
+
+    layout: 
+      sequence: 55
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COMMENT_TEXT ================================
+    id: 14859305251041705419
+    identification: 
+      column-name: COMMENT_TEXT
+      type: Plain Text
+
+    heading: 
+      heading: Comment text
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: USER_NAME ===================================
+    id: 14859305363804705420
+    identification: 
+      column-name: USER_NAME
+      type: Plain Text
+
+    heading: 
+      heading: User name
+      alignment: start
+
+    layout: 
+      sequence: 11
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: USER_ICON ===================================
+    id: 14859305392953705421
+    identification: 
+      column-name: USER_ICON
+      type: Plain Text
+
+    heading: 
+      heading: User icon
+      alignment: start
+
+    layout: 
+      sequence: 12
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_MODIFIER ===============================
+    id: 14859305543873705422
+    identification: 
+      column-name: ICON_MODIFIER
+      type: Plain Text
+
+    heading: 
+      heading: Icon modifier
+      alignment: start
+
+    layout: 
+      sequence: 13
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COMMENT_DATE ================================
+    id: 14859305634895705423
+    identification: 
+      column-name: COMMENT_DATE
+      type: Plain Text
+
+    heading: 
+      heading: Comment date
+      alignment: start
+
+    layout: 
+      sequence: 14
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: since
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ACTIONS =====================================
+    id: 14859305691584705424
+    identification: 
+      column-name: ACTIONS
+      type: Link
+
+    heading: 
+      heading: Actions
+      alignment: start
+
+    layout: 
+      sequence: 15
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:97:&SESSION.::&DEBUG.:RP,97:P97_ID,P97_CUSTOMER_ID:#NOTE_ID#,&P50_ID.'
+        page: 97 # Update
+        clear-cache: RP,97
+        values: 
+          p97_id: '#NOTE_ID#'
+          p97_customer_id: '&P50_ID.'
+
+      link-text: '#ACTIONS#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NOTE_TYPE ===================================
+    id: 16445128528928723871
+    identification: 
+      column-name: NOTE_TYPE
+      type: Plain Text
+
+    heading: 
+      heading: Note Type
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CREATED =====================================
+    id: 16445129429176723872
+    identification: 
+      column-name: CREATED
+      type: Plain Text
+
+    heading: 
+      heading: Created
+      alignment: start
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: since
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLASS =======================================
+    id: 16445129525225723872
+    identification: 
+      column-name: CLASS
+      type: Plain Text
+
+    heading: 
+      heading: Class
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK ========================================
+    id: 16644029242663975793
+    identification: 
+      column-name: LINK
+      type: Link
+
+    heading: 
+      heading: Link
+      alignment: start
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:7:&SESSION.:CUSTOMER:&DEBUG.:7:P7_ID:#NOTE_ID#'
+        page: 7 # Maintain Update
+        request: CUSTOMER
+        clear-cache: 7
+        values: 
+          p7_id: '#NOTE_ID#'
+
+      link-text: '#LINK#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Expression
+      language: PL/SQL
+      pl/sql-expression: "'#NOTE_ID#' is not null"
+
+    security: 
+      authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+      escape-special-characters: true
+
+  - # ====== Column: NOTE_ID =====================================
+    id: 16656579227879679505
+    identification: 
+      column-name: NOTE_ID
+      type: Hidden
+
+    layout: 
+      sequence: 9
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Attachments =================================
+  id: 16445130041452723872
+  identification: 
+    name: Attachments
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+          id,
+          '<a href="'||APEX_UTIL.GET_BLOB_FILE_SRC('P64_FILE_BLOB',id)||'">'||apex_escape.html(FILE_NAME)||'</a>' FILE_NAME,
+          FILE_MIMETYPE,
+          FILE_CHARSET,
+          apex_util.filesize_mask(dbms_lob.getlength(FILE_BLOB)) f_len,
+          substr(FILE_COMMENTS,1,50)||decode(greatest(length(FILE_COMMENTS),50),50,'','...') FILE_COMMENTS,
+          case when instr(upper(FILE_NAME),'.PPT') > 0or instr(upper(FILE_NAME),'.PPTX') > 0 then
+              'uFileIcon powerpoint'
+          when instr(upper(FILE_NAME),'.XLS') > 0 or instr(upper(FILE_NAME),'.XLSX') > 0 then
+              'uFileIcon excel'
+          when instr(upper(FILE_NAME),'.DOC') > 0 or instr(upper(FILE_NAME),'.DOCX') > 0 then
+              'uFileIcon word'
+          when instr(upper(FILE_NAME),'.PDF') > 0 then
+              'uFileIcon pdf'
+          when instr(upper(FILE_NAME),'.GIF') > 0 or
+               instr(upper(FILE_NAME),'.PNG') > 0 or
+               instr(upper(FILE_NAME),'.TIFF') > 0 or
+               instr(upper(FILE_NAME),'.JPG') > 0 then
+              'uFileIcon image'
+          else
+              'uFileIcon generic'
+          end file_type,
+          created,
+          lower(created_by) created_by
+      from EBA_CUST_FILES f
+      where CUSTOMER_ID = :P50_ID 
+      order by created desc;
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - js-showMaximizeButton
+    - t-Region--hiddenOverflow
+    css-classes: 
+    - js-dynamicHideShowRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: rptAttachments
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--noBorders
+      css-classes: 
+      - t-Report--cleanBorders
+      show-null-values-as: ' - '
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: No attachments found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: F_LEN =======================================
+    id: 16445130232664723872
+    identification: 
+      column-name: F_LEN
+      type: Plain Text
+
+    heading: 
+      heading: Size
+      alignment: end
+
+    layout: 
+      sequence: 4
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FILE_COMMENTS ===============================
+    id: 16445130319827723872
+    identification: 
+      column-name: FILE_COMMENTS
+      type: Plain Text
+
+    heading: 
+      heading: Description
+      alignment: start
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FILE_TYPE ===================================
+    id: 16445130444894723872
+    identification: 
+      column-name: FILE_TYPE
+      type: Hidden
+
+    layout: 
+      sequence: 2
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CREATED =====================================
+    id: 16445130533194723873
+    identification: 
+      column-name: CREATED
+      type: Plain Text
+
+    heading: 
+      heading: Added
+      alignment: end
+
+    layout: 
+      sequence: 6
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: SINCE
+
+    column-formatting: 
+      html-expression: '#CREATED# &middot; #CREATED_BY#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CREATED_BY ==================================
+    id: 16445130642280723873
+    identification: 
+      column-name: CREATED_BY
+      type: Plain Text
+
+    heading: 
+      heading: Added By
+      alignment: start
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Never
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 16445130744646723873
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: <span class="u-VisuallyHidden">Edit</span>
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:64:&SESSION.::&DEBUG.:RP,64:P64_CUSTOMER_ID,P64_ID:&P50_ID.,#ID#'
+        page: 64 # Customer Attachment
+        clear-cache: RP,64
+        values: 
+          p64_customer_id: '&P50_ID.'
+          p64_id: '#ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="Edit">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FILE_MIMETYPE ===============================
+    id: 16445130831889723873
+    identification: 
+      column-name: FILE_MIMETYPE
+      type: Hidden
+
+    layout: 
+      sequence: 8
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FILE_CHARSET ================================
+    id: 16445130930652723873
+    identification: 
+      column-name: FILE_CHARSET
+      type: Hidden
+
+    layout: 
+      sequence: 9
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FILE_NAME ===================================
+    id: 16445131021877723873
+    identification: 
+      column-name: FILE_NAME
+      type: Plain Text
+
+    heading: 
+      heading: Name
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+- # ====== Region: Links =======================================
+  id: 16445131525462723873
+  identification: 
+    name: Links
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select id,decode(LINK_DESC,null, LINK, LINK_DESC) link_text, LINK link_target, lower(created_by) created_by, created, LINK_DESC 
+      from EBA_CUST_LINKS 
+      where CUSTOMER_ID = :P50_ID 
+      order by created desc
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 90
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    css-classes: 
+    - js-dynamicHideShowRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: rptLinks
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--noBorders
+      css-classes: 
+      - t-Report--cleanBorders
+      show-null-values-as: ' - '
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: No links found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 13868098031012513390
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: <span class="u-VisuallyHidden">Edit</span>
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:66:&SESSION.::&DEBUG.:RP,66:P66_CUSTOMER_ID,P66_ID:&P50_ID.,#ID#'
+        page: 66 # Link
+        clear-cache: RP,66
+        values: 
+          p66_customer_id: '&P50_ID.'
+          p66_id: '#ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="Edit">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK_TEXT ===================================
+    id: 16445131746108723874
+    identification: 
+      column-name: LINK_TEXT
+      type: Link
+
+    heading: 
+      heading: Name
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: '#LINK_TARGET#'
+      link-text: '#LINK_TEXT#'
+      link-attributes: target="_blank"
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK_TARGET =================================
+    id: 16445131844413723874
+    identification: 
+      column-name: LINK_TARGET
+      type: Hidden
+
+    layout: 
+      sequence: 2
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CREATED_BY ==================================
+    id: 16445131946192723874
+    identification: 
+      column-name: CREATED_BY
+      type: Plain Text
+
+    heading: 
+      heading: Added By
+      alignment: start
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Never
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CREATED =====================================
+    id: 16445132048740723874
+    identification: 
+      column-name: CREATED
+      type: Plain Text
+
+    heading: 
+      heading: Added
+      alignment: end
+
+    layout: 
+      sequence: 5
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: SINCE
+
+    column-formatting: 
+      html-expression: '#CREATED# &middot; #CREATED_BY#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK_DESC ===================================
+    id: 16445673019799817564
+    identification: 
+      column-name: LINK_DESC
+      type: Plain Text
+
+    heading: 
+      heading: Description
+      alignment: start
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Customer ====================================
+  id: 16445132643506723875
+  identification: 
+    name: Customer
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+         a.id,
+         c.status,
+         a.summary,
+         apex_util.get_since(a.created) as created,
+         lower(a.created_by) as created_by,
+         apex_util.get_since(a.updated) as updated,
+         lower(a.updated_by) as updated_by,
+         row_key
+      from
+         eba_cust_customers a , eba_cust_categories b, eba_cust_status c, eba_cust_geographies d
+      where 
+         a.category_id = b.id (+) and 
+         a.status_id = c.id (+) and 
+         a.geography_id = d.id (+) and
+         a.id = :P50_ID
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - t-Form--noPadding
+    - t-Form--large
+    - t-Form--stretchInputs
+    - t-Form--labelsAbove
+    - margin-left-none
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: CUSTOMERS
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Never
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Value Attribute Pairs - Column
+      template-options: 
+      - '#DEFAULT#'
+      - t-AVPList--fixedLabelSmall
+      - t-AVPList--leftAligned
+      css-classes: 
+      - t-Report--cleanBorders
+      show-null-values-as: ' - '
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ROW_KEY =====================================
+    id: 1120134093216135567
+    identification: 
+      column-name: ROW_KEY
+      type: Plain Text
+
+    heading: 
+      heading: Row Key
+      alignment: start
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+    configuration: 
+      build-option: Display Row Key # 1185608018019798158
+
+  - # ====== Column: CREATED =====================================
+    id: 1172036707797556969
+    identification: 
+      column-name: CREATED
+      type: Hidden
+
+    layout: 
+      sequence: 4
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CREATED_BY ==================================
+    id: 1172036761362556970
+    identification: 
+      column-name: CREATED_BY
+      type: Hidden
+
+    layout: 
+      sequence: 5
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: UPDATED =====================================
+    id: 1172036889837556971
+    identification: 
+      column-name: UPDATED
+      type: Hidden
+
+    layout: 
+      sequence: 6
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: UPDATED_BY ==================================
+    id: 1172036991868556972
+    identification: 
+      column-name: UPDATED_BY
+      type: Hidden
+
+    layout: 
+      sequence: 7
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 13868097970974513389
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 16445133332508723875
+    identification: 
+      column-name: STATUS
+      type: Hidden
+
+    layout: 
+      sequence: 2
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and status_id is not null
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SUMMARY =====================================
+    id: 16445184238562731883
+    identification: 
+      column-name: SUMMARY
+      type: Plain Text
+
+    heading: 
+      heading: Summary
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_customers
+         where id = :P50_ID
+           and summary is not null
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Breadcrumb ==================================
+  id: 16445137717618723879
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 17862590586954210114
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Products ====================================
+  id: 16616355421839029043
+  identification: 
+    name: Products
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select u.id, p.product_name, u.reference_status_id, p.id as product_id,
+             (
+                  select listagg(rt.reference_type,', ') within group (order by rt.reference_type)
+                    from eba_cust_reference_types rt
+                   where ':'||u.reference_type_ids||':' like '%:'||rt.id||':%'
+             ) as reference_types,
+             decode( u.customer_contact_id, null, null, (select decode(email, null, name, '<a href="mailto:'
+                                                                       || apex_escape.html(email) || '">'
+                                                                       || apex_escape.html(name)
+                                                                       || '</a>')
+                                                         from EBA_CUST_CONTACTS where id = u.customer_contact_id) ) as customer_contact,
+             case when instr(nvl(u.internal_contact,'xxx'), '@') = 0 then apex_escape.html(u.internal_contact)
+                 else '<a href="mailto:' || apex_escape.html(u.internal_contact) || '">' || apex_escape.html(u.internal_contact)
+                     || '</a>' end as internal_contact,
+             u.valid_from, u.valid_to,
+             u.created added, lower(u.created_by) added_by,
+             ( select name from eba_cust_product_families pf where pf.id = p.product_family_id ) product_family,
+             u.COMMENTS 
+      from eba_cust_product_uses u,
+           eba_cust_products p
+      where u.CUSTOMER_ID = :P50_ID
+        and u.product_id = p.id
+      order by p.product_name, u.created desc
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hiddenOverflow
+    css-classes: 
+    - js-dynamicHideShowRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: rptProducts
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Products and Services # 14978641932588597225
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--noBorders
+      css-classes: 
+      - t-Report--cleanBorders
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: No products found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 13868098199470513391
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: <span class="u-VisuallyHidden">Edit</span>
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:68:&SESSION.::&DEBUG.:RP,68:P68_CUSTOMER_ID,P68_PRODUCT_ID,P68_ID:&P50_ID.,#PRODUCT_ID#,#ID#'
+        page: 68 # Customer Product(s)
+        clear-cache: RP,68
+        values: 
+          p68_customer_id: '&P50_ID.'
+          p68_product_id: '#PRODUCT_ID#'
+          p68_id: '#ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="Edit">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INTERNAL_CONTACT ============================
+    id: 14300320339631575181
+    identification: 
+      column-name: INTERNAL_CONTACT
+      type: Plain Text
+
+    heading: 
+      heading: Internal Contact
+      alignment: start
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_product_uses
+         where customer_id = :P50_ID
+           and internal_contact is not null
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: VALID_FROM ==================================
+    id: 14300320575915575183
+    identification: 
+      column-name: VALID_FROM
+      type: Hidden
+
+    layout: 
+      sequence: 9
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Expression
+      language: PL/SQL
+      pl/sql-expression: |
+        APEX_UTIL.GET_BUILD_OPTION_STATUS(
+            P_APPLICATION_ID => :APP_ID,
+            P_BUILD_OPTION_NAME => 'Product Referencability') = 'INCLUDE'
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VALID_TO ====================================
+    id: 14300320689295575184
+    identification: 
+      column-name: VALID_TO
+      type: Hidden
+
+    layout: 
+      sequence: 10
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Expression
+      language: PL/SQL
+      pl/sql-expression: |
+        APEX_UTIL.GET_BUILD_OPTION_STATUS(
+            P_APPLICATION_ID => :APP_ID,
+            P_BUILD_OPTION_NAME => 'Product Referencability') = 'INCLUDE'
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CUSTOMER_CONTACT ============================
+    id: 14300320735959575185
+    identification: 
+      column-name: CUSTOMER_CONTACT
+      type: Plain Text
+
+    heading: 
+      heading: Customer Contact
+      alignment: start
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+          from eba_cust_product_uses
+         where customer_id = :P50_ID
+           and customer_contact_id is not null
+           and APEX_UTIL.GET_BUILD_OPTION_STATUS(
+            P_APPLICATION_ID => :APP_ID,
+            P_BUILD_OPTION_NAME => 'Product Referencability') = 'INCLUDE'
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: PRODUCT_ID ==================================
+    id: 14300320866780575186
+    identification: 
+      column-name: PRODUCT_ID
+      type: Hidden
+
+    layout: 
+      sequence: 2
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: REFERENCE_STATUS_ID =========================
+    id: 14300322138287575199
+    identification: 
+      column-name: REFERENCE_STATUS_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Reference Status
+      alignment: start
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: PRODUCT STATUSES # 14303652121970411220
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Expression
+      language: PL/SQL
+      pl/sql-expression: |
+        APEX_UTIL.GET_BUILD_OPTION_STATUS(
+            P_APPLICATION_ID => :APP_ID,
+            P_BUILD_OPTION_NAME => 'Product Referencability') = 'INCLUDE'
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: REFERENCE_TYPES =============================
+    id: 14300322244656575200
+    identification: 
+      column-name: REFERENCE_TYPES
+      type: Plain Text
+
+    heading: 
+      heading: Reference Assets
+      alignment: start
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Expression
+      language: PL/SQL
+      pl/sql-expression: |
+        APEX_UTIL.GET_BUILD_OPTION_STATUS(
+            P_APPLICATION_ID => :APP_ID,
+            P_BUILD_OPTION_NAME => 'Product Referencability') = 'INCLUDE'
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRODUCT_NAME ================================
+    id: 16616355740596029055
+    identification: 
+      column-name: PRODUCT_NAME
+      type: Plain Text
+
+    heading: 
+      heading: Product
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ADDED =======================================
+    id: 16616355817656029057
+    identification: 
+      column-name: ADDED
+      type: Plain Text
+
+    heading: 
+      heading: Added
+      alignment: end
+
+    layout: 
+      sequence: 11
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: SINCE
+
+    column-formatting: 
+      html-expression: '#ADDED# &middot; #ADDED_BY#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ADDED_BY ====================================
+    id: 16616355948787029057
+    identification: 
+      column-name: ADDED_BY
+      type: Plain Text
+
+    heading: 
+      heading: Added By
+      alignment: start
+
+    layout: 
+      sequence: 12
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Never
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRODUCT_FAMILY ==============================
+    id: 17771186336890605912
+    identification: 
+      column-name: PRODUCT_FAMILY
+      type: Plain Text
+
+    heading: 
+      heading: Product Family
+      alignment: start
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select null
+        from eba_cust_product_families
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COMMENTS ====================================
+    id: 18002893032566578494
+    identification: 
+      column-name: COMMENTS
+      type: Plain Text
+
+    heading: 
+      heading: Comments
+      alignment: start
+
+    layout: 
+      sequence: 13
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Contacts ====================================
+  id: 16616453733002113922
+  identification: 
+    name: Contacts
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+          "ID", 
+          "NAME",
+          "TITLE",
+          "PHONE",
+          "EMAIL",
+          created date_added,
+          lower(created_by) added_by
+      from EBA_CUST_CONTACTS
+      where customer_id = :P50_ID
+      order by name;
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--scrollBody
+    css-classes: 
+    - js-dynamicHideShowRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: rptContacts
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Contacts # 14978649220461663676
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--noBorders
+      css-classes: 
+      - t-Report--cleanBorders
+      show-null-values-as: ' - '
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: No contacts found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 16616454033511113929
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: <span class="u-VisuallyHidden">Edit</span>
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:37:&SESSION.::&DEBUG.:RP,37:P37_CUSTOMER_ID,P37_ID:&P50_ID.,#ID#'
+        page: 37 # Customer Contact
+        clear-cache: RP,37
+        values: 
+          p37_customer_id: '&P50_ID.'
+          p37_id: '#ID#'
+
+      link-text: '<img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="Edit #NAME#">'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NAME ========================================
+    id: 16616454138090113930
+    identification: 
+      column-name: NAME
+      type: Plain Text
+
+    heading: 
+      heading: Name
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 16616454224568113930
+    identification: 
+      column-name: TITLE
+      type: Plain Text
+
+    heading: 
+      heading: Title
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PHONE =======================================
+    id: 16616454317662113930
+    identification: 
+      column-name: PHONE
+      type: Plain Text
+
+    heading: 
+      heading: Phone
+      alignment: start
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: EMAIL =======================================
+    id: 16616454422473113930
+    identification: 
+      column-name: EMAIL
+      type: Plain Text
+
+    heading: 
+      heading: Email
+      alignment: start
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DATE_ADDED ==================================
+    id: 16616455543354164251
+    identification: 
+      column-name: DATE_ADDED
+      type: Plain Text
+
+    heading: 
+      heading: Added
+      alignment: end
+
+    layout: 
+      sequence: 7
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: SINCE
+
+    column-formatting: 
+      html-expression: '#DATE_ADDED# &middot; #ADDED_BY#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ADDED_BY ====================================
+    id: 16616455623338164252
+    identification: 
+      column-name: ADDED_BY
+      type: Plain Text
+
+    heading: 
+      heading: Added By
+      alignment: start
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Never
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Referenceability ============================
+  id: 16849991539663355693
+  identification: 
+    name: Referenceability
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+         a.id,
+         referencable,
+          (   select listagg(rt.reference_type, ', ') within group (order by rt.reference_type) reference_types
+              from eba_cust_reference_types rt, eba_cust_customer_reftype_ref ref
+              where ref.customer_id = a.id
+                  and rt.id = ref.reference_type_id
+          ) reference_types,
+          a.reference_phase_id reference_phase,
+          a.REF_RECRUITMENT_OWNER
+      from
+         eba_cust_customers a , eba_cust_categories b, eba_cust_status c, eba_cust_geographies d
+      where 
+         a.category_id = b.id (+) and 
+         a.status_id = c.id (+) and 
+         a.geography_id = d.id (+) and
+         a.id = :P50_ID
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hiddenOverflow
+    css-classes: 
+    - js-dynamicHideShowRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: referenceability
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--noBorders
+      css-classes: 
+      - t-Report--cleanBorders
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 16849992828602355706
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: <span class="u-VisuallyHidden">Edit</span>
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:96:&SESSION.::&DEBUG.:RP,96:P96_ID:#ID#'
+        page: 96 # Customer Referenceability
+        clear-cache: RP,96
+        values: 
+          p96_id: '#ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="Edit">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: REFERENCABLE ================================
+    id: 16849992918070355707
+    identification: 
+      column-name: REFERENCABLE
+      type: Plain Text
+
+    heading: 
+      heading: Referenceable
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: REFERENCE_TYPES =============================
+    id: 16849993026782355708
+    identification: 
+      column-name: REFERENCE_TYPES
+      type: Plain Text
+
+    heading: 
+      heading: Reference Types
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: REFERENCE_PHASE =============================
+    id: 16849993184031355709
+    identification: 
+      column-name: REFERENCE_PHASE
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Reference Phase
+      alignment: start
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: REFERENCE PHASE # 15866666334102138100
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: REF_RECRUITMENT_OWNER =======================
+    id: 16849993283090355710
+    identification: 
+      column-name: REF_RECRUITMENT_OWNER
+      type: Plain Text
+
+    heading: 
+      heading: Recruitment Owner
+      alignment: start
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Competitors =================================
+  id: 17771183417000605883
+  identification: 
+    name: Competitors
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select rf.id,
+          c.name competitor,
+          c.website,
+          c.description,
+          rf.created added,
+          lower(rf.created_by) added_by
+      from eba_cust_cust_competitor_ref rf,
+           eba_cust_competitors c
+      where rf.customer_id = :P50_ID
+        and c.id = rf.competitor_id
+      order by c.name, rf.created desc
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hiddenOverflow
+    css-classes: 
+    - js-dynamicHideShowRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: rptCompetitors
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: View Competitors # 1382996476893427415
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Competitors # 1359327821518655294
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--noBorders
+      css-classes: 
+      - t-Report--cleanBorders
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: No partners found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ADDED =======================================
+    id: 17771183646577605885
+    identification: 
+      column-name: ADDED
+      type: Plain Text
+
+    heading: 
+      heading: Added
+      alignment: end
+
+    layout: 
+      sequence: 5
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: SINCE
+
+    column-formatting: 
+      html-expression: '#ADDED# &middot; #ADDED_BY#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ADDED_BY ====================================
+    id: 17771183749114605886
+    identification: 
+      column-name: ADDED_BY
+      type: Plain Text
+
+    heading: 
+      heading: Added By
+      alignment: start
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Never
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 17771183871961605887
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: <span class="u-VisuallyHidden">Edit</span>
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:111:&SESSION.::&DEBUG.:RP,111:P111_CUSTOMER_ID:&P50_ID.'
+        page: 111 # Competitor(s)
+        clear-cache: RP,111
+        values: 
+          p111_customer_id: '&P50_ID.'
+
+      link-text: '<img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="Edit #COMPETITOR#">'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: WEBSITE =====================================
+    id: 17771184055502605889
+    identification: 
+      column-name: WEBSITE
+      type: Link
+
+    heading: 
+      heading: Website
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: '#WEBSITE#'
+      link-text: '#WEBSITE#'
+      link-attributes: target="_blank"
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 17771184142478605890
+    identification: 
+      column-name: DESCRIPTION
+      type: Hidden
+
+    layout: 
+      sequence: 4
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COMPETITOR ==================================
+    id: 17771184281961605891
+    identification: 
+      column-name: COMPETITOR
+      type: Plain Text
+
+    heading: 
+      heading: Competitor
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Activities ==================================
+  id: 18191429044901657685
+  identification: 
+    name: Activities
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select rf.id,
+          rf.activity_id,
+          a.type_id,
+          a.name activity,
+          nvl(a.activity_date,rf.activity_date) activity_date,
+          nvl(a.owner, rf.owner) owner,
+          nvl(a.location, rf.location) location
+      from eba_cust_activities a,
+          eba_cust_activity_ref rf
+      where rf.customer_id = :P50_ID
+          and rf.activity_id = a.id
+      order by 3 desc, 2
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    css-classes: 
+    - js-dynamicHideShowRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: rptActivities
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Activities # 18161405259992530478
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--noBorders
+      css-classes: 
+      - t-Report--cleanBorders
+      show-null-values-as: ' - '
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: No contacts found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 18191429614882657691
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: <span class="u-VisuallyHidden">Edit</span>
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:150:&SESSION.::&DEBUG.:RP,150:P150_CUSTOMER_ID,P150_ID:&P50_ID.,#ID#'
+        page: 150 # Customer Activity
+        clear-cache: RP,150
+        values: 
+          p150_customer_id: '&P50_ID.'
+          p150_id: '#ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="Edit">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ACTIVITY ====================================
+    id: 18191430102015657695
+    identification: 
+      column-name: ACTIVITY
+      type: Link
+
+    heading: 
+      heading: Activity
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:145:&SESSION.::&DEBUG.:RP,145:P145_ID:#ACTIVITY_ID#'
+        page: 145 # &P145_ACTIVITY.
+        clear-cache: RP,145
+        values: 
+          p145_id: '#ACTIVITY_ID#'
+
+      link-text: '#ACTIVITY#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ACTIVITY_DATE ===============================
+    id: 18191430134290657696
+    identification: 
+      column-name: ACTIVITY_DATE
+      type: Plain Text
+
+    heading: 
+      heading: Activity date
+      alignment: start
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: fmDay, fmDD fmMonth, YYYY
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OWNER =======================================
+    id: 18191430284288657697
+    identification: 
+      column-name: OWNER
+      type: Plain Text
+
+    heading: 
+      heading: Owner
+      alignment: start
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LOCATION ====================================
+    id: 18191430398908657698
+    identification: 
+      column-name: LOCATION
+      type: Plain Text
+
+    heading: 
+      heading: Location
+      alignment: start
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE_ID =====================================
+    id: 18191432541600657720
+    identification: 
+      column-name: TYPE_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Type
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ACTIVITY TYPES # 18168389197930883482
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ACTIVITY_ID =================================
+    id: 18191432672799657721
+    identification: 
+      column-name: ACTIVITY_ID
+      type: Hidden
+
+    layout: 
+      sequence: 7
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Sub Customers ===============================
+  id: 18482874603243185322
+  identification: 
+    name: Sub Customers
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select a.id,
+         a.customer_name,
+         a.number_of_users,
+         a.summary,
+          (   select listagg(rt.reference_type, ', ') within group (order by rt.reference_type) reference_types
+              from eba_cust_reference_types rt, eba_cust_customer_reftype_ref ref
+              where ref.customer_id = a.id
+                  and rt.id = ref.reference_type_id
+          ) reference_types,
+          a.updated,
+          lower(a.updated_by) updated_by
+      from eba_cust_customers a, eba_cust_categories b, eba_cust_status c, eba_cust_geographies d
+      where a.category_id = b.id (+) and 
+         a.status_id = c.id (+) and 
+         a.geography_id = d.id (+) and
+         a.parent_customer_id = :P50_ID
+      order by lower(a.customer_name)
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 100
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - js-showMaximizeButton
+    - t-Region--scrollBody
+    css-classes: 
+    - js-dynamicHideShowRegion
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: rptSubCustomers
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--noBorders
+      css-classes: 
+      - t-Report--cleanBorders
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: CUSTOMER_NAME ===============================
+    id: 18482875085068185327
+    identification: 
+      column-name: CUSTOMER_NAME
+      type: Link
+
+    heading: 
+      heading: Customer
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:50:&SESSION.::&DEBUG.:RP,50:P50_ID:#ID#'
+        page: 50 # Customer
+        clear-cache: RP,50
+        values: 
+          p50_id: '#ID#'
+
+      link-text: '#CUSTOMER_NAME#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NUMBER_OF_USERS =============================
+    id: 18767783413781098284
+    identification: 
+      column-name: NUMBER_OF_USERS
+      type: Plain Text
+
+    heading: 
+      heading: Users
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G999G990
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SUMMARY =====================================
+    id: 18767783595624098285
+    identification: 
+      column-name: SUMMARY
+      type: Plain Text
+
+    heading: 
+      heading: Summary
+      alignment: start
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: REFERENCE_TYPES =============================
+    id: 18767785567942098305
+    identification: 
+      column-name: REFERENCE_TYPES
+      type: Plain Text
+
+    heading: 
+      heading: Referencability
+      alignment: start
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+    comments: 
+      comments: |
+        select 1
+        from eba_cust_customers
+        where referencable != 'No' and referencable is not null and id = :P50_ID
+
+  - # ====== Column: ID ==========================================
+    id: 18767785959565098309
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 5
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: UPDATED =====================================
+    id: 18767786529688098315
+    identification: 
+      column-name: UPDATED
+      type: Plain Text
+
+    heading: 
+      heading: Updated
+      alignment: start
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: Since
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: UPDATED_BY ==================================
+    id: 18767786618193098316
+    identification: 
+      column-name: UPDATED_BY
+      type: Plain Text
+
+    heading: 
+      heading: Updated By
+      alignment: start
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P50_ROW_KEY ==============================
+  id: 14644328144555804950
+  identification: 
+    name: P50_ROW_KEY
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: Hidden Items # 16445127525473723869
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: |
+      select row_key
+      from EBA_CUST_CUSTOMERS
+      where id = :P50_ID
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P50_ID ===================================
+  id: 16445127723944723870
+  identification: 
+    name: P50_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Hidden Items # 16445127525473723869
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: EDIT_CUSTOMER_DETAILS =======================
+  id: 1172036331961556966
+  identification: 
+    button-name: EDIT_CUSTOMER_DETAILS
+    label: Edit Customer Details
+
+  layout: 
+    sequence: 10
+    region: Details # 170325164586725168
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-pencil
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.:RP,2:P2_ID:&P50_ID.'
+      page: 2 # Customer Details
+      clear-cache: RP,2
+      values: 
+        p2_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: POP_ISSUE ===================================
+  id: 2588622302058373848
+  identification: 
+    button-name: POP_ISSUE
+    label: Add Issue
+
+  layout: 
+    sequence: 10
+    region: Issues # 2337564365080495684
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:129:&SESSION.::&DEBUG.:129:P129_CUSTOMER_ID:&P50_ID.'
+      page: 129 # Customer Issue
+      clear-cache: 129
+      values: 
+        p129_customer_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  comments: 
+    comments: Fixed missing reference that prevented user from adding an issue using the + button in this report. - Carlos.
+
+- # ====== Button: VIEW_ISSUES =================================
+  id: 2588622660347373852
+  identification: 
+    button-name: VIEW_ISSUES
+    label: View Issues
+
+  layout: 
+    sequence: 20
+    region: Issues # 2337564365080495684
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-chevron-right
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:131:&SESSION.::&DEBUG.:RP:P131_CUSTOMER_ID:&P50_ID.'
+      page: 131 # Customer Issues
+      clear-cache: RP
+      values: 
+        p131_customer_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: POP_PARTNERS ================================
+  id: 15671440939080645313
+  identification: 
+    button-name: POP_PARTNERS
+    label: Select Partners
+
+  layout: 
+    sequence: 10
+    region: Partners # 15671440824537645312
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:110:&SESSION.::&DEBUG.:RP,110,RIR:P110_CUSTOMER_ID:&P50_ID.'
+      page: 110 # Implementation Partner(s)
+      clear-cache: RP,110,RIR
+      values: 
+        p110_customer_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+- # ====== Button: EDIT ========================================
+  id: 16445127126190723868
+  identification: 
+    button-name: EDIT
+    label: Edit Customer
+
+  layout: 
+    sequence: 110
+    region: Breadcrumb # 16445137717618723879
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.:RP,2:P2_ID:&P50_ID.'
+      page: 2 # Customer Details
+      clear-cache: RP,2
+      values: 
+        p2_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+- # ====== Button: GONOTES =====================================
+  id: 16445129624854723872
+  identification: 
+    button-name: GONOTES
+    label: Notes
+
+  layout: 
+    sequence: 60
+    region: Updates # 16445128336301723871
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-chevron-right
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:47:&SESSION.::&DEBUG.:47:P47_ID:&P50_ID.'
+      page: 47 # Customer Updates
+      clear-cache: 47
+      values: 
+        p47_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: POPNOTE =====================================
+  id: 16445129840012723872
+  identification: 
+    button-name: POPNOTE
+    label: Add Update
+
+  layout: 
+    sequence: 50
+    region: Updates # 16445128336301723871
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:97:&SESSION.::&DEBUG.:RP,97:P97_CUSTOMER_ID:&P50_ID.'
+      page: 97 # Update
+      clear-cache: RP,97
+      values: 
+        p97_customer_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+- # ====== Button: POPATTACHMENT ===============================
+  id: 16445131132828723873
+  identification: 
+    button-name: POPATTACHMENT
+    label: Add Attachment
+
+  layout: 
+    sequence: 90
+    region: Attachments # 16445130041452723872
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:64:&SESSION.::&DEBUG.:RP,64:P64_CUSTOMER_ID:&P50_ID.'
+      page: 64 # Customer Attachment
+      clear-cache: RP,64
+      values: 
+        p64_customer_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+- # ====== Button: VIEW_ATTACHMENTS ============================
+  id: 16445131325185723873
+  identification: 
+    button-name: VIEW_ATTACHMENTS
+    label: View Attachments
+
+  layout: 
+    sequence: 100
+    region: Attachments # 16445130041452723872
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-chevron-right
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:52:&SESSION.::&DEBUG.:52:P52_ID:&P50_ID.'
+      page: 52 # Customer Attachments
+      clear-cache: 52
+      values: 
+        p52_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: VIEW_LINKS ==================================
+  id: 16445132222769723874
+  identification: 
+    button-name: VIEW_LINKS
+    label: View Links
+
+  layout: 
+    sequence: 80
+    region: Links # 16445131525462723873
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-chevron-right
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:51:&SESSION.::&DEBUG.:51:P51_ID:&P50_ID.'
+      page: 51 # Customer Links
+      clear-cache: 51
+      values: 
+        p51_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: POP_LINK ====================================
+  id: 16445132447105723874
+  identification: 
+    button-name: POP_LINK
+    label: Add Link
+
+  layout: 
+    sequence: 70
+    region: Links # 16445131525462723873
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:66:&SESSION.::&DEBUG.:RP,66:P66_CUSTOMER_ID:&P50_ID.'
+      page: 66 # Link
+      clear-cache: RP,66
+      values: 
+        p66_customer_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+- # ====== Button: POP_CONTACT =================================
+  id: 16616456231149179632
+  identification: 
+    button-name: POP_CONTACT
+    label: Add Contact
+
+  layout: 
+    sequence: 10
+    region: Contacts # 16616453733002113922
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:37:&SESSION.::&DEBUG.:RP,37:P37_CUSTOMER_ID:&P50_ID.'
+      page: 37 # Customer Contact
+      clear-cache: RP,37
+      values: 
+        p37_customer_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+- # ====== Button: VIEW_CONTACTS ===============================
+  id: 16616456440846182376
+  identification: 
+    button-name: VIEW_CONTACTS
+    label: View Contacts
+
+  layout: 
+    sequence: 20
+    region: Contacts # 16616453733002113922
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-chevron-right
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:25:&SESSION.::&DEBUG.:25:P25_ID:&P50_ID.'
+      page: 25 # Customer Contacts
+      clear-cache: 25
+      values: 
+        p25_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: POP_PRODUCTS ================================
+  id: 16616457244440192944
+  identification: 
+    button-name: POP_PRODUCTS
+    label: Add Product
+
+  layout: 
+    sequence: 30
+    region: Products # 16616355421839029043
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:68:&SESSION.::&DEBUG.:RP,68,RIR:P68_CUSTOMER_ID:&P50_ID.'
+      page: 68 # Customer Product(s)
+      clear-cache: RP,68,RIR
+      values: 
+        p68_customer_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+- # ====== Button: VIEW_PRODUCTS ===============================
+  id: 16616457418944195050
+  identification: 
+    button-name: VIEW_PRODUCTS
+    label: View Products
+
+  layout: 
+    sequence: 40
+    region: Products # 16616355421839029043
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-chevron-right
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:67:&SESSION.::&DEBUG.:67:P67_ID:&P50_ID.'
+      page: 67 # Products
+      clear-cache: 67
+      values: 
+        p67_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: POP_COMPETITORS =============================
+  id: 17771183596484605884
+  identification: 
+    button-name: POP_COMPETITORS
+    label: Select Competitors
+
+  layout: 
+    sequence: 10
+    region: Competitors # 17771183417000605883
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:111:&SESSION.::&DEBUG.:RP,111,RIR:P111_CUSTOMER_ID:&P50_ID.'
+      page: 111 # Competitor(s)
+      clear-cache: RP,111,RIR
+      values: 
+        p111_customer_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+- # ====== Button: POP_ACTIVITY ================================
+  id: 18191429192925657686
+  identification: 
+    button-name: POP_ACTIVITY
+    label: Add Activity
+
+  layout: 
+    sequence: 10
+    region: Activities # 18191429044901657685
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:150:&SESSION.::&DEBUG.:RP,150:P150_CUSTOMER_ID:&P50_ID.'
+      page: 150 # Customer Activity
+      clear-cache: RP,150
+      values: 
+        p150_customer_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: CONTRIBUTION RIGHTS # 15989128224831177580
+
+- # ====== Button: VIEW_ACTIVITIES =============================
+  id: 18191429229314657687
+  identification: 
+    button-name: VIEW_ACTIVITIES
+    label: View Activities
+
+  layout: 
+    sequence: 20
+    region: Activities # 18191429044901657685
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-chevron-right
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:149:&SESSION.::&DEBUG.:RP,RIR,149:P149_CUSTOMER_ID:&P50_ID.'
+      page: 149 # Customer Activities
+      clear-cache: RP,RIR,149
+      values: 
+        p149_customer_id: '&P50_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Reload Issues =======================
+  id: 1882094298614290663
+  identification: 
+    name: Reload Issues
+
+  execution: 
+    sequence: 140
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: jQuery Selector
+    jquery-selector: '#listPageActions, #rptIssues'
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: this.data && this.data.dialogPageId == "129"
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: 'select null from eba_cust_issues where customer_id = :P50_ID'
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 1882094401294290664
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        location.reload();
+        $('li.apex-rds-item a')[3].click();
+
+    execution: 
+      sequence: 10
+      event: Reload Issues # 1882094298614290663
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Refresh Issues ======================
+  id: 2588621753305373843
+  identification: 
+    name: Refresh Issues
+
+  execution: 
+    sequence: 130
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: jQuery Selector
+    jquery-selector: '#listPageActions, #rptIssues'
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: this.data && this.data.dialogPageId == "129"
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: 'select null from eba_cust_issues where customer_id = :P50_ID'
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 1882094190342290662
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Issues # 2337564365080495684
+
+    execution: 
+      sequence: 20
+      event: Refresh Issues # 2588621753305373843
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Refresh on Issue Pop Add ============
+  id: 2588622330481373849
+  identification: 
+    name: Refresh on Issue Pop Add
+
+  execution: 
+    sequence: 150
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: POP_ISSUE # 2588622302058373848
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 2588622436116373850
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Issues # 2337564365080495684
+
+    execution: 
+      sequence: 10
+      event: Refresh on Issue Pop Add # 2588622330481373849
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Go to Issues ========================
+  id: 2588623437160373860
+  identification: 
+    name: Go to Issues
+
+  execution: 
+    sequence: 160
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  server-side-condition: 
+    type: Request = Value
+    value: ISSUES
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 2588623574860373861
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: $('li.apex-rds-item a')[3].click();
+
+    execution: 
+      sequence: 10
+      event: Go to Issues # 2588623437160373860
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Handle Show / Hide Content Regions ==
+  id: 12756567742198002825
+  identification: 
+    name: Handle Show / Hide Content Regions
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 12756567841011002826
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        (function() {
+          function toggleRegion() {
+              var $region = $(this)
+                noDataFound = $region.find('.nodatafound').length === 1;
+              
+              //triggering after hide/show because that what the RDS response to
+              if (noDataFound) {
+                $region.hide();
+                $region.trigger('apexafterhide');
+              } else {
+                $region.show();
+                $region.trigger('apexaftershow');
+              }
+          }
+          
+          function initHideShowRegions() {
+            var $regions = $('.js-dynamicHideShowRegion'),
+              $rds = $('.apex-rds');
+        
+            $regions
+              .each(toggleRegion)
+              .on('apexafterrefresh', toggleRegion);
+         
+            //using visiblity over display to avoid DOM movement issues
+            $rds.css('visibility', 'visible');
+          } 
+        
+          //using load because document.ready here goes before the RDS has added its listeners
+          $(window).on('theme42ready',initHideShowRegions);
+        }())
+
+    execution: 
+      sequence: 10
+      event: Handle Show / Hide Content Regions # 12756567742198002825
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: Refresh Contacts ====================
+  id: 12756567931043002827
+  identification: 
+    name: Refresh Contacts
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: jQuery Selector
+    jquery-selector: '#listPageActions, #rptContacts'
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: this.data && this.data.dialogPageId == "37"
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 13868004504228520078
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Contacts # 16616453733002113922
+
+    execution: 
+      sequence: 10
+      event: Refresh Contacts # 12756567931043002827
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Refresh Updates =====================
+  id: 13868004598923520079
+  identification: 
+    name: Refresh Updates
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: jQuery Selector
+    jquery-selector: '#listPageActions, #rptUpdates'
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: this.data && this.data.dialogPageId == "97"
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 13868004686315520080
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Updates # 16445128336301723871
+
+    execution: 
+      sequence: 10
+      event: Refresh Updates # 13868004598923520079
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Refresh Products ====================
+  id: 13868004735838520081
+  identification: 
+    name: Refresh Products
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: jQuery Selector
+    jquery-selector: '#listPageActions, #rptProducts'
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: this.data && this.data.dialogPageId == "68"
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 13868004878630520082
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Products # 16616355421839029043
+
+    execution: 
+      sequence: 10
+      event: Refresh Products # 13868004735838520081
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Refresh Links =======================
+  id: 13868004947420520083
+  identification: 
+    name: Refresh Links
+
+  execution: 
+    sequence: 80
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: jQuery Selector
+    jquery-selector: '#listPageActions, #rptLinks'
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: this.data && this.data.dialogPageId == "66"
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 13868005009468520084
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Links # 16445131525462723873
+
+    execution: 
+      sequence: 10
+      event: Refresh Links # 13868004947420520083
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Refresh Attachments =================
+  id: 13868005187866520085
+  identification: 
+    name: Refresh Attachments
+
+  execution: 
+    sequence: 90
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: jQuery Selector
+    jquery-selector: '#listPageActions, #rptLinks'
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: this.data && this.data.dialogPageId == "64"
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 13868005243312520086
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Attachments # 16445130041452723872
+
+    execution: 
+      sequence: 10
+      event: Refresh Attachments # 13868005187866520085
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Refresh IRR after Edit ==============
+  id: 14300321926312575197
+  identification: 
+    name: Refresh IRR after Edit
+
+  execution: 
+    sequence: 100
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: Products # 16616355421839029043
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 14300322036173575198
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Products # 16616355421839029043
+
+    execution: 
+      sequence: 10
+      event: Refresh IRR after Edit # 14300321926312575197
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Refresh on dialog close after edit ==
+  id: 16849993319193355711
+  identification: 
+    name: Refresh on dialog close after edit
+
+  execution: 
+    sequence: 110
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: Referenceability # 16849991539663355693
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 16849993494040355712
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Referenceability # 16849991539663355693
+
+    execution: 
+      sequence: 10
+      event: Refresh on dialog close after edit # 16849993319193355711
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Refresh Page Regions on dialog close 
+  id: 16849993580352355713
+  identification: 
+    name: Refresh Page Regions on dialog close
+
+  execution: 
+    sequence: 120
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: Page Actions # 14859305906520705426
+
+  server-side-condition: 
+    type: Never
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 2588622017070373846
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Issues # 2337564365080495684
+
+    execution: 
+      sequence: 80
+      event: Refresh Page Regions on dialog close # 16849993580352355713
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 2588622115506373847
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Region display selector # 14881924186520919116
+
+    execution: 
+      sequence: 90
+      event: Refresh Page Regions on dialog close # 16849993580352355713
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 16849993650519355714
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Referenceability # 16849991539663355693
+
+    execution: 
+      sequence: 10
+      event: Refresh Page Regions on dialog close # 16849993580352355713
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 16849993745164355715
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Attachments # 16445130041452723872
+
+    execution: 
+      sequence: 20
+      event: Refresh Page Regions on dialog close # 16849993580352355713
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 16849993834623355716
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Links # 16445131525462723873
+
+    execution: 
+      sequence: 30
+      event: Refresh Page Regions on dialog close # 16849993580352355713
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 16849993980912355717
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Contacts # 16616453733002113922
+
+    execution: 
+      sequence: 40
+      event: Refresh Page Regions on dialog close # 16849993580352355713
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 16849994077548355718
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Products # 16616355421839029043
+
+    execution: 
+      sequence: 60
+      event: Refresh Page Regions on dialog close # 16849993580352355713
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 16849994141236355719
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Updates # 16445128336301723871
+
+    execution: 
+      sequence: 70
+      event: Refresh Page Regions on dialog close # 16849993580352355713
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 18191432507958657719
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Activities # 18191429044901657685
+
+    execution: 
+      sequence: 50
+      event: Refresh Page Regions on dialog close # 16849993580352355713
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Refresh Partners ====================
+  id: 17771183189783605880
+  identification: 
+    name: Refresh Partners
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: jQuery Selector
+    jquery-selector: '#listPageActions, #rptPartners'
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: this.data && this.data.dialogPageId == "110"
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 17771183264666605881
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Partners # 15671440824537645312
+
+    execution: 
+      sequence: 10
+      event: Refresh Partners # 17771183189783605880
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Refresh Competitors =================
+  id: 17771184353353605892
+  identification: 
+    name: Refresh Competitors
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: jQuery Selector
+    jquery-selector: '#listPageActions, #rptCompetitors'
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: this.data && this.data.dialogPageId == "111"
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 17771184506607605893
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Competitors # 17771183417000605883
+
+    execution: 
+      sequence: 10
+      event: Refresh Competitors # 17771184353353605892
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Refresh Activities ==================
+  id: 18191432274038657717
+  identification: 
+    name: Refresh Activities
+
+  execution: 
+    sequence: 70
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: jQuery Selector
+    jquery-selector: '#listPageActions, #rptActivities'
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: this.data && this.data.dialogPageId == "150"
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 18191432387734657718
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: Activities # 18191429044901657685
+
+    execution: 
+      sequence: 10
+      event: Refresh Activities # 18191432274038657717
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: CUSTOMER ===============================
+  id: 14882153716083540784
+  identification: 
+    item-name: CUSTOMER
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'select apex_escape.html(customer_name) from eba_cust_customers where id = :P50_ID'
+
+- # ====== Computation: LAST_VIEW ==============================
+  id: 16445138320969723885
+  identification: 
+    item-name: LAST_VIEW
+
+  execution: 
+    sequence: 20
+    point: Before Header
+
+  computation: 
+    type: Static Value
+    static-value: 50
+
+processes: 
+- # ====== Process: Count Clicks ===============================
+  id: 14955992330470129422
+  identification: 
+    name: Count Clicks
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      insert into eba_cust_clicks (cust_id) values (:P50_ID);
+      delete from eba_cust_clicks where view_timestamp < (sysdate - 90);
+      commit;
+
+  execution: 
+    sequence: 60
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+branches: 
+- # ====== Branch: Go To Page 50 ===============================
+  id: 16445139133331723887
+  identification: 
+    name: Go To Page 50
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:50:&SESSION.::&DEBUG.::P50_ID:&P50_ID.&success_msg=#SUCCESS_MSG#'
+      page: 50 # Customer
+      values: 
+        p50_id: '&P50_ID.'
+
+  comments: 
+    comments: 'Created 11-JAN-2012 16:02 by MIKE'
+

@@ -1,0 +1,292 @@
+---
+# ====== Application: Customers ==============================
+id: 102
+identification: 
+  name: Customers
+  alias: CUSTOMERS
+  version: 24.2.0
+  application-group: Starter Apps # 186357354789101527
+
+row-search: 
+  tokenize: false
+  text-query-function: None
+
+availability: 
+  status: Available with Developer Toolbar
+  build-status: Run and Build Application
+
+error-handling: 
+  default-display-location: Inline with Field and in Notification
+  error-handling-function: eba_cust_fw.apex_error_handling
+
+report-printing: 
+  type: Use Instance Settings
+
+advanced: 
+  friendly-urls: true
+  allow-feedback: false
+  logging: true
+  debugging: true
+  compatibility-mode: 24.2
+  accessible-read-only-items: true
+  pass-ecid: N
+  copyright-banner: |
+    Name: #APP_NAME#
+    Copyright (c)2012, #YEAR# Oracle and/or its affiliates.
+    Licensed under the Universal Permissive License v 1.0 as shown 
+    at https://oss.oracle.com/licenses/upl/
+
+authentication: 
+  public-user: APEX_PUBLIC_USER
+  authentication-scheme: APEX Accounts # 17822765602702123660
+
+authorization: 
+  authorization-scheme: APPLICATION SENTRY # 15989112447556174685
+  run-on-public-pages: false
+  run-on-background-job: true
+  source-for-role-or-group-schemes: Access Control User Role Assignments
+
+session-management: 
+  rejoin-sessions: Enabled for Public Sessions
+  maximum-session-length: 28800
+  maximum-session-idle-time: 28800
+
+session-state-protection: 
+  enabled: true
+
+security: 
+  deep-linking: Enabled
+  browser-cache: Disabled
+  embed-in-frames: Allow from same origin
+  referrer-policy: strict-origin
+  html-escaping-mode: Extended
+  runtime-api-usage: 
+  - Modify This Application
+
+database-session: 
+  parsing-schema: PRLNU
+
+globalization: 
+  primary-language: English (United States) (en-us)
+  document-direction: Left-To-Right
+  language-derived-from: Application Primary Language
+  automatic-time-zone: false
+  automatic-csv-encoding: false
+
+application-format-masks: 
+  date: DS
+  timestamp: DS
+
+character-value-comparison: 
+  behavior: Database session NLS setting (default)
+
+logo: 
+  type: Text
+  text: '&APPLICATION_TITLE.'
+
+progressive-web-app: 
+  enable: false
+
+navigation: 
+  home-url: 
+    url: 'f?p=&APP_ID.:59:&SESSION.'
+    page: 59 # Customers
+
+navigation-menu: 
+  list-template: Side Navigation Menu
+  template-options: 
+  - '#DEFAULT#'
+  - js-defaultCollapsed
+  - js-navCollapsed--hidden
+  - t-TreeNav--styleA
+  list-position: Side
+  list: Application Navigation # 14881819248322741220
+
+navigation-bar: 
+  implementation: List
+  list: Navigation Bar # 14896127078164405024
+  list-template: Navigation Bar
+
+javascript: 
+  include-deprecated-or-desupported-javascript-functions: 
+  - Pre 18.1
+  - 18.x
+  include-jquery-migrate: false
+
+css: 
+  file-urls: 
+  - '#IMAGE_PREFIX#pkgapp_ui/css/5.0#MIN#.css'
+
+attributes: 
+  theme: Universal Theme # 42
+  global-page: 0
+  enable-end-users-to-choose-theme-style: true
+  add-"built-with-apex"-to-footer: true
+  auto-dismiss-success-messages: false
+
+subscription: 
+  version-number: 187959776
+
+substitutions: 
+- # ====== Substitution: APP_DATE_FORMAT =======================
+  id: 1
+  identification: 
+    name: APP_DATE_FORMAT
+
+  value: 
+    static-value: DD-MON-YYYY
+
+- # ====== Substitution: GETTING_STARTED_URL ===================
+  id: 2
+  identification: 
+    name: GETTING_STARTED_URL
+
+  value: 
+    static-value: 'http://www.oracle.com/technetwork/developer-tools/apex/index.html'
+
+- # ====== Substitution: APP_DATETIME_FORMAT ===================
+  id: 3
+  identification: 
+    name: APP_DATETIME_FORMAT
+
+  value: 
+    static-value: 'DD-MON-YYYY HH24:MI'
+
+- # ====== Substitution: APP_NAME ==============================
+  id: 4
+  identification: 
+    name: APP_NAME
+
+  value: 
+    static-value: Customers
+
+component-settings: 
+- # ====== Component Setting: NATIVE_BOSS ======================
+  id: 23976845856905706
+  identification: 
+    name: NATIVE_BOSS
+    type: REST Data Source
+
+  subscription: 
+    version-number: 187909017
+
+- # ====== Component Setting: NATIVE_STAR_RATING ===============
+  id: 25307624738404052
+  identification: 
+    name: NATIVE_STAR_RATING
+    type: Item
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Component Setting: NATIVE_OPEN_AI_ASSISTANT =========
+  id: 25483114841378611
+  identification: 
+    name: NATIVE_OPEN_AI_ASSISTANT
+    type: Dynamic Action
+
+  subscription: 
+    version-number: 37167665066540
+
+- # ====== Component Setting: NATIVE_SELECT_MANY ===============
+  id: 25483502268378611
+  identification: 
+    name: NATIVE_SELECT_MANY
+    type: Item
+
+  subscription: 
+    version-number: 37167665066540
+
+- # ====== Component Setting: NATIVE_GEOCODING =================
+  id: 25506860989226480
+  identification: 
+    name: NATIVE_GEOCODING
+    type: Process
+
+  settings: 
+    attribute-1: RELAX_HOUSE_NUMBER
+
+  subscription: 
+    version-number: 155458166
+
+- # ====== Component Setting: NATIVE_GEOCODED_ADDRESS ==========
+  id: 123822207670794602
+  identification: 
+    name: NATIVE_GEOCODED_ADDRESS
+    type: Item
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Component Setting: NATIVE_MAP_REGION ================
+  id: 144877904428197129
+  identification: 
+    name: NATIVE_MAP_REGION
+    type: Region
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Component Setting: NATIVE_DATE_PICKER_APEX ==========
+  id: 147191369573384164
+  identification: 
+    name: NATIVE_DATE_PICKER_APEX
+    type: Item
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Component Setting: NATIVE_SINGLE_CHECKBOX ===========
+  id: 200106491380412517
+  identification: 
+    name: NATIVE_SINGLE_CHECKBOX
+    type: Item
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Component Setting: NATIVE_ADFBC =====================
+  id: 630699700137530228
+  identification: 
+    name: NATIVE_ADFBC
+    type: REST Data Source
+
+  subscription: 
+    version-number: 37166093824739
+
+- # ====== Component Setting: NATIVE_IR ========================
+  id: 1858269079910579200
+  identification: 
+    name: NATIVE_IR
+    type: Region
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Component Setting: NATIVE_COLOR_PICKER ==============
+  id: 1944142242606525037
+  identification: 
+    name: NATIVE_COLOR_PICKER
+    type: Item
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Component Setting: NATIVE_YES_NO ====================
+  id: 14566493020358534009
+  identification: 
+    name: NATIVE_YES_NO
+    type: Item
+
+  subscription: 
+    version-number: 37166093824741
+
+- # ====== Component Setting: NATIVE_DISPLAY_SELECTOR ==========
+  id: 15213363007040441482
+  identification: 
+    name: NATIVE_DISPLAY_SELECTOR
+    type: Region
+
+  subscription: 
+    version-number: 37166093824741
+
