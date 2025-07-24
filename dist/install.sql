@@ -5,6 +5,10 @@
 set define off
 set sqlblanklines on
 
+ set define on
+-- define DEFAULTS_FILE = 'utils/properties/uat.properties'
+
+
 -- Prechecks modifiable helper
 -- Check running with SQLcl
 -- Check minimum DB version
@@ -18,5 +22,7 @@ set sqlblanklines on
 -- Kick off Liquibase
 prompt "Installing/updating schemas"
 lb update -log -changelog-file releases/main.changelog.xml -search-path "." -defaults-file &DEFAULTS_FILE 
+--lb update -log -changelog-file releases/main.changelog.xml -search-path "." -defaults-file utils/properties/uat.properties
+
 
 --@utils/recompile.sql
