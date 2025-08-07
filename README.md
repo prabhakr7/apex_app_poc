@@ -15,7 +15,7 @@ Submit bug reports and feature suggestions, or track changes in the
 - Installation
 - Configuration
 - Troubleshooting
-- FAQ
+- FAQs
 - Maintainers
 
 
