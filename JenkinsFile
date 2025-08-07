@@ -1,7 +1,7 @@
 pipeline {
     agent any
     options {
-        checkoutToSubdirectory('greatapp')
+        checkoutToSubdirectory('apex_poc')
     }
     tools {
         jdk 'JDK11'
