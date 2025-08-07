@@ -1,26 +1,38 @@
 pipeline {
     agent any
-
-    stages {
-        stage("code") {
-            steps {
-                echo "coding"
-            }
-        }
-        stage("build") {
-            steps {
-                echo "building"
-            }
-        }
-        stage("test") {
-            steps {
-                echo "testing"
-            }
-        }
-        stage("deploy") {
-            steps {
-                echo "deploying"
-            }
-        }
+    options {
+        checkoutToSubdirectory('greatapp')
     }
+    tools {
+        jdk 'JDK11'
+    }
+    environment {
+        GIT_WORKAREA = "$WORKSPACE/greatapp"
+        UTILS = "$GIT_WORKAREA/utils"
+        SQLCL = "$WORKSPACE/sqlcl/bin/sql"
+        DB = 'localhost:1521/freepdb1'
+    }
+    stages {
+        stage('Setup') {
+            steps {
+                sh '$UTILS/setupLatestSQLcl'
+                }
+        }
+        stage('Export, Stage, and Create New Release Artifact') {
+            environment {
+                DEVDB_AUTH = credentials('apex-dev-credential')
+            }
+            steps {
+                sh '$UTILS/exportStageMergeReleaseArtifact $GIT_WORKAREA $DEVDB_AUTH_USR/$DEVDB_AUTH_PSW@$DB'
+            }
+        }
+        stage('SQLcl Connection Test') {
+            environment {
+                 DEVDB_AUTH = credentials('apex-dev-credential')
+            }
+            steps {
+                sh '''echo "SELECT * FROM DUAL;" | $SQLCL -S $DEVDB_AUTH_USR/$DEVDB_AUTH_PSW@$DB'''
+            }
+        }
+}
 }
