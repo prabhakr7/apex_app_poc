@@ -7,8 +7,8 @@ pipeline {
         jdk 'JDK11'
     }
     environment {
-        GIT_WORKAREA = "$WORKSPACE/greatapp"
-        UTILS = "$GIT_WORKAREA/utils"
+        GIT_WORKAREA = "$WORKSPACE/apex_poc"
+        UTILS = "$GIT_WORKAREA/dist/utils"
         SQLCL = "$WORKSPACE/sqlcl/bin/sql"
         DB = 'localhost:1521/freepdb1'
     }
